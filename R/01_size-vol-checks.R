@@ -4,6 +4,7 @@
 
 
 rm(list = ls())
+
 library(EcotaxaTools)
 
 ###
@@ -39,10 +40,50 @@ rhiz_only <- uvp_data |>
   mod_zoo(func = 'names_keep', keep_names = 'Rhizaria',
           keep_children = T)
 
-# need to account for casts with no observations####
 
-rhiz_sizes <- rhiz_only$zoo_files |> 
-  list_to_tib('profileid')
+# remove data.frames with 0's
+no_rows <- NULL
+for(name in names(rhiz_only$zoo_files)) {
+  if(nrow(rhiz_only$zoo_files[[name]]) == 0) {
+    no_rows <- c(no_rows, name)
+  }
+}
+
+rhiz_only$par_files <- rhiz_only$par_files[-which(names(rhiz_only$par_files) %in% no_rows)]
+rhiz_only$zoo_files <- rhiz_only$zoo_files[-which(names(rhiz_only$zoo_files) %in% no_rows)]
+rhiz_only$meta <- rhiz_only$meta[-which(rhiz_only$meta$profileid %in% no_rows),]
+
+
+rhiz_sizes$esd <- rhiz_sizes$esd*unique(rhiz_only$meta$acq_pixel)
+
+# |- Density-based filter selection -------------------------
+rhiz_sizes$esd |> range()
+
+rhiz_sizes$esd |> 
+  density() |> 
+  plot()
+
+# |- NBSS option ------------------------------------
+
+calc_nbss <- function(df, metric = 'esd') {
+  
+  size_limits <- c(min_size = min(df[[metric]]), max_size = max(df[[metric]]))
+  
+  df$size_class <- df[[metric]] |>
+    assign_spectra_bins('log', min_size = size_limits[1], max_size = size_limits[2])
+  
+  db_num <- df |>
+    count_size_classes() |>
+    numeric_spectra(vol_L = 1, needs_format = T)
+  
+  return(db_num)
+}
+
+
+# rhiz_nbss <- rhiz_sizes |> 
+#   calc_nbss() 
+# 
+# plot(n_s ~ mp_size_class, data = rhiz_nbss)
 
 
 
@@ -50,11 +91,11 @@ rhiz_sizes <- rhiz_only$zoo_files |>
 # Sample Volume Selection ######################
 ####
 
-# |- get volume sampled in 10m bins ---------
+# |- get volume sampled in 25m bins ---------
 
 vol_by_cast <- uvp_data |> 
   get_ecopart_vol() |> 
-  lapply(ecopart_vol_bin, depth_breaks = seq(0,1200,20)) |> 
+  lapply(ecopart_vol_bin, depth_breaks = seq(0,1200,25)) |> 
   list_to_tib("profileid") |> 
   bin_format()
 
@@ -79,8 +120,33 @@ for(r in 1:nrow(vol_by_cast)) {
 epi_avg <- vol_by_cast$vol_sampled[vol_by_cast$zone == 'epi'] |> 
   mean()
 
+meso_avg <- vol_by_cast$vol_sampled[vol_by_cast$zone == 'meso'] |> 
+  mean()
+
 non_detect <- function(prob,vol) {
   log(prob) / -vol
 }
 
 non_detect(0.1, epi_avg)
+non_detect(0.1, meso_avg)
+
+# |- What about when integrating? ---------------------
+
+# average volumes
+epi_avg * (200/25)
+meso_avg * ((1200-200)/25)
+
+non_detect(0.1, epi_avg * (200/25))
+non_dectect(0.1, meso_avg * ((1200-200) /25))
+
+
+###
+# Calculate Binned Abundances #############
+###
+
+rhiz_densities <- rhiz_only |> 
+  uvp_zoo_conc(breaks = seq(0,1200,25))
+
+rhiz_densities <- rhiz_densities |> 
+  lapply(bin_format)
+saveRDS(rhiz_densities, './data/01_rhiz-densities.rds')
