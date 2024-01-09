@@ -283,7 +283,7 @@ saveRDS(
     upmeso = all_upmeso,
     lomeso = all_lomeso
   ),
-  "./data/02_integrated-all-rhiz"
+  "./data/02_integrated-all-rhiz.rds"
 )
 
 # Groups
