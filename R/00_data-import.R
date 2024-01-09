@@ -177,8 +177,8 @@ keep_names <- coords$ctd_origfilename[-drop_casts]
 
 trim_zoop <- list()
 trim_zoop$meta <- zoops$meta[which(zoops$meta$ctd_origfilename %in% keep_names),]
-trim_zoop$par_files <- zoops$par_files[which(names(zoops$par_files) %in% zoops$meta$profileid)]
-trim_zoop$zoo_files <- zoops$zoo_files[which(names(zoops$zoo_files) %in% zoops$meta$profileid)]
+trim_zoop$par_files <- zoops$par_files[which(names(zoops$par_files) %in% trim_zoop$meta$profileid)]
+trim_zoop$zoo_files <- zoops$zoo_files[which(names(zoops$zoo_files) %in% trim_zoop$meta$profileid)]
 
 trim_zoop <- trim_zoop |> as_ecopart_obj()
 

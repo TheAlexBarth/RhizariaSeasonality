@@ -53,7 +53,8 @@ rhiz_only$par_files <- rhiz_only$par_files[-which(names(rhiz_only$par_files) %in
 rhiz_only$zoo_files <- rhiz_only$zoo_files[-which(names(rhiz_only$zoo_files) %in% no_rows)]
 rhiz_only$meta <- rhiz_only$meta[-which(rhiz_only$meta$profileid %in% no_rows),]
 
-
+rhiz_sizes <- rhiz_only$zoo_files |> 
+  list_to_tib('profileid')
 rhiz_sizes$esd <- rhiz_sizes$esd*unique(rhiz_only$meta$acq_pixel)
 
 # |- Density-based filter selection -------------------------
@@ -80,10 +81,10 @@ calc_nbss <- function(df, metric = 'esd') {
 }
 
 
-# rhiz_nbss <- rhiz_sizes |> 
-#   calc_nbss() 
-# 
-# plot(n_s ~ mp_size_class, data = rhiz_nbss)
+rhiz_nbss <- rhiz_sizes |>
+  calc_nbss()
+
+plot(n_s ~ mp_size_class, data = rhiz_nbss)
 
 
 
@@ -137,7 +138,7 @@ epi_avg * (200/25)
 meso_avg * ((1200-200)/25)
 
 non_detect(0.1, epi_avg * (200/25))
-non_dectect(0.1, meso_avg * ((1200-200) /25))
+non_detect(0.1, meso_avg * ((1200-200) /25))
 
 
 ###
@@ -149,4 +150,5 @@ rhiz_densities <- rhiz_only |>
 
 rhiz_densities <- rhiz_densities |> 
   lapply(bin_format)
+
 saveRDS(rhiz_densities, './data/01_rhiz-densities.rds')
