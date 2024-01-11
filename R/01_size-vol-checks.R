@@ -17,13 +17,12 @@ uvp_data <- readRDS("./data/00_zoop-uvp.rds")
 # Re-naming zoops ########
 ####
 
-taxa_names <- c('Rhizaria', 'Eumalacostraca', 'Copepoda',
+taxa_names <- c('Rhizaria', 'Copepoda',
                 'Phaeodaria','Aulacanthidae','Coelodendridae',
-                'Ostracoda','Aulosphaeridae','Acantharea','Chaetognatha',
-                'Castanellidae','Hydrozoa','Collodaria','Actinopterygii',
-                'Medusettidae','Foraminifera','Pteropoda',
-                'Annelida','Crustacea','living','Decapoda',
-                'Tuscaroridae')
+                'Aulosphaeridae','Acantharea',
+                'Castanellidae','Collodaria',
+                'Medusettidae','Foraminifera',
+                'Tuscaroridae','living')
 
 uvp_data <- uvp_data |> 
   add_zoo(func = names_to, col_name = 'name',
@@ -145,8 +144,27 @@ non_detect(0.1, meso_avg * ((1200-200) /25))
 # Calculate Binned Abundances #############
 ###
 
+# |- Rhizaria Only Calcs ----------------------------------------
 rhiz_densities <- rhiz_only |> 
-  uvp_zoo_conc(breaks = seq(0,1200,25))
+  uvp_zoo_conc(breaks = seq(0,1000,25))
+
+# |- Add 0 observations for certain UVP taxa --------------------
+all_possible_taxa <- expand.grid(
+  db = unique(unlist(lapply(rhiz_densities, function(x) x$db))),
+  group = unique(unlist(lapply(rhiz_densities, function(x) x$group)))
+)
+
+# Function to merge each dataframe in the list with the template dataframe
+
+fill_missing_species <- function(df) {
+  merged_df <- merge(all_possible_taxa, df, by = c("db", "group"), all.x = TRUE)
+  merged_df[is.na(merged_df)] <- 0  # Replace NA values with 0
+  return(merged_df)
+}
+
+rhiz_densities <- rhiz_densities |> 
+  lapply(fill_missing_species) |> 
+  lapply(bin_format)
 
 rhiz_densities <- rhiz_densities |> 
   lapply(bin_format)

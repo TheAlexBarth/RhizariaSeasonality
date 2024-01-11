@@ -188,6 +188,18 @@ trim_zoop$meta$cruise_id <- trim_zoop$meta$ctd_origfilename |>
   unlist() |> 
   as.vector()
 
+# |-|- Depth filter --------------------------------
+drop_deepcasts <- function(df) {
+  row_index <- which(df$depth_including_offset <= 1000)
+  if(length(row_index) == 0) {
+    return(NULL)
+  }
+  return(df[row_index,])
+}
+
+trim_zoop <- trim_zoop |> 
+  mod_zoo(func = drop_deepcasts)
+
 saveRDS(trim_zoop, './data/00_zoop-uvp.rds')
 saveRDS(ctd_data, './data/00_ctd-data.rds')
 saveRDS(coords[-drop_casts,], './data/s00_cast-coords.rds')
