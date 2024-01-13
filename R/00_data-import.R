@@ -200,6 +200,11 @@ drop_deepcasts <- function(df) {
 trim_zoop <- trim_zoop |> 
   mod_zoo(func = drop_deepcasts)
 
+trim_zoop$par_files <- trim_zoop$par_files |> 
+  lapply(
+    function(x) x[which(x$depth<=1000),]
+  )
+
 saveRDS(trim_zoop, './data/00_zoop-uvp.rds')
 saveRDS(ctd_data, './data/00_ctd-data.rds')
 saveRDS(coords[-drop_casts,], './data/s00_cast-coords.rds')

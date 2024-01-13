@@ -95,7 +95,7 @@ plot(n_s ~ mp_size_class, data = rhiz_nbss)
 
 vol_by_cast <- uvp_data |> 
   get_ecopart_vol() |> 
-  lapply(ecopart_vol_bin, depth_breaks = seq(0,1200,25)) |> 
+  lapply(ecopart_vol_bin, depth_breaks = seq(0,1000,25)) |> 
   list_to_tib("profileid") |> 
   bin_format()
 
@@ -105,7 +105,7 @@ vol_by_cast$zone <- rep(NA, nrow(vol_by_cast))
 for(r in 1:nrow(vol_by_cast)) {
   if(vol_by_cast$max_d[r] <=200) {
     vol_by_cast$zone[r] <- 'epi'
-  } else if (vol_by_cast$max_d[r] <=1200) {
+  } else if (vol_by_cast$max_d[r] <=1000) {
     vol_by_cast$zone[r] <- 'meso'
   } else {
     vol_by_cast$zone[r] <- 'deep'
@@ -134,10 +134,10 @@ non_detect(0.1, meso_avg)
 
 # average volumes
 epi_avg * (200/25)
-meso_avg * ((1200-200)/25)
+meso_avg * ((1000-200)/25)
 
 non_detect(0.1, epi_avg * (200/25))
-non_detect(0.1, meso_avg * ((1200-200) /25))
+non_detect(0.1, meso_avg * ((1000-200) /25))
 
 
 ###
@@ -149,24 +149,30 @@ rhiz_densities <- rhiz_only |>
   uvp_zoo_conc(breaks = seq(0,1000,25))
 
 # |- Add 0 observations for certain UVP taxa --------------------
-all_possible_taxa <- expand.grid(
-  db = unique(unlist(lapply(rhiz_densities, function(x) x$db))),
-  group = unique(unlist(lapply(rhiz_densities, function(x) x$group)))
-)
+all_possible_taxa <- unique(unlist(lapply(rhiz_densities, function(x) x$group)))
 
 # Function to merge each dataframe in the list with the template dataframe
 
 fill_missing_species <- function(df) {
-  merged_df <- merge(all_possible_taxa, df, by = c("db", "group"), all.x = TRUE)
-  merged_df[is.na(merged_df)] <- 0  # Replace NA values with 0
-  return(merged_df)
+  if(all(all_possible_taxa %in% unique(df$group))) {
+    return(df)
+  } else {
+    merge_df <- expand.grid(
+      db = unique(df$db),
+      group = all_possible_taxa
+    )
+    
+    df <- df |> 
+      merge(merge_df, by = c('group', 'db'), all.y = T)
+    
+    df[is.na(df)] <- 0
+    return(df)
+  }
 }
 
-rhiz_densities <- rhiz_densities |> 
-  lapply(fill_missing_species) |> 
+corrected_rhiz_densities <- rhiz_densities |>
+  lapply(fill_missing_species) |>
   lapply(bin_format)
 
-rhiz_densities <- rhiz_densities |> 
-  lapply(bin_format)
 
-saveRDS(rhiz_densities, './data/01_rhiz-densities.rds')
+saveRDS(corrected_rhiz_densities, './data/01_rhiz-densities.rds')

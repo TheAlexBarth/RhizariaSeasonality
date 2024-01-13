@@ -20,23 +20,6 @@ meta <- readRDS('./data/00_zoop-uvp.rds')$meta
 meta$month <- month(meta$sampledate)
 meta$year <- year(meta$sampledate)
 
-# drop any deep casts
-
-deep_drop <- function(cast_df) {
-  if(max(cast_df$max_d) > 1200) {
-    outdf <- cast_df |> 
-      as_tibble() |> 
-      filter(max_d < 1200)
-  } else {
-    outdf <- cast_df
-  }
-  
-  return(outdf)
-}
-
-rhiz <- rhiz |> 
-  lapply(deep_drop)
-
 # |- make a all-rhizaria dataframe --------------
 
 sum_by_cast <- function(cast_df) {
@@ -114,7 +97,11 @@ trim_NAs <- function(rhiz_list) {
   drop_list <- rhiz_list |> 
     sapply(is.logical)
   
-  return(rhiz_list[-which(drop_list)])
+  if(all(!drop_list)) {
+    return(rhiz_list)
+  } else {
+    return(rhiz_list[-which(drop_list)])
+  }
 }
 
 
