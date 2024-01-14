@@ -14,8 +14,14 @@ library(mgcViz)
 # Load in Data #########
 ##
 
-tot_rhiz <- readRDS('../data/03_all-integrated.rds')
-taxa_rhiz <- readRDS('../data/03_taxa-integrated.rds')
+tot_rhiz <- readRDS('./data/03_all-integrated.rds')
+tot_rhiz$epi <- tot_rhiz$epi[-which(tot_rhiz$epi$sal < 33),] # drop epi malfunction
+taxa_rhiz <- readRDS('./data/03_taxa-integrated.rds')
+
+# drop epi sal malfunction
+for(taxa in names(taxa_rhiz$epi)) {
+  taxa_rhiz$epi[[taxa]] <- taxa_rhiz$epi[[taxa]][-which(taxa_rhiz$epi[[taxa]]$sal < 33),]
+}
 
 ###
 # Total Rhizaria ##########
@@ -429,12 +435,18 @@ AIC(red_epi_Foraminifera, full_epi_Foraminifera)
 BIC(red_epi_Foraminifera, full_epi_Foraminifera)
 
 
+
 ###
 # Plots #####
 ###
 
 
 # |- Plot extracting function --------------------------------
+
+# function for inside smooth predictor
+get_other_median <- function(var, data) {
+  median(data[[var]], na.rm = T)
+}
 
 smooth_predictor <- function(model, data) {
   
@@ -447,51 +459,127 @@ smooth_predictor <- function(model, data) {
   ## need to replace newdata with plot output  and 
   # finish merging fit, se.fit, and the newdata predicited
   # don't need to save the fitting dataframes!
-  var_newdata <- list()
+  
+  plot_output <- list()
   
   for (var in vars) {
     
     other_vars <- vars[which(vars != var)]
     
-    var_newdata[[var]] <- other_vars |> 
+    var_newdata<- other_vars |> 
       lapply(get_other_median, data)
     
-    names(var_newdata[[var]]) <- other_vars
+    names(var_newdata) <- other_vars
     
-    var_newdata[[var]][[var]] <- seq(min(data[[var]], na.rm = T), max(data[[var]], na.rm = T), length.out = 1000)
+    var_newdata[[var]] <- seq(min(data[[var]], na.rm = T), max(data[[var]], na.rm = T), length.out = 1000)
     
-    var_newdata[[var]] <- as.data.frame(var_newdata[[var]])
+    var_newdata <- as.data.frame(var_newdata)
     
-    pred_fit <- predict.gam(model, var_newdata[[var]], type = 'link', se.fit = T)
+    pred_fit <- predict.gam(model, var_newdata, type = 'link', se.fit = T)
     
+    plot_output[[var]] <- list()
+    plot_output[[var]]$pred <- data.frame(
+      fit = ilink(pred_fit$fit),
+      low = ilink(pred_fit$fit - (1.96*pred_fit$se.fit)),
+      high = ilink(pred_fit$fit + (1.96 * pred_fit$se.fit))
+    )
+    plot_output[[var]]$pred[[var]] <- var_newdata[[var]]
+    
+    plot_output[[var]]$obs <- data.frame(
+      intg = data$intg,
+      month = data$month
+    )
+    plot_output[[var]]$obs[[var]] <- data[[var]]
     
   }
   
-  
-  
-  
+  return(plot_output)
 }
 
-# function for inside smooth predictor
-get_other_median <- function(var, data) {
-  median(data[[var]], na.rm = T)
-}
+# |- Save Data for plots --------------------------
+
+# |-|- Total Data --------------------------------------
+
+epi_total <- smooth_predictor(red_epi_total, tot_rhiz$epi)
+upmeso_total <- smooth_predictor(red_upmeso_tot, tot_rhiz$upmeso)
+lomeso_total <- smooth_predictor(red_lomeso_tot, tot_rhiz$lomeso)
 
 
-newdata <- data.frame(
-  Si = median(tot_rhiz$upmeso$Si, na.rm = T),
-  avg_mass_flux_200 = median(tot_rhiz$upmeso$avg_mass_flux_200, na.rm = T),
-  par_conc = seq(min(tot_rhiz$upmeso$par_conc, na.rm = T), max(tot_rhiz$upmeso$par_conc, na.rm = T), length.out = 1000)
+saveRDS(list(
+  epi = epi_total,
+  upmeso = upmeso_total,
+  lomeso = lomeso_total
+), './data/04_total-gam.rds')
+
+
+# |-|- Taxa Data ----------------------------------------
+
+acantharea_epi <- smooth_predictor(red_epi_acantharea, taxa_rhiz$epi$Acantharea)
+acantharea_upmeso <- smooth_predictor(red_upmeso_acantharea, taxa_rhiz$upmeso$Acantharea)
+acantharea_lomeso <- smooth_predictor(red_lomeso_acantharea, taxa_rhiz$lomeso$Acantharea)
+saveRDS(
+  list(
+    epi = acantharea_epi,
+    upmeso = acantharea_upmeso,
+    lomeso = acantharea_lomeso
+  ),
+  './data/04_acanth-gam.rds'
+)
+
+aulacanthidae_epi <- smooth_predictor(red_epi_Aulacanthidae, taxa_rhiz$epi$Aulacanthidae)
+aulacanthidae_upmeso <- smooth_predictor(red_upmeso_Aulacanthidae, taxa_rhiz$upmeso$Aulacanthidae)
+aulacanthidae_lomeso <- smooth_predictor(red_lomeso_Aulacanthidae, taxa_rhiz$lomeso$Aulacanthidae)
+saveRDS(
+  list(
+    epi = aulacanthidae_epi,
+    upmeso = aulacanthidae_upmeso,
+    lomeso = aulacanthidae_lomeso
+  ),
+  './data/04_aulacanthidae-gam.rds'
+)
+
+aulosphaeridae_upmeso <- smooth_predictor(red_upmeso_Aulosphaeridae, taxa_rhiz$upmeso$Aulosphaeridae)
+aulosphaeridae_lomeso <- smooth_predictor(red_lomeso_Aulosphaeridae, taxa_rhiz$lomeso$Aulosphaeridae)
+saveRDS(
+  list(
+    upmeso = aulosphaeridae_upmeso,
+    lomeso = aulosphaeridae_lomeso
+  ),
+  './data/04_aulosphaeridae-gam.rds'
+)
+
+castanellidae_epi <- smooth_predictor(red_epi_Castanellidae, taxa_rhiz$epi$Castanellidae)
+saveRDS(
+  list(
+   epi = castanellidae_epi 
+  ),
+  './data/04_castanellidae-gam.rds'
+)
+
+coelodendridae_upmeso <- smooth_predictor(red_upmeso_Coelodendridae, taxa_rhiz$upmeso$Coelodendridae)
+coelodendridae_lomeso <- smooth_predictor(red_lomeso_Coelodendridae, taxa_rhiz$lomeso$Coelodendridae)
+saveRDS(
+  list(
+    upmeso = coelodendridae_upmeso,
+    lomeso = coelodendridae_lomeso
+  ),
+  './data/04_coelodendridae-gam.rds'
 )
 
 
-ilink = family(red_upmeso_tot)$linkinv
-pred <- predict.gam(red_upmeso_tot, newdata, type = 'link', se.fit = TRUE)
+collodaria_epi <- smooth_predictor(red_epi_Collodaria, taxa_rhiz$epi$Collodaria)
+saveRDS(
+  list(
+    epi = collodaria_epi
+  ),
+  './data/04_collodaria-gam.rds'
+)
 
-ggplot() +
-  geom_line(aes(x = newdata$par_conc, y = ilink(pred$fit))) +
-  geom_point(aes(x = tot_rhiz$upmeso$par_conc, y = tot_rhiz$upmeso$intg))+
-  theme_bw()
 
-windows()
-plot(red_upmeso_tot)
+foraminifera_epi <- smooth_predictor(red_epi_Foraminifera, taxa_rhiz$epi$Foraminifera)
+saveRDS(
+  list(
+    epi = foraminifera_epi
+  ),
+  './data/04_foram-gam.rds'
+)
