@@ -49,6 +49,15 @@ rhiz_avg_group <- rhiz |>
   summarize(mean = mean(conc_m3),
             sd = sd(conc_m3))
 
+# |- Save for later plots ---------------
+saveRDS(
+  list(
+    all = total_avg_rhiz,
+    taxa = rhiz_avg_group
+  ),
+  './data/02_avg-bins.rds'
+)
+
 
 
 ####
@@ -294,5 +303,5 @@ saveRDS(
       lomeso = rhiz_lomeso_sum
     )
   ),
-  "./data/02_summed-integrate.rds"
+  "./data/02_avg-integrate.rds"
 )

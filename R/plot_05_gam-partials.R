@@ -47,7 +47,7 @@ save_plots <- function(name) {
     for(var in names(group_data[[zone]])) {
       cur_plot <- make_gam_plot(var, group_data[[zone]])
       
-      file_loc <- paste0('./output/05_',name,'-',zone,'-gam-',var,'.pdf')
+      file_loc <- paste0('./output/05_gam-partials/05_',name,'-',zone,'-gam-',var,'.pdf')
       
       ggsave(file_loc, cur_plot,
              width = 6, height = 6, 
