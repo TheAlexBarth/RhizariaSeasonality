@@ -63,9 +63,9 @@ full_upmeso_tot |> summary()
 
 
 red_upmeso_tot <- gam(
-  intg ~
+  intg ~ 
     s(Si, k = 6) + 
-    s(avg_mass_flux_200, k = 6) +
+    s(avg_mass_flux_200, k = 6) + 
     s(par_conc, k = 6),
   data = tot_rhiz$upmeso, method = 'ML', select = T 
 )
@@ -88,14 +88,11 @@ full_lomeso_tot |> summary()
 
 red_lomeso_tot <- gam(
   intg ~ 
-    s(Si, k = 6) +
-    s(avg_mass_flux_200, k = 6) + s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
+    s(avg_mass_flux_200, k = 6) +
     s(par_conc, k = 6),
   data = tot_rhiz$lomeso, method = 'ML', select = T 
 )
 red_lomeso_tot |> summary()
-AIC(full_lomeso_tot, red_lomeso_tot)
-BIC(full_lomeso_tot, red_lomeso_tot)
 
 
 ##
@@ -116,14 +113,13 @@ full_epi_acantharea |>  summary()
 
 # reduced model
 red_epi_acantharea <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) + s(RFU, k = 6) +
-    s(Bact_enumb, k = 6) +
-    s(avg_fbc_200, k = 6),
+  intg ~ s(sal, k = 6) + s(o2, k = 6) + 
+    s(Bact_enumb, k = 6) + 
+    s(avg_mass_flux_200, k = 6) +
+    s(par_conc, k = 6),
   data = taxa_rhiz$epi$Acantharea, method = 'ML', select = T
 )
 red_epi_acantharea |>  summary()
-AIC(red_epi_acantharea, full_epi_acantharea)
-BIC(red_epi_acantharea, full_epi_acantharea)
 
 # |- UpMeso ----------------------------------
 
@@ -137,9 +133,8 @@ full_upmeso_acantharea |> summary()
 
 
 red_upmeso_acantharea <- gam(
-  intg ~
-    s(o2, k = 6) +
-    s(avg_fbn_200, k = 6) +
+  intg ~  
+    s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
     s(par_conc, k = 6),
   data = taxa_rhiz$upmeso$Acantharea, method = 'ML', select = T 
 )
@@ -210,7 +205,6 @@ full_upmeso_Aulacanthidae |> summary()
 
 red_upmeso_Aulacanthidae <- gam(
   intg ~ 
-    s(NO3, k = 6) +
     s(par_conc, k = 6),
   data = taxa_rhiz$upmeso$Aulacanthidae, method = 'ML', select = T 
 )
@@ -230,8 +224,8 @@ full_lomeso_Aulacanthidae <- gam(
 full_lomeso_Aulacanthidae |> summary()
 
 red_lomeso_Aulacanthidae <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) + 
-    s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
+  intg ~ 
+    s(avg_mass_flux_200, k = 6) +
     s(par_conc, k = 6),
   data = taxa_rhiz$lomeso$Aulacanthidae, method = 'ML', select = T 
 )
@@ -279,8 +273,7 @@ full_upmeso_Aulosphaeridae |> summary()
 
 
 red_upmeso_Aulosphaeridae <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) +
-    s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
+  intg ~
     s(par_conc, k = 6),
   data = taxa_rhiz$upmeso$Aulosphaeridae, method = 'ML', select = T 
 )
@@ -305,8 +298,6 @@ red_lomeso_Aulosphaeridae <- gam(
   data = taxa_rhiz$lomeso$Aulosphaeridae, method = 'ML', select = T 
 )
 red_lomeso_Aulosphaeridae |> summary()
-AIC(full_lomeso_Aulosphaeridae, red_lomeso_Aulosphaeridae)
-BIC(full_lomeso_Aulosphaeridae, red_lomeso_Aulosphaeridae)
 
 ###
 # Castanellidae #####
@@ -324,9 +315,9 @@ full_epi_Castanellidae |>  summary()
 
 # reduced model
 red_epi_Castanellidae <- gam(
-  intg ~ s(temp, k = 6) + 
-    s(Si, k = 6) +
-    s(par_conc, k = 6),
+  intg ~
+    s(avg_fbc_200, k = 6) + 
+    s(pp, k = 6) + s(par_conc, k = 6),
   data = taxa_rhiz$epi$Castanellidae, method = 'ML', select = T
 )
 red_epi_Castanellidae |>  summary()
@@ -353,6 +344,7 @@ full_upmeso_Coelodendridae |> summary()
 
 red_upmeso_Coelodendridae <- gam(
   intg ~  
+    s(avg_fbn_200, k = 6) +
     s(par_conc, k = 6),
   data = taxa_rhiz$upmeso$Coelodendridae, method = 'ML', select = T 
 )
@@ -373,7 +365,7 @@ full_lomeso_Coelodendridae <- gam(
 full_lomeso_Coelodendridae |> summary()
 
 red_lomeso_Coelodendridae <- gam(
-  intg ~ 
+  intg ~  
     s(par_conc, k = 6),
   data = taxa_rhiz$lomeso$Coelodendridae, method = 'ML', select = T 
 )
@@ -398,8 +390,8 @@ full_epi_Collodaria |>  summary()
 
 # reduced model
 red_epi_Collodaria <- gam(
-  intg ~  s(sal, k = 6) + s(o2, k = 6) + 
-    s(Bact_enumb, k = 6) ,
+  intg ~  s(sal, k = 6) + s(o2, k = 6) +
+    s(Bact_enumb, k = 6),
   data = taxa_rhiz$epi$Collodaria, method = 'ML', select = T
 )
 red_epi_Collodaria |>  summary()
@@ -425,9 +417,9 @@ full_epi_Foraminifera |>  summary()
 
 # reduced model
 red_epi_Foraminifera <- gam(
-  intg ~ s(temp, k = 6) + s(o2, k = 6) + 
+  intg ~ s(temp, k = 6) + s(o2, k = 6) +
     s(avg_fbn_200, k = 6) +
-    s(par_conc, k = 6),
+    s(pp, k = 6) + s(par_conc, k = 6),
   data = taxa_rhiz$epi$Foraminifera, method = 'ML', select = T
 )
 red_epi_Foraminifera |>  summary()
@@ -551,7 +543,7 @@ saveRDS(
 castanellidae_epi <- smooth_predictor(red_epi_Castanellidae, taxa_rhiz$epi$Castanellidae)
 saveRDS(
   list(
-   epi = castanellidae_epi 
+   epi = castanellidae_epi
   ),
   './data/04_castanellidae-gam.rds'
 )

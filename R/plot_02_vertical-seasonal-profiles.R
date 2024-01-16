@@ -169,17 +169,35 @@ ggsave('./output/02_seasonality/lomeso_taxa.pdf',
        lomeso_taxa, width = 190, height = 120, units = 'mm',
        dpi = 600)
 
+# |- Stacked Contribution --------------------
+epi_contrib <- ggplot(avg_intg$taxa$epi) +
+  geom_bar(aes(x = cruise_id, y = mean_intg,
+               fill = taxa),
+           position = 'stack', stat = 'identity') +
+  scale_fill_manual(values = taxa_colors) +
+  theme_bw()
 
+upmeso_contrib <- ggplot(avg_intg$taxa$upmeso) +
+  geom_bar(aes(x = cruise_id, y = mean_intg,
+               fill = taxa),
+           position = 'stack', stat = 'identity') +
+  scale_fill_manual(values = taxa_colors) +
+  theme_bw()
 
-# |- By Rhizaria Group ------------------------------------
-
-ggplot(rhiz_epi_sum[which(rhiz_epi_sum$taxa == 'Rhizaria'),]) +
-  geom_bar(aes(x = cruise_id,  y = mean_intg, fill = month),
-           stat = 'identity') +
-  geom_errorbar(aes(x = cruise_id, ymin = mean_intg, ymax = mean_intg + sd_intg),
-                stat = 'identity') +
-  scale_fill_gradient2(low = "#FDDBC7", mid = "#B2182B", high = "#FDDBC7", name = "Month",
-                       midpoint = 6) +
+lomeso_contrib <- ggplot(avg_intg$taxa$lomeso) +
+  geom_bar(aes(x = cruise_id, y = mean_intg,
+               fill = taxa),
+           position = 'stack', stat = 'identity') +
+  scale_fill_manual(values = taxa_colors) +
   theme_bw()
 
 
+ggsave('./output/02_seasonality/epi-contrib.pdf',
+       epi_contrib,
+       width = 190, dpi = 500, units = 'mm')
+ggsave('./output/02_seasonality/upmeso-contrib.pdf',
+       epi_contrib,
+       width = 190, dpi = 500, units = 'mm')
+ggsave('./output/02_seasonality/lomeso-contrib.pdf',
+       epi_contrib,
+       width = 190, dpi = 500, units = 'mm')

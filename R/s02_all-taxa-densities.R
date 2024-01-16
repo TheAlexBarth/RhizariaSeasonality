@@ -48,3 +48,5 @@ fill_missing_species <- function(df) {
 corrected_densities <- all_density |>
   lapply(fill_missing_species) |>
   lapply(bin_format)
+
+saveRDS(corrected_densities,"./data/s02_all-taxa-density.rds")
