@@ -1,0 +1,623 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Rhizaria in the oligotrophic exhibit clear temporal and vertical variability.},
+  pdfauthor={Alex Barth*; Leo Blanco-Berical; Rod Johnson; Joshua Stone},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Rhizaria in the oligotrophic exhibit clear temporal and vertical
+variability.}
+\author{Alex Barth* \and Leo Blanco-Berical \and Rod Johnson \and Joshua
+Stone}
+\date{}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, interior hidden, boxrule=0pt, enhanced, borderline west={3pt}{0pt}{shadecolor}, sharp corners, breakable]}{\end{tcolorbox}}\fi
+
+\setstretch{2}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Rhizaria are an extremely diverse super-group of single celled organisms
+consisting of several phyla including retaria (foraminifera and
+radiolaria) and cercozoa. These organisms exist in a wide range of
+habitats and are widely represented in plankton communities throughout
+the global ocean. While the taxonomy of these organisms has recently
+undergone several reclassifications (Wiley, 2022), their presence in
+ocean ecosystems has been long known to oceanographers. Some of the
+earliest records of their existence are from oceanographic expeditions
+in the 19th century (Haekel, 1887). Rhizaria are unique members of the
+plankton and protist community because they can reach large sizes (up to
+several mm in diameter) and they construct intricate mineral skeletons
+out of either silica, strontium, or calcium carbonate (Kimoto, 2015;
+Nakamura and Suzuki, 2015; Suzuki and Not, 2015; Wiley, 2022). Despite
+their noticeable morphology and global distribution, Rhizaria were
+largely understudied throughout the 20th century. The bulk of modern
+plankton research has focused hard-bodied crustacea which are
+numerically dominant and easily sampled with nets and preservatives.
+Fragile organisms like Rhizaria, were difficult to adequately study as
+they can be destroyed through standard zooplankton sampling techniques.
+A number of studies in the late 1900s did employ alternative techniques
+to quantify Rhizaria including diaphragm pumps (Michaels, 1988) or
+blue-water SCUBA collections (Bijma et al., 1990; Caron et al., 1995;
+Caron and Be, 1984). However, the bulk of Rhizaria research was
+constrained to sediment traps or paleontological studies of sediment
+(Boltovskoy et al., 1993; Takahashi et al., 1983). Only recently has the
+advent of molecular techniques and in-situ imaging tools ignited a
+renewed focus on Rhizaria in pelagic ecosystems (Caron, 2016).
+
+The wave of new data on Rhizaria has facilitated an improved
+understanding of the significance in ocean ecosystem functions. Firstly,
+taxonomists have been able to greatly refine the understanding of
+evolutionary relationships amongst these diverse protists (Aurahs et
+al., 2009; Biard et al., 2015; Cavalier-Smith et al., 2018; Decelle et
+al., 2013, 2012; rev by Wiley, 2022). DNA metabarcoding studies have
+revealed insights into the distributional patterns Llopis Monferrer et
+al. (2022), ecological relationships (Decelle et al., 2012; Nakamura et
+al., 2023), and contribution to biogeochemical fluxes (Guidi et al.,
+2016; Gutierrez-Rodriguez et al., 2019). Transcriptomic and proteomic
+approaches also have been used to quantify rhizarian contribution to
+community metabolism (Cohen et al., 2023). Yet, despite the excellent
+taxonomic resolution provided by molecular approaches, they do not
+provide a truly quantitative metric for estimating Rhizarian abundance
+or biomass. In-situ imaging tools however, offer the ability to observe
+organisms in the natural state and quantify their abundance (Barth and
+Stone, in review; Ohman, 2019). While there were early applicaitons of
+imaging tools to document Rhizaria (Dennett et al., 2002), Biard et al.
+(2016)'s report from a global imaging dataset highlighted the importance
+of Rhizaria to the total standing stock of marine carbon. Due to their
+large sizes, ability to concentrate smaller particles (ballasting), and
+the unique structure of their mineral skeletons, Rhizaria have the
+potential to massively influence ocean biogeochemical cycling. A number
+of studies have made large advances in estimating the contribution of
+Rhizaria to ocean cycling of carbon (Gutierrez-Rodriguez et al., 2019;
+Ikenoue et al., 2019; Lampitt et al., 2009; Stukel et al., 2018), silica
+(Biard et al., 2018; Llopis Monferrer et al., 2021), and strontium
+(Decelle et al., 2013). Still, Rhizarian ecological roles are not well
+understood (Wiley, 2022). This is a major challenge as it is critical to
+understand the ecological role of plankton to fully incorporate them
+into biological oceanographic models.
+
+The ecological role of Rhizaria in plankton communities is complicated
+due to the fact different taxa can exhibit every different trophic
+modes. As zooplankton, rhizaria are predominately heterotrophic (Wiley,
+2022), yet their feeding modes can be quite varied. Phaeodarians (family
+Cercozoa) are largely thought to be flux-feeders, collecting and feeding
+on sinking particles (Nakamura and Suzuki, 2015; Stukel et al., 2019).
+Alternatively, Retaria can be either exclusively heterotrophic or
+mixotrophic, utilizing photosynthetic algal symbionts (Anderson, 2014;
+Decelle et al., 2015). Mixotrophic foraminifera host a variety of
+endosymbiont partners (Decelle et al., 2015; Lee, 2006), which are
+thought to support early and adult life stages and contribute to total
+primary productivity (Kimoto, 2015). Still, foraminifera are omnivorous,
+possibly even predominately carnivorous with several studies suggesting
+that they can be effective predators (Anderson and Bé, 1976; Gaskell et
+al., 2019), majoritively consuming live copepods (Caron and Be, 1984).
+Radiolaria have several lineages all which have some taxa who are well
+known to host symbionts (Biard, 2022). Amongst radiolarians, arguably
+the most widespread are Collodaria who can be either large solitary
+cells or form massive colonies, up to several meters in length (Swanberg
+and Anderson, 1981). All known Collodaria species host dinoflagellate
+symbionts (Biard, 2022) and can contribute substantially to primary
+productivity, particularly in oligotrophic ocean regions (Caron et al.,
+1995; Dennett et al., 2002). This Collodaria-symbiont association has
+been suggested as a reason for their high abundances throughout the
+photic zone of oligotrophic environments globally (Biard et al., 2017,
+2016). A few Acantharean (Radiolarian order) clades host algal symbionts
+(Biard, 2022; Decelle et al., 2012), notably with two clades forming an
+exclusive relationship with Phaeocystis. However, globally Acantharea
+are less abundant than Collodaria (Wiley, 2022) and contribute less to
+total primary productivity (Michaels et al., 1995). This may be due to
+the fact several clades of Acantharea are cyst-forming and strictly
+heterotrophs (Biard, 2022; Decelle et al., 2013). Furthermore, Mars
+Brisbin et al. (2020) documented apparent predation behavior in
+Acantharea near the surface, suggesting that there may be a large
+reliance on carnivory.
+
+Given the high abundances, yet diverse trophic strategies found among
+Rhizarian taxa, it is reasonable to expect some form of niche
+partitioning. A number of studies do suggest evidence for vertical
+zonation between Rhizaria groups according to various trophic
+strategies. Taxa-specific studies of radiolarians suggest they may be
+restricted to the euphotic zone (Boltovskoy, 2017; Michaels, 1988).
+Although some studies report Acantharea in deeper waters (Decelle et
+al., 2013; Gutiérrez-Rodríguez et al., 2022). Phaeodarians
+alternatively, are generally found in the mesopelagic where
+photosynthesis cannot occur but they can feed on sinking particles
+(Stukel et al., 2018). In an imaging-based study of the whole Rhizaria
+community, Biard and Ohman (2020) noted clear patterns in vertical
+zonation which largely corresponded to different trophic roles. In the
+oligotrophic ocean, Blanco-Bercial et al. (2022) also noted that the
+protist community, including Rhizaria partition along an autotroph and
+mixotroph to heterotroph gradient with increasing depth in the water
+column. Yet, few studies have made direct attempts to relate rhizaria
+abundances to abiotic environmental factors (Biard and Ohman, 2020). In
+part, this is due to the fact few studies have been able to sample
+Rhizaria in the same location over a consistent timeframe (Boltovskoy et
+al., 1993; Gutiérrez-Rodríguez et al., 2022; Hull et al., 2011; Michaels
+et al., 1995; Michaels, 1988). Furthermore, no studies have utilized
+imaging, arguably the best method for quantifying rhizaria, consistently
+throughout the full mesopelagic. Given this lack of information, there
+are many unknowns with respect to Rhizarian ecology, seasonality and
+phenology across different groups.
+
+In this study, we present a comprehensive assessment of large Rhizaria
+measured for multiple months (greater than 1 year) using an in-situ
+imaging approach. With this dataset, we address two critical aims. 1)
+Quantification of large Rhizaria throughout the epipelagic (0-200m) and
+mesopelagic (200-1000m) over the course of an annual cycle. These data
+were collected in the Sargasso Sea, and represents the first study of
+its kind in an oligotrophic system. 2) We aim to test the hypothesis
+that Rhizaria exhibit niche partitioning according to trophic roles.
+This hypothesis makes several predictions, including vertical zonation,
+as seen in prior studies, but also that abiotic variables related to
+trophic strategy will explain abundance patterns. Specifically,
+autotrophic/mixotrophic taxa will correspond to variables related to
+autotrophy (chl-a concentration, primary productivity, high \(O_2\) )
+and other rhizaria will correspond to factors which promote heterotrophy
+(particle concentration, flux, and low \(O_2\)).
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-anderson2014}{}}%
+Anderson, O.R., 2014. Living Together in the Plankton: A Survey of
+Marine Protist Symbioses. Acta Protozoologica 53, 29--38.
+\url{https://doi.org/10.4467/16890027AP.13.0019.1116}
+
+\leavevmode\vadjust pre{\hypertarget{ref-anderson1976}{}}%
+Anderson, O.R., Bé, A.W.H., 1976. A CYTOCHEMICAL FINE STRUCTURE STUDY OF
+PHAGOTROPHY IN A PLANKTONIC FORAMINIFER, {\emph{HASTIGERINA PELAGICA}}
+(d'ORBIGNY). The Biological Bulletin 151, 437--449.
+\url{https://doi.org/10.2307/1540498}
+
+\leavevmode\vadjust pre{\hypertarget{ref-aurahs2009}{}}%
+Aurahs, R., Grimm, G.W., Hemleben, V., Hemleben, C., Kucera, M., 2009.
+Geographical distribution of cryptic genetic types in the planktonic
+foraminifer Globigerinoides ruber. Molecular Ecology 18, 1692--1706.
+\url{https://doi.org/10.1111/j.1365-294X.2009.04136.x}
+
+\leavevmode\vadjust pre{\hypertarget{ref-barth-inrev}{}}%
+Barth, A., Stone, J., in review. Understanding the picture: The promis
+and challenges of in-situ imagery data in the study of plankton ecology.
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2022b}{}}%
+Biard, T., 2022. Diversity and ecology of Radiolaria in modern oceans.
+Environmental Microbiology 24, 2179--2200.
+\url{https://doi.org/10.1111/1462-2920.16004}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2017}{}}%
+Biard, T., Bigeard, E., Audic, S., Poulain, J., Gutierrez-Rodriguez, A.,
+Pesant, S., Stemmann, L., Not, F., 2017. Biogeography and diversity of
+Collodaria (Radiolaria) in the global ocean. The ISME Journal 11,
+1331--1344. \url{https://doi.org/10.1038/ismej.2017.12}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2018}{}}%
+Biard, T., Krause, J.W., Stukel, M.R., Ohman, M.D., 2018. The
+Significance of Giant Phaeodarians (Rhizaria) to Biogenic Silica Export
+in the California Current Ecosystem. Global Biogeochemical Cycles 32,
+987--1004. \url{https://doi.org/10.1029/2018GB005877}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2020}{}}%
+Biard, T., Ohman, M.D., 2020. Vertical niche definition of test-bearing
+protists (Rhizaria) into the twilight zone revealed by in situ imaging.
+Limnology and Oceanography 65, 2583--2602.
+\url{https://doi.org/10.1002/lno.11472}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2015}{}}%
+Biard, T., Pillet, L., Decelle, J., Poirier, C., Suzuki, N., Not, F.,
+2015. Towards an integrative morpho-molecular classification of the
+collodaria (polycystinea, radiolaria). Protist 166, 374--388.
+\url{https://doi.org/10.1016/j.protis.2015.05.002}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2016}{}}%
+Biard, T., Stemmann, L., Picheral, M., Mayot, N., Vandromme, P., Hauss,
+H., Gorsky, G., Guidi, L., Kiko, R., Not, F., 2016. In situ imaging
+reveals the biomass of giant protists in the global ocean. Nature 532,
+504--507. \url{https://doi.org/10.1038/nature17652}
+
+\leavevmode\vadjust pre{\hypertarget{ref-bijma1990}{}}%
+Bijma, J., Erez, J., Hemleben, C., 1990.
+\href{https://epic.awi.de/id/eprint/6096/1/Bij1990a.pdf}{Lunar and
+semi-luan reproductive cycles in some spinose planktonic foraminifers}.
+Journal of Foraminiferal Research 20, 117--127.
+
+\leavevmode\vadjust pre{\hypertarget{ref-blanco-bercial2022}{}}%
+Blanco-Bercial, L., Parsons, R., Bolaños, L.M., Johnson, R., Giovannoni,
+S.J., Curry, R., 2022.
+\href{https://www.frontiersin.org/articles/10.3389/fmars.2022.897140}{The
+protist community traces seasonality and mesoscale hydrographic features
+in the oligotrophic sargasso sea}. Frontiers in Marine Science 9.
+
+\leavevmode\vadjust pre{\hypertarget{ref-boltovskoy2017}{}}%
+Boltovskoy, D., 2017. Vertical distribution patterns of radiolaria
+polycystina (protista) in the world ocean: Living ranges, isothermal
+submersion and settling shells. Journal of Plankton Research 39,
+330--349. \url{https://doi.org/10.1093/plankt/fbx003}
+
+\leavevmode\vadjust pre{\hypertarget{ref-boltovskoy1993}{}}%
+Boltovskoy, D., Alder, V.A., Abelmann, A., 1993. Annual flux of
+radiolaria and other shelled plankters in the eastern equatorial
+atlantic at 853 m: seasonal variations and polycystine species-specific
+responses. Deep Sea Research Part I: Oceanographic Research Papers 40,
+1863--1895. \url{https://doi.org/10.1016/0967-0637(93)90036-3}
+
+\leavevmode\vadjust pre{\hypertarget{ref-caron2016}{}}%
+Caron, D.A., 2016.
+\href{https://www.nature.com/articles/nature17892}{The rise of rhizaria
+\textbar{} nature}. Nature 532, 444--445.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caron1984}{}}%
+Caron, D.A., Be, A.W.H., 1984. PREDICTED AND OBSERVED FEEDING RATES OF
+THE SPINOSE PLANKTONIC FORAMINIFER. BULLETIN OF MARINE SCIENCE 35.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caron1995}{}}%
+Caron, D.A., Michaels, A.F., Swanberg, N.R., Howse, F.A., 1995. Primary
+productivity by symbiont-bearing planktonic sarcodines (acantharia,
+radiolaria, foraminifera) in surface waters near bermuda. Journal of
+Plankton Research 17, 103--129.
+\url{https://doi.org/10.1093/plankt/17.1.103}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cavalier-smith2018}{}}%
+Cavalier-Smith, T., Chao, E.E., Lewis, R., 2018. Multigene phylogeny and
+cell evolution of chromist infrakingdom Rhizaria: contrasting cell
+organisation~of sister~phyla Cercozoa and Retaria. Protoplasma 255,
+1517--1574. \url{https://doi.org/10.1007/s00709-018-1241-1}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cohen2023}{}}%
+Cohen, N.R., Krinos, A.I., Kell, R.M., Chmiel, R.J., Moran, D.M.,
+McIlvin, M.R., Lopez, P.Z., Barth, A., Stone, J., Alanis, B.A., Chan,
+E.W., Breier, J.A., Jakuba, M.V., Johnson, R., Alexander, H., Saito,
+M.A., 2023. Microeukaryote metabolism across the western North Atlantic
+Ocean revealed through autonomous underwater profiling.
+\url{https://doi.org/10.1101/2023.11.20.567900}
+
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2015}{}}%
+Decelle, J., Colin, S., Foster, R.A., 2015. Photosymbiosis in Marine
+Planktonic Protists, in: Ohtsuka, S., Suzaki, T., Horiguchi, T., Suzuki,
+N., Not, F. (Eds.),. Springer Japan, Tokyo, pp. 465--500.
+\url{https://doi.org/10.1007/978-4-431-55130-0_19}
+
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2013}{}}%
+Decelle, J., Martin, P., Paborstava, K., Pond, D.W., Tarling, G., Mahé,
+F., De Vargas, C., Lampitt, R., Not, F., 2013. Diversity, Ecology and
+Biogeochemistry of Cyst-Forming Acantharia (Radiolaria) in the Oceans.
+PLoS ONE 8, e53598. \url{https://doi.org/10.1371/journal.pone.0053598}
+
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2012}{}}%
+Decelle, J., Siano, R., Probert, I., Poirier, C., Not, F., 2012.
+Multiple microalgal partners in symbiosis with the acantharian
+Acanthochiasma sp. (Radiolaria). Symbiosis 58, 233--244.
+\url{https://doi.org/10.1007/s13199-012-0195-x}
+
+\leavevmode\vadjust pre{\hypertarget{ref-dennett2002}{}}%
+Dennett, M.R., Caron, D.A., Michaels, A.F., Gallager, S.M., Davis, C.S.,
+2002. Video plankton recorder reveals high abundances of colonial
+radiolaria in surface waters of the central north pacific. Journal of
+Plankton Research 24, 797--805.
+\url{https://doi.org/10.1093/plankt/24.8.797}
+
+\leavevmode\vadjust pre{\hypertarget{ref-gaskell2019}{}}%
+Gaskell, D.E., Ohman, M.D., Hull, P.M., 2019. Zooglider-based
+measurements of planktonic foraminifera in the california current
+system. Journal of Foraminiferal Research 49, 390--404.
+\url{https://doi.org/10.2113/gsjfr.49.4.390}
+
+\leavevmode\vadjust pre{\hypertarget{ref-guidi2016}{}}%
+Guidi, L., Chaffron, S., Bittner, L., Eveillard, D., Larhlimi, A., Roux,
+S., Darzi, Y., Audic, S., Berline, L., Brum, J.R., Coelho, L.P.,
+Espinoza, J.C.I., Malviya, S., Sunagawa, S., Dimier, C., Kandels-Lewis,
+S., Picheral, M., Poulain, J., Searson, S., Stemmann, L., Not, F.,
+Hingamp, P., Speich, S., Follows, M., Karp-Boss, L., Boss, E., Ogata,
+H., Pesant, S., Weissenbach, J., Wincker, P., Acinas, S.G., Bork, P.,
+Vargas, C. de, Iudicone, D., Sullivan, M.B., Raes, J., Karsenti, E.,
+Bowler, C., Gorsky, G., 2016. Plankton networks driving carbon export in
+the oligotrophic ocean. Nature 532, 465--470.
+\url{https://doi.org/10.1038/nature16942}
+
+\leavevmode\vadjust pre{\hypertarget{ref-gutierrez-rodriguez2019}{}}%
+Gutierrez-Rodriguez, A., Stukel, M.R., Lopes dos Santos, A., Biard, T.,
+Scharek, R., Vaulot, D., Landry, M.R., Not, F., 2019. High contribution
+of Rhizaria (Radiolaria) to vertical export in the California Current
+Ecosystem revealed by DNA metabarcoding. The ISME Journal 13, 964--976.
+\url{https://doi.org/10.1038/s41396-018-0322-7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-gutiuxe9rrez-rodruxedguez2022}{}}%
+Gutiérrez-Rodríguez, A., Lopes dos Santos, A., Safi, K., Probert, I.,
+Not, F., Fernández, D., Gourvil, P., Bilewitch, J., Hulston, D.,
+Pinkerton, M., Nodder, S.D., 2022. Planktonic protist diversity across
+contrasting subtropical and subantarctic waters of the southwest
+pacific. Progress in Oceanography 206, 102809.
+\url{https://doi.org/10.1016/j.pocean.2022.102809}
+
+\leavevmode\vadjust pre{\hypertarget{ref-haekel1887}{}}%
+Haekel, E., 1887.
+\href{https://www.gutenberg.org/cache/epub/44527/pg44527-images.html}{Report
+on the radiolaria collected by h.m.s. Challenger during the years
+1873-1876, plates, by ernst haeckel}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hull2011}{}}%
+Hull, P.M., Osborn, K.J., Norris, R.D., Robison, B.H., 2011. Seasonality
+and depth distribution of a mesopelagic foraminifer, Hastigerinella
+digitata, in Monterey Bay, California. Limnology and Oceanography 56,
+562--576. \url{https://doi.org/10.4319/lo.2011.56.2.0562}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ikenoue2019}{}}%
+Ikenoue, T., Kimoto, K., Okazaki, Y., Sato, M., Honda, M.C., Takahashi,
+K., Harada, N., Fujiki, T., 2019. Phaeodaria: An Important Carrier of
+Particulate Organic Carbon in the Mesopelagic Twilight Zone of the North
+Pacific Ocean. Global Biogeochemical Cycles 33, 1146--1160.
+\url{https://doi.org/10.1029/2019GB006258}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kimoto2015}{}}%
+Kimoto, K., 2015. Planktic foraminifera. pp. 129--178.
+\url{https://doi.org/10.1007/978-4-431-55130-0_7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-lampitt2009}{}}%
+Lampitt, R.S., Salter, I., Johns, D., 2009. Radiolaria: Major exporters
+of organic carbon to the deep ocean. Global Biogeochemical Cycles 23.
+\url{https://doi.org/10.1029/2008GB003221}
+
+\leavevmode\vadjust pre{\hypertarget{ref-lee2006}{}}%
+Lee, J.J., 2006.
+\href{https://dalspace.library.dal.ca/bitstream/handle/10222/78255/VOLUME\%2042-NUMBER\%202-2006-PAGE\%2063.pdf?sequence=1}{Algal
+symbiosis in larger foraminifera}. Symbiosis 42, 63--75.
+
+\leavevmode\vadjust pre{\hypertarget{ref-llopismonferrer2022}{}}%
+Llopis Monferrer, N., Biard, T., Sandin, M.M., Lombard, F., Picheral,
+M., Elineau, A., Guidi, L., Leynaert, A., Tréguer, P.J., Not, F., 2022.
+\href{https://www.frontiersin.org/articles/10.3389/fmars.2022.895995}{Siliceous
+rhizaria abundances and diversity in the mediterranean sea assessed by
+combined imaging and metabarcoding approaches}. Frontiers in Marine
+Science 9.
+
+\leavevmode\vadjust pre{\hypertarget{ref-llopismonferrer2021}{}}%
+Llopis Monferrer, N., Leynaert, A., Tréguer, P., Gutiérrez-Rodríguez,
+A., Moriceau, B., Gallinari, M., Latasa, M., L'Helguen, S., Maguer,
+J.-F., Safi, K., Pinkerton, M.H., Not, F., 2021. Role of small Rhizaria
+and diatoms in the pelagic silica production of the Southern Ocean.
+Limnology and Oceanography 66, 2187--2202.
+\url{https://doi.org/10.1002/lno.11743}
+
+\leavevmode\vadjust pre{\hypertarget{ref-marsbrisbin2020}{}}%
+Mars Brisbin, M., Brunner, O.D., Grossmann, M.M., Mitarai, S., 2020.
+Paired high-throughput, in situ imaging and high-throughput sequencing
+illuminate acantharian abundance and vertical distribution. Limnology
+and Oceanography 65, 2953--2965. \url{https://doi.org/10.1002/lno.11567}
+
+\leavevmode\vadjust pre{\hypertarget{ref-michaels1988}{}}%
+Michaels, A.F., 1988. Vertical distribution and abundance of Acantharia
+and their symbionts. Marine Biology 97, 559--569.
+\url{https://doi.org/10.1007/BF00391052}
+
+\leavevmode\vadjust pre{\hypertarget{ref-michaels1995}{}}%
+Michaels, A.F., Caron, D.A., Swanberg, N.R., Howse, F.A., Michaels,
+C.M., 1995. Planktonic sarcodines (Acantharia, Radiolaria, Foraminifera)
+in surface waters near Bermuda: abundance, biomass and vertical flux.
+Journal of Plankton Research 17, 131--163.
+\url{https://doi.org/10.1093/plankt/17.1.131}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nakamura2023}{}}%
+Nakamura, Y., Itagaki, H., Tuji, A., Shimode, S., Yamaguchi, A., Hidaka,
+K., Ogiso-Tanaka, E., 2023. DNA metabarcoding focused on
+difficult-to-culture protists: An effective approach to clarify
+biological interactions. Environmental Microbiology 25, 3630--3638.
+\url{https://doi.org/10.1111/1462-2920.16524}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nakamura2015}{}}%
+Nakamura, Y., Suzuki, N., 2015.
+\href{https://link.springer.com/chapter/10.1007/978-4-431-55130-0_9}{Phaeodaria:
+Diverse marine cercozoans of world-wide distribution}. Springer, pp.
+223--249.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ohman2019a}{}}%
+Ohman, M.D., 2019. A sea of tentacles: optically discernible traits
+resolved from planktonic organisms in situ. ICES Journal of Marine
+Science 76, 1959--1972. \url{https://doi.org/10.1093/icesjms/fsz184}
+
+\leavevmode\vadjust pre{\hypertarget{ref-sogawa2022}{}}%
+Sogawa, S., Nakamura, Y., Nagai, S., Nishi, N., Hidaka, K., Shimizu, Y.,
+Setou, T., 2022. DNA metabarcoding reveals vertical variation and hidden
+diversity of alveolata and rhizaria communities in the western north
+pacific. Deep Sea Research Part I: Oceanographic Research Papers 183,
+103765. \url{https://doi.org/10.1016/j.dsr.2022.103765}
+
+\leavevmode\vadjust pre{\hypertarget{ref-stukel2018}{}}%
+Stukel, M.R., Biard, T., Krause, J., Ohman, M.D., 2018. Large Phaeodaria
+in the twilight zone: Their role in the carbon cycle. Limnology and
+Oceanography 63, 2579--2594. \url{https://doi.org/10.1002/lno.10961}
+
+\leavevmode\vadjust pre{\hypertarget{ref-stukel2019}{}}%
+Stukel, M.R., Ohman, M.D., Kelly, T.B., Biard, T., 2019.
+\href{https://www.frontiersin.org/articles/10.3389/fmars.2019.00397}{The
+roles of suspension-feeding and flux-feeding zooplankton as gatekeepers
+of particle flux into the mesopelagic ocean in the northeast pacific}.
+Frontiers in Marine Science 6.
+
+\leavevmode\vadjust pre{\hypertarget{ref-suzuki2015}{}}%
+Suzuki, N., Not, F., 2015.
+\href{https://link.springer.com/chapter/10.1007/978-4-431-55130-0_8}{Biology
+and ecology of radiolaria}. Springer, pp. 179--222.
+
+\leavevmode\vadjust pre{\hypertarget{ref-swanberg1981}{}}%
+Swanberg, N.R., Anderson, O.R., 1981. Collozoum caudatum sp. nov.: A
+giant colonial radiolarian from equatorial and Gulf Stream waters. Deep
+Sea Research Part A. Oceanographic Research Papers 28, 1033--1047.
+\url{https://doi.org/10.1016/0198-0149(81)90016-9}
+
+\leavevmode\vadjust pre{\hypertarget{ref-takahashi1983}{}}%
+Takahashi, K., Hurd, D.C., Honjo, S., 1983. Phaeodarian skeletons: Their
+role in silica transport to the deep sea. Science 222, 616--618.
+\url{https://doi.org/10.1126/science.222.4624.616}
+
+\leavevmode\vadjust pre{\hypertarget{ref-biard2022}{}}%
+Wiley, 2022. Rhizaria. Wiley, pp. 1--11.
+\url{https://doi.org/10.1002/9780470015902.a0029469}
+
+\end{CSLReferences}
+
+
+
+\end{document}
