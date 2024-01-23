@@ -101,7 +101,7 @@ all_lomeso <- ggplot(avg_intg$all$lomeso) +
   theme_bw()
 
 ggsave('./output/02_seasonality/all-lomeso.pdf',
-       all_upmeso,
+       all_lomeso,
        width = 190, height = 71.25, dpi = 600, units = 'mm')
 
 # |- For Taxa-Specific Rhizaria ---------------------------------------
@@ -175,29 +175,35 @@ epi_contrib <- ggplot(avg_intg$taxa$epi) +
                fill = taxa),
            position = 'stack', stat = 'identity') +
   scale_fill_manual(values = taxa_colors) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_blank())
 
 upmeso_contrib <- ggplot(avg_intg$taxa$upmeso) +
   geom_bar(aes(x = cruise_id, y = mean_intg,
                fill = taxa),
            position = 'stack', stat = 'identity') +
   scale_fill_manual(values = taxa_colors) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_blank())
 
 lomeso_contrib <- ggplot(avg_intg$taxa$lomeso) +
   geom_bar(aes(x = cruise_id, y = mean_intg,
                fill = taxa),
            position = 'stack', stat = 'identity') +
   scale_fill_manual(values = taxa_colors) +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_blank())
 
 
 ggsave('./output/02_seasonality/epi-contrib.pdf',
        epi_contrib,
-       width = 190, dpi = 500, units = 'mm')
+       width = 75, height = 26, dpi = 500, units = 'mm')
 ggsave('./output/02_seasonality/upmeso-contrib.pdf',
-       epi_contrib,
-       width = 190, dpi = 500, units = 'mm')
+       upmeso_contrib,
+       width = 75, height = 26, dpi = 500, units = 'mm')
 ggsave('./output/02_seasonality/lomeso-contrib.pdf',
-       epi_contrib,
-       width = 190, dpi = 500, units = 'mm')
+       lomeso_contrib,
+       width = 75, height = 26, dpi = 500, units = 'mm')

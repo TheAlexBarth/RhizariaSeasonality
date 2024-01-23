@@ -150,9 +150,9 @@ ctd_plotter <- function(value, color_option) {
   ctd_plot_late <- ggplot()+
     geom_tile(data = late_interp,
               aes(x = Date, y = Depth, fill = late_interp[[value]])) +
-    geom_point(data = late_df,
+    geom_point(data = late_df[seq(1,nrow(late_df),10),],
                aes(x = as.POSIXct(Date), y = Depth),
-               size = 0.005, color = 'lightgrey', alpha = 0.25) +
+               size = 0.005, color = 'lightgrey', alpha = 0.75) +
     scale_y_reverse(expand = c(0,0)) +
     scale_fill_viridis_c(option = color_option) +
     theme_bw() +
@@ -167,13 +167,15 @@ ctd_plotter <- function(value, color_option) {
   ctd_plot_early <- ggplot()+
     geom_tile(data = early_interp,
               aes(x = Date, y = Depth, fill = early_interp[[value]])) +
-    geom_point(data = early_df,
+    geom_point(data = early_df[seq(1,nrow(early_df),10),],
                aes(x = as.POSIXct(Date), y = Depth),
-               size = 0.005, color = 'lightgrey', alpha = 0.25) +
+               size = 0.005, color = 'lightgrey', alpha = 0.75) +
     scale_y_reverse(expand = c(0,0)) +
     scale_fill_viridis_c(option = color_option) +
     theme_bw() +
-    theme(legend.position = 'none')
+    theme(legend.position = 'none',
+          axis.title = element_blank(),
+          axis.text = element_text(size = 2))
   
   early_title <- paste0('./output/01_environmental/', value, '-early.pdf')
   late_title <- paste0('./output/01_environmental/', value, '-late.pdf')
@@ -432,4 +434,4 @@ prod_plot <- ggplot(prod_intg) +
 
 ggsave('./output/01_environmental/prod.pdf',
        prod_plot,
-       width = 140, dpi = 500, units = 'mm')
+       width = 140, dpi = 500, units =)

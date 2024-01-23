@@ -181,8 +181,7 @@ full_epi_Aulacanthidae |>  summary()
 
 # reduced model
 red_epi_Aulacanthidae <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) + s(RFU, k = 6) +
-    s(Bact_enumb, k = 6) + 
+  intg ~  s(sal, k = 6) + 
     s(avg_fbn_200, k = 6) +
     s(pp, k = 6) + s(par_conc, k = 6),
   data = taxa_rhiz$epi$Aulacanthidae, method = 'ML', select = T

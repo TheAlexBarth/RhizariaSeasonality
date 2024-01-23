@@ -12,7 +12,8 @@ rm(list = ls())
 make_gam_plot <- function(var, data) {
   plot <- ggplot() +
     geom_point(aes(x = data[[var]]$obs[[var]], y = data[[var]]$obs$intg,
-                   color = data[[var]]$obs$month)) +
+                   color = data[[var]]$obs$month),
+               size = 5) +
     geom_line(aes(x = data[[var]]$pred[[var]],
                   y = data[[var]]$pred$fit)) +
     geom_ribbon(aes(x = data[[var]]$pred[[var]],

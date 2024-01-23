@@ -83,7 +83,7 @@ calc_nbss <- function(df, metric = 'esd') {
 rhiz_nbss <- rhiz_sizes |>
   calc_nbss()
 
-plot(n_s ~ mp_size_class, data = rhiz_nbss)
+plot(log(n_s,2) ~ mp_size_class, data = rhiz_nbss)
 
 
 
@@ -134,7 +134,7 @@ non_detect(0.1, meso_avg)
 
 # average volumes
 epi_avg * (200/25)
-meso_avg * ((1000-200)/25)
+meso_avg * ((300)/25)
 
 non_detect(0.1, epi_avg * (200/25))
 non_detect(0.1, meso_avg * ((1000-200) /25))
