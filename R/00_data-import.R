@@ -141,27 +141,6 @@ coords <- zoops$meta |>
   select(profileid, latitude, longitude, sampledate,
          ctd_origfilename, tod) |> 
   left_join(ctd_coords, by = "ctd_origfilename")
-# 
-# # |- All cast map ---------------------
-# library("rnaturalearth")
-# library("rnaturalearthdata")
-# 
-# world <- ne_countries(scale = "medium", returnclass = "sf")
-# 
-# all_cast_map <- ggplot()+
-#   geom_sf(data = world, fill = 'green')+
-#   geom_point(aes(x = coords$lon, coords$lat,
-#                  shape = coords$tod, col = coords$tod))+
-#   coord_sf(xlim = c(-65,-62), ylim = c(30,33))+
-#   geom_segment(aes(x = -65.1, xend = -62.9,
-#                    y = 31.8, yend = 32.75),
-#                size = 2, col = 'red')+
-#   theme_bw()+
-#   labs(x = "",y = "", shape = "")+
-#   scale_color_manual(values = c('beige','black'))+
-#   theme(panel.background = element_rect(fill = 'cornflowerblue'),
-#         axis.text.x = element_text(angle = 45, hjust = c(1,1)),
-#         legend.position = 'bottom')
 
 # |- Removing casts outside range ------------------------
 drop_casts <- which(

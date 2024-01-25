@@ -28,15 +28,15 @@ author:
       address: 700 Sumter St 401, Columbia, SC 29208
 format:
   pdf:
-    # template-partials:
-    #   - "before-body.tex"
-    #   - "_titlepage.tex"
-    # include-in-header:
-    #   - "in-header.tex"
+    template-partials:
+      - "before-body.tex"
+      - "_titlepage.tex"
+    include-in-header:
+      - "in-header.tex"
     number-sections: false
     linestretch: 2
     tbl-cap-location: top
-    # filters: [wordcount.lua]
+    filters: [wordcount.lua]
     keep-tex: true
 ---
 
@@ -46,4 +46,19 @@ format:
 #| child: ./01_intro.qmd
 ```
 
+```{r}
+#| child: ./02_methods.qmd
+```
 
+```{r}
+#| child: ./03_results.qmd
+```
+
+```{r}
+#| child: ./04_discussion.qmd
+```
+
+
+# References:
+:::{#refs}
+:::
