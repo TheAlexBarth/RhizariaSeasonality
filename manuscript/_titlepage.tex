@@ -13,7 +13,7 @@
 {\large\bfseries\nohyphens{$title$}}\\[2\baselineskip] 
 $if(subtitle)${\large\textit{$subtitle$}}\\[4\baselineskip]$endif$
   
-  % Authors	
+% Authors	
 % This hairy bit of code is just to get "and" between the last 2
 % authors. See below if you don't need that
 $if(by-author/allbutlast)$
@@ -82,12 +82,20 @@ $endfor$
 
 $for(by-author)$
   $if(by-author.email)$
-  * \textit{Correspondence:}~$by-author.name.literal$~$by-author.email$
+  * \textit{correspondence:}~$by-author.name.literal$~$by-author.email$
   $endif$
   $endfor$
   
   %use \vfill instead to get the space to fill flexibly	
 %\vspace{0.25\textheight} % Whitespace between the title block and the publisher
+
+%%%%%%%%% Abstract
+$if(abstract)$
+\begin{abstract}
+$abstract$    
+\end{abstract}
+$endif$
+
 
 \vfill
 

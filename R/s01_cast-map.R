@@ -1,6 +1,9 @@
 ###
 # Cast Map
 ###
+library(EcotaxaTools)
+library(ggplot2)
+library(dplyr)
 
 ctd_data <- readRDS('./data/00_ctd-data.rds')
 zoops <- readRDS("./data/00_zoop-uvp.rds")
@@ -33,5 +36,6 @@ all_cast_map <- ggplot() +
         axis.text.x = element_text(angle = 45, hjust = c(1,1)),
         legend.position = 'bottom')
 
+ggsave('./output/Supplement/s01_cast-map.pdf', all_cast_map)
 
 windows()
