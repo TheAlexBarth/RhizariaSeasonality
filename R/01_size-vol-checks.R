@@ -139,6 +139,29 @@ meso_avg * ((300)/25)
 non_detect(0.1, epi_avg * (200/25))
 non_detect(0.1, meso_avg * ((1000-200) /25))
 
+###
+# Table for supplement of sampling volumes #######################
+###
+
+meta_basics <- data.frame(
+  profileid = uvp_data$meta$profileid,
+  cruise_id = uvp_data$meta$cruise_id,
+  year_mo = as.Date(
+    paste(year(uvp_data$meta$sampledate),month(uvp_data$meta$sampledate), '01', sep = '-'),
+    format = '%Y-%m-%d'
+  )
+)
+meta_basics$month = month(meta_basics$year_mo, label = T)
+
+vol_by_cast |> 
+  left_join(meta_basics, by = 'profileid') |> 
+  group_by(zone, month, cruise_id, year(year_mo)) |> 
+  summarize(n_casts = length(unique(profileid)),
+            mean_vol = mean(vol_sampled),
+            sd_vol = sd(vol_sampled),
+            tot_vol = sum(vol_sampled)) |> 
+  write.csv('./output/Supplement/sT01_vol-by-cast.csv', row.names = F)
+
 
 ###
 # Calculate Binned Abundances #############
