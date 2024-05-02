@@ -36,6 +36,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage[left=1in,textwidth=6.5in,right=1in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
@@ -196,13 +197,14 @@ clear temporal and vertical variability.}}\\[2\baselineskip]
 % Authors	
 % This hairy bit of code is just to get "and" between the last 2
 % authors. See below if you don't need that
- {\large{Alex Barth*}}{\textsuperscript{1}}%
+ {\large{Alex
+Barth*}}{\textsuperscript{1}}\textsuperscript{,}{\textsuperscript{2}}%
 %
 , 
- {\large{Leocadio Blanco-Berical}}{\textsuperscript{2}}%
+ {\large{Leocadio Blanco-Berical}}{\textsuperscript{3}}%
 %
 , 
- {\large{Rod Johnson}}{\textsuperscript{2}}%
+ {\large{Rod Johnson}}{\textsuperscript{3}}%
 %
 %
 { and \large{Joshua Stone}}%
@@ -230,7 +232,18 @@ clear temporal and vertical variability.}}\\[2\baselineskip]
 %
 \par\hangindent=1em\hangafter=1%
 %
-{2}.~{Arizone State University}%
+{2}.~{University of Texas at Austin}%
+%
+, %
+{Marine Science Institute}%
+%
+%
+, %
+{750 Channel Drive, Port Aransas, Texas, USA}%
+%
+\par\hangindent=1em\hangafter=1%
+%
+{3}.~{Arizone State University}%
 %
 , %
 {School of Ocean Futures}%
@@ -252,30 +265,30 @@ GE 01}%
 %%%%%%%%% Abstract
 \begin{abstract}
 Recently studies have shown that Rhizaria, a super-group of marine
-protists have a large role in pelagic ecosystems. They are unique in
+protists, have a large role in pelagic ecosystems. They are unique in
 that they construct mineral tests out of silica, calcium carbonate, or
 strontium sulfate. As a consequence, Rhizaria can have large impacts on
 the ocean's cycling of carbon and other elements. However, less is known
-about Rhizarian ecology or their role in the pelagic food-web. Some
-taxa, like certain Radiolarians are mixotrophic, hosting algal
-symbionts. While other taxa are flux-feeders or even predatory
-carnivores. Some prior research has suggested that Rhizaria will
-partition vertically in the water column, likely due to different
-trophic strategies. However, very few studies have investigated their
-populations over extended periods of time. In this study, we present
-data investigating Rhizarian abundance and vertical distribution from
-over a year of monthly cruises into the Sargasso Sea. This study
-represents the first quantification of Rhizaria throughout the
-mesopelagic zone in an oligotrophic system for an extended period of
-time. We use this data to investigate the hypothesis that Rhizaria
-taxonomic groups will partition due to trophic mode. We also investigate
-how their abundance varies in accordance with a variety of environmental
-parameters. Rhizaria abundance was quantified using an Underwater Vision
-Profiler (UVP5), an in-situ imaging device. Ultimately, we show that
-different Rhizaria taxa will have unique vertical distribution patterns.
-Models relating their abundance to environmental parameters have mixed
-results, yet particle concentration is a common predictive variable,
-supporting the importance of heterotrophy amongst many taxa.    
+about Rhizaria ecology or their role in the pelagic food-web. Some taxa,
+like certain Radiolarians, are mixotrophic, hosting algal symbionts.
+While other taxa are flux-feeders or even predatory carnivores. Some
+prior research has suggested that Rhizaria will partition vertically in
+the water column, likely due to different trophic strategies. However,
+very few studies have investigated their populations over extended
+periods of time. In this study, we present data investigating Rhizaria
+abundance and vertical distribution from over a year of monthly cruises
+in the Sargasso Sea. This study represents the first quantification of
+Rhizaria throughout the mesopelagic zone in an oligotrophic system for
+an extended period of time. We use this data to investigate the
+hypothesis that Rhizaria taxonomic groups will partition due to trophic
+mode. We also investigate how their abundance varies in accordance with
+environmental parameters. Rhizaria abundance was quantified using an
+Underwater Vision Profiler (UVP5), an in-situ imaging device.
+Ultimately, we show that different Rhizaria taxa will have unique
+vertical distribution patterns. Models relating their abundance to
+environmental parameters have mixed results, yet particle concentration
+is a common predictive variable, supporting the importance of
+heterotrophy amongst many taxa.    
 \end{abstract}
 
 
@@ -288,7 +301,7 @@ supporting the importance of heterotrophy amongst many taxa.
 \vspace{0.1\textheight} 
 
 \end{minipage}  \end{titlepage}
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, frame hidden, enhanced, sharp corners, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, interior hidden, sharp corners, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
 
 \setstretch{2}
 \hypertarget{introduction}{%
@@ -311,7 +324,7 @@ their noticeable morphology and global distribution, Rhizaria were
 largely understudied throughout the 20th century. The bulk of modern
 plankton research has focused on hard-bodied crustacea which are
 numerically dominant and easily sampled with nets and preservatives.
-Fragile organisms like Rhizaria, were difficult to adequately study as
+Fragile organisms like Rhizaria were difficult to adequately study as
 they can be destroyed through standard zooplankton sampling techniques
 and preserve poorly. A number of studies in the late 1900s did employ
 alternative techniques to quantify Rhizaria including diaphragm pumps
@@ -329,78 +342,81 @@ taxonomists have been able to greatly refine the understanding of
 evolutionary relationships amongst these diverse protists (Aurahs et
 al., 2009; Biard et al., 2015; Cavalier-Smith et al., 2018; Decelle et
 al., 2013, 2012; rev by Biard, 2022a). DNA metabarcoding studies have
-revealed insights into the distributional patterns Llopis Monferrer et
-al. (2022), ecological relationships (Decelle et al., 2012; Nakamura et
-al., 2023), and contribution to biogeochemical fluxes (Guidi et al.,
-2016; Gutierrez-Rodriguez et al., 2019). Transcriptomic and proteomic
-approaches also have been used to quantify rhizarian contribution to
+revealed insights into the distributional patterns (Biard et al., 2017;
+Blanco-Bercial et al., 2022; Decelle et al., 2013; Llopis Monferrer et
+al., 2022; Mars Brisbin et al., 2020; Sogawa et al., 2022), ecological
+relationships (Decelle et al., 2012; Nakamura et al., 2023), and
+contribution to biogeochemical fluxes (Guidi et al., 2016;
+Gutierrez-Rodriguez et al., 2019). Transcriptomic and proteomic
+approaches also have been used to quantify Rhizaria contribution to
 community metabolism (Cohen et al., 2023). Yet, despite the excellent
 taxonomic resolution provided by molecular approaches, they do not
-provide a truly quantitative metric for estimating Rhizarian abundance
-or biomass. In-situ imaging tools however, offer the ability to observe
+provide a truly quantitative metric for estimating Rhizaria abundance or
+biomass. In-situ imaging tools however, offer the ability to observe
 organisms in the natural state and quantify their abundance (Barth and
-Stone, in review; Ohman, 2019). While there were early applicaitons of
-imaging tools to document Rhizaria (Dennett et al., 2002), Biard et al.
-(2016)'s report from a global imaging dataset highlighted the importance
-of Rhizaria to the total standing stock of marine carbon. Due to their
-large sizes, ability to concentrate smaller particles and the unique
-structure of their mineral skeletons, Rhizaria have the potential to
-massively influence ocean biogeochemical cycling. A number of studies
-have made large advances in estimating the contribution of Rhizaria to
-ocean cycling of carbon (Gutierrez-Rodriguez et al., 2019; Ikenoue et
-al., 2019; Lampitt et al., 2009; Stukel et al., 2018), silica (Biard et
-al., 2018; Llopis Monferrer et al., 2021), and strontium (Decelle et
-al., 2013). Still, Rhizarian ecological roles are not well understood
-(Biard, 2022a). This is a major challenge as it is critical to
-understand the ecological role of plankton to fully incorporate them
-into biological oceanographic models.
+Stone, In press; Ohman, 2019). Biard et al. (2016) utilized in-situ
+imaging at a global scale to suggest Rhizaria were substantial
+contributors to the ocean carbon standing stock. While more recent
+calculations suggest lower carbon contribution (Laget et al., 2024),
+Rhizaria nonetheless have substantial influences on biogeochemical
+cycling. Due to their large sizes, ability to concentrate smaller
+particles and the unique structure of their mineral skeletons, Rhizaria
+have the potential to massively influence ocean biogeochemical cycling.
+A number of studies have made large advances in estimating the
+contribution of Rhizaria to ocean cycling of carbon (Gutierrez-Rodriguez
+et al., 2019; Ikenoue et al., 2019; Lampitt et al., 2009; Stukel et al.,
+2018), silica (Biard et al., 2018; Llopis Monferrer et al., 2021), and
+strontium (Decelle et al., 2013). Still, Rhizaria ecological roles are
+not well understood (Biard, 2022a). This is a major challenge as it is
+critical to understand the ecological role of plankton to fully
+incorporate them into biological oceanographic models.
 
 The ecological role of Rhizaria in plankton communities is complicated
 due to the fact different taxa can exhibit every different trophic
 modes. As zooplankton, rhizaria are predominately heterotrophic (Biard,
-2022a), yet their feeding modes can be quite varied. Phaeodarians
-(family Cercozoa) are largely thought to be flux-feeders, collecting and
-feeding on sinking particles (Nakamura and Suzuki, 2015; Stukel et al.,
-2019). Alternatively, Retaria can be either exclusively heterotrophic or
+2022a), yet their feeding modes can be quite varied. Phaeodarias (family
+Cercozoa) are largely thought to be flux-feeders, collecting and feeding
+on sinking particles (Nakamura and Suzuki, 2015; Stukel et al., 2019).
+Alternatively, Retaria can be either exclusively heterotrophic or
 mixotrophic, utilizing photosynthetic algal symbionts (Anderson, 2014;
 Decelle et al., 2015). Mixotrophic foraminifera host a variety of
 endosymbiont partners (Decelle et al., 2015; Lee, 2006), which are
-thought to support early and adult life stages and contribute to total
-primary productivity (Kimoto, 2015). Still, foraminifera are omnivorous,
-possibly even predominately carnivorous with several studies suggesting
-that they can be effective predators (Anderson and Bé, 1976; Gaskell et
-al., 2019), mainly consuming live copepods (Caron and Be, 1984).
-Radiolaria have several lineages all which have some taxa who are well
-known to host symbionts (Biard, 2022b). Amongst radiolarians, arguably
-the most widespread are Collodaria who can be either large solitary
-cells or form massive colonies, up to several meters in length (Swanberg
-and Anderson, 1981). All known Collodaria species host dinoflagellate
-symbionts (Biard, 2022b) and can contribute substantially to primary
-productivity, particularly in oligotrophic ocean regions (Caron et al.,
-1995; Dennett et al., 2002). This Collodaria-symbiont association has
-been suggested as a reason for their high abundances throughout the
-photic zone of oligotrophic environments globally (Biard et al., 2017,
-2016). A few Acantharean (Radiolarian order) clades host algal symbionts
-(Biard, 2022b; Decelle et al., 2012), notably with two clades forming an
-exclusive relationship with Phaeocystis. However, globally Acantharea
-are less abundant than Collodaria (Biard, 2022a) and contribute less to
-total primary productivity (Michaels et al., 1995). This may be due to
-the fact several clades of Acantharea are cyst-forming and strictly
-heterotrophs (Biard, 2022b; Decelle et al., 2013). Furthermore, Mars
-Brisbin et al. (2020) documented apparent predation behavior in
-Acantharea near the surface, suggesting that there may be a large
-reliance on carnivory.
+thought to support early and adult life stages and significantly
+contribute to total primary productivity (Kimoto, 2015). Still,
+foraminifera are omnivorous, possibly even predominately carnivorous,
+with several studies suggesting that they can be effective predators
+(Anderson and Bé, 1976; Gaskell et al., 2019), mainly consuming live
+copepods (Caron and Be, 1984). Radiolaria have several lineages, all of
+which have some taxa well known to host symbionts (Biard, 2022b).
+Amongst Radiolarias, arguably the most widespread are Collodaria who can
+be either large solitary cells or form massive colonies, up to several
+meters in length (Swanberg and Anderson, 1981). All known Collodaria
+species host dinoflagellate symbionts (Biard, 2022b) and can contribute
+substantially to primary productivity, particularly in oligotrophic
+ocean regions (Caron et al., 1995; Dennett et al., 2002). This
+Collodaria-symbiont association has been suggested as a reason for their
+high abundances throughout the photic zone of oligotrophic environments
+globally (Biard et al., 2017, 2016). A few Acantharea (Radiolaria order)
+clades host algal symbionts (Biard, 2022b; Decelle et al., 2012),
+notably with two clades forming an exclusive relationship with
+\emph{Phaeocystis}. However, globally, Acantharea are less abundant than
+Collodaria (Biard, 2022a) and contribute less to total primary
+productivity (Michaels et al., 1995). This may be due to the fact
+several clades of Acantharea are cyst-forming and strictly heterotrophs
+(Biard, 2022b; Decelle et al., 2013). Furthermore, Mars Brisbin et al.
+(2020) documented apparent predation behavior in Acantharea near the
+surface, suggesting that there may be a larger reliance on carnivory.
 
 Given the high abundances, yet diverse trophic strategies found among
-Rhizarian taxa, it is reasonable to expect some form of niche
+Rhizaria taxa, it is reasonable to expect some form of niche
 partitioning. A number of studies do suggest evidence for vertical
 zonation between Rhizaria groups according to various trophic
-strategies. Taxa-specific studies of radiolarians suggest they may be
+strategies. Taxa-specific studies of Radiolarias suggest they may be
 restricted to the euphotic zone (Boltovskoy, 2017; Michaels, 1988).
 Although some studies report Acantharea in deeper waters (Decelle et
-al., 2013; Gutiérrez-Rodríguez et al., 2022). Phaeodarians
+al., 2013; Gutiérrez-Rodríguez et al., 2022), Phaeodarias,
 alternatively, are generally found in the mesopelagic where
-photosynthesis cannot occur but they can feed on sinking particles
+photosynthesis cannot occur, but they can feed on sinking particles
 (Stukel et al., 2018). In an imaging-based study of the whole Rhizaria
 community, Biard and Ohman (2020) noted clear patterns in vertical
 zonation which largely corresponded to different trophic roles. In the
@@ -415,24 +431,25 @@ Gutiérrez-Rodríguez et al., 2022; Hull et al., 2011; Michaels et al.,
 1995; Michaels, 1988). Furthermore, no studies have utilized imaging,
 arguably the best method for quantifying rhizaria, consistently
 throughout the full mesopelagic. Given this lack of information, there
-are many unknowns with respect to Rhizarian ecology, seasonality and
+are many unknowns with respect to Rhizaria ecology, seasonality and
 phenology across different groups.
 
 In this study, we present a comprehensive assessment of large Rhizaria
-measured for multiple months (greater than 1 year) using an in-situ
-imaging approach. With this dataset, we address two critical aims. 1)
-Quantification of large Rhizaria throughout the epipelagic (0-200m) and
-mesopelagic (200-1000m) over the course of an annual cycle. These data
-were collected in the Sargasso Sea, and represents the first study of
-its kind in an oligotrophic system. 2) We aim to test the hypothesis
-that Rhizaria exhibit niche partitioning according to trophic roles.
-This hypothesis makes several predictions, including vertical zonation,
-as seen in prior studies, but also that environmental variables related
-to trophic strategy will explain abundance patterns. Specifically,
-autotrophic/mixotrophic taxa will correspond to variables related to
-autotrophy (chl-a concentration, primary productivity, high \(O_2\) )
-and other rhizaria will correspond to factors which promote heterotrophy
-(particle concentration, flux, and low \(O_2\)).
+measured for over a year from regularly occurring cruises at monthly
+intervals. We utilized an in-situ imaging approach to facilitate
+abundance calculations. With this dataset, we address two critical aims.
+1) Quantification of large Rhizaria throughout the epipelagic (0-200m)
+and mesopelagic (200-1000m) over the course of an annual cycle. These
+data were collected in the Sargasso Sea, and represents the first study
+of its kind in an oligotrophic system; and 2) We aim to test the
+hypothesis that Rhizaria exhibit niche partitioning according to trophic
+roles. This hypothesis makes several predictions, including vertical
+zonation, as seen in prior studies, but also that environmental
+variables related to trophic strategy will explain abundance patterns.
+Specifically, autotrophic/mixotrophic taxa will correspond to variables
+related to autotrophy (chl-a concentration, primary productivity, local
+DO maxima) and other rhizaria will correspond to factors which promote
+heterotrophy (particle concentration, flux, and local DO minima).
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -441,7 +458,7 @@ and other rhizaria will correspond to factors which promote heterotrophy
 \subsection{Oceanographic Sampling}\label{oceanographic-sampling}}
 
 Data were collected in collaboration with the Bermuda Atlantic
-Time-Series Study (Lomas et al., 2013; Michaels and Knap, 1996) on board
+Time-series Study (Lomas et al., 2013; Michaels and Knap, 1996) on board
 the R/V Atlantic Explorer. Cruises were conducted at approximately
 monthly intervals. Rhizaria individuals were sampled using the
 Underwater Vision Profiler 5 {[}UVP5; Picheral et al. (2010){]}, a tool
@@ -451,51 +468,50 @@ al., 2022; Llopis Monferrer et al., 2022; Panaïotis et al., 2023; Stukel
 et al., 2019; Stukel et al., 2018). The UVP5 was mounted to the sampling
 rosette and collected data autonomously on routine casts, from which
 only the downcast data are utilized. The UVP5 was deployed from
-June-September 2019 then from October 2020 - January 2022. Casts were
-filtered to only include data collected in the BATS region, far offshore
-of Bermuda into the Sargasso Sea (approximately 31.0\(^oN\)-32.5\(^oN\),
-64.25\(^oW\)-63\(^oW\); Supplemental Figure 1). In general, casts
-extended to either 200m, 500m, or 1200m deep, with a few extended into
-the bathypelagic (4500m). However, Rhizaria were only typically found in
-large abundances throughout the epipelagic and mesopelagic zones. As
-such, we limit this study to results from the upper 1000m of the water
-column.
+June-September 2019 then from October 2020 - January 2022, during which
+time the BATS region was sampled for 3-5 days at monthly intervals.
+Casts were filtered to only include data collected in the BATS region,
+far offshore of Bermuda in the Sargasso Sea (approximately
+31.0\(^oN\)-32.5\(^oN\), 64.25\(^oW\)-63\(^oW\); Supplemental Figure 1).
+In general, casts extended to either 200m, 500m, or 1200m deep, with a
+few extended into the bathypelagic (4500m). However, Rhizaria were only
+typically found in large abundances throughout the epipelagic and
+mesopelagic zones. As such, we limit this study to results from the
+upper 1000m of the water column.
 
 A variety of biotic and abiotic data were collected during each BATS
 cruise. Briefly, we will explain the data utilized in this study. The
 UVP5 provided particle count data at a high-frequency from each cast.
 Particle concentration was calculated from this data for all particles
 184\(\mu m\) - 450\(\mu m\). The lower size range was set by what could
-be reliably sampled by the UVP5's pixel resolution (\textgreater2px) and
-the upper size range is representative of a potential prey field for
-mesozooplankton (Whitmore and Ohman, 2021). Salinity, temperature,
-Dissolved Oxygen (DO), and in-situ chlorophyll fluorescence were
-measured at high-frequencies on each cast, attached to the same CTD
-rosette as the UVP. On certain casts, niskin bottles were used to
-collect bacterial abundance estimates (via epifluorescence microscopy)
-as well as measure inorganic nutrients (\(NO_3\), and \(Si\) as
-silicate/sicilic acid) at discrete depths. On each cruise, flux
-estimates of total mass, carbon, and nitrogen were also collected using
-sediment traps (in the present study we utilize flux to the mesopelagic
-as the flux at 200m). Also primary productivity was estimated through
-measuring \(C^{14}\) uptake rates from in-situ incubations. Full
-descriptions of the BATS sampling program, methods, and data are
-available freely online
-\href{https://bats.bios.asu.edu/bats-data/}{(https://bats.bios.asu.edu/bats-data/)}
-and reviewed in (Lomas et al., 2013).
+be reliably sampled by the UVP5's pixel resolution (\textgreater2px;
+0.092mm per pixel) and the upper size range is representative of a
+potential prey field for mesozooplankton (Whitmore and Ohman, 2021). For
+each UVP cast supporting continuous profiles of the CTD parameters
+salinity, temperature, and auxiliary CTD channels; Dissolved Oxygen
+(DO), in-situ chlorophyll fluorescence were measured at 24Hz using the
+BATS CTD package. On select casts, Niskin bottles were used to collect
+bacterial abundance estimates (via epifluorescence microscopy) as well
+as measure inorganic nutrients (\(NO_3\), and \(Si\) as silicate/sicilic
+acid) at discrete depths. On each cruise, flux estimates of total mass,
+organic carbon, and nitrogen were also collected using sediment traps;
+in the present study we utilized flux to the mesopelagic as the flux at
+200m. Also primary productivity was estimated through measuring
+\(^{14}C\) uptake rates from in-situ incubations. For full descriptions
+of the BATS sampling program and methods, see Knap et al. (1997) and
+Lomas et al. (2013) for a review. Additionally, data can be viewed
+online
+\href{https://bats.bios.asu.edu/bats-data/}{(https://bats.bios.asu.edu/bats-data/)}.
 
 Environmental data were processed in a variety of ways to match the
-format of the Rhizaria abundance estimates (See below). CTD data were
-collected at higher frequency than the UVP, so these data were averaged
-within matching bins to the UVP5 data. Data from niskin bottles were
-first linearly interpolated with a 1m resolution for each cast where
-data were available. Then, because data were collected at different
-frequencies over the course of a cruise, the interpolated data were
-averaged across casts, then averaged into matching UVP5-sized bins.
-Primary productivity estimates were totaled within the euphotic zone to
-represent a ``total euphotic productivity''. Finally the data from the
-sediment trap deployed to 200m was used to represent ``flux to the
-mesopelagic''.
+format of the Rhizaria abundance estimates (see below). CTD data were
+collected at higher frequency than the UVP (24Hz vs 15Hz respectively),
+so these data were averaged within matching bins to the UVP5 data. Data
+from Niskin bottles were first linearly interpolated in depth at 1m
+resolution then time averaged over the cruise, then subsequently
+averaged into matching UVP5-sized bins. Primary productivity estimates
+were totaled within the euphotic zone to represent a ``total euphotic
+productivity''.
 
 \hypertarget{rhizaria-imaging-processing-and-quantification}{%
 \subsection{Rhizaria imaging processing and
@@ -508,64 +524,75 @@ set. Taxonomic classification were done based on morphology exclusively.
 While there are sparse taxonomic guides for in-situ images of rhizaria,
 identification largely relied on descriptions in (Nakamura and Suzuki,
 2015; Suzuki and Not, 2015; and Biard and Ohman, 2020). Using the
-aforementioned sources and publicly available ecotaxa projects, I
-constructed a guide which can be found here:
-\protect\hyperlink{0}{https://thealexbarth.github.io/media//Project\_Items/Oligotrophic\_Community/ecotaxa\_UVP-guide-stone-lab.pdf}.
-Broadly, Rhizaria were classified as Foraminifera, Radiolarians
-(Acantharea or Collodaria), or a variety of Phaeodarian families (Figure
-1). When identification could not be confidently made between a few
-candidate taxa, a less specific label was used. As a result, we have
+aforementioned sources and publicly available ecotaxa projects, we
+constructed a guide accessible at:
+\url{https://thealexbarth.github.io/media//Project_Items/Oligotrophic_Community/ecotaxa_UVP-guide-stone-lab.pdf}.
+Broadly, Rhizaria were classified as Foraminifera, Radiolarias
+(Acantharea or Collodaria), or as a variety of Phaeodaria families
+(Figure 1). When identification could not be confidently made between a
+few candidate taxa, a less specific label was used. As a result, we have
 data from ``unidentified Rhizaria'', which typically were vignettes not
 distinguishable between Aulacanthidae or Acantharea or ``unidentified
-Phaeodaria'', which are clearly phaeodaria but not distinguishable into
+Phaeodaria'', which are clearly Phaeodaria but not distinguishable into
 a family.
+
+\begin{figure}
+
+{\centering \includegraphics{images/01_taxa.pdf}
+
+}
+
+\caption{Example images of different Rhizaria taxa. 4mm scale bar shown
+in lower right. All vignettes are same scale}
+
+\end{figure}
 
 The UVP5 samples at \textasciitilde15Hz rate as it descends the water
 column and records the exact position of each particle larger than
 600\(\mu m\). However, identified rhizaria ranged from a 934\(\mu m\)
 Aulacanthidae cell to a Collodarian colony over 10mm in diameter. To
 confirm that the UVP5 was sampling adequately across all size ranges, an
-NBSS slope was constructed to identify a drop-off which would indicate
-poor-sampling at the small size range (Barth and Stone, in review;
-Lombard et al., 2019). However, it was evident from this analysis that
-all size ranges were adequately sampled across the size range
-(Supplemental Figure 2) so no data were excluded. The UVP5 reports the
-exact depth at which a particle is recorded, however to estimate
-abundance, observations must be binned over fixed depth intervals. Our
-deployments had variable descent depths and speeds with more casts
-descending to 500m than 1000m and descents quicker through the
-epipelagic than the mesopelagic (see Barth and Stone (2022) for an
-extended discussion of UVP5 data processing). For the present study,
-Rhizarian abundances were estimated in 25m vertical bins, which offer a
-moderate sampling volume per bin (average 0.948\(m^3\) in the epipelagic
-and 0.589\(m^3\) in the mesopelagic) while still maintaining
-ecologically relevant widths. However, concentrations in a 25m bin would
-need to be greater than 2.428 indv. \(m^{-3}\) and 3.912 indv.
-\(m^{-3}\), in the epipelagic and mesopelagic respectively, to fall
-below a 10\% non-detection risk {[}Benfield et al. (1996); Barth and
-Stone (in review){]}. Because we typically observed many rhizaria taxa
-below these concentrations, we present the 25m binned data to visualize
-broad-scale average distributions. For quantifying and modelling
-Rhizaria abundances, we present integrated abundance estimates, with
-each cast. Due to the variable descent depths of the UVP, data are
-categorized as epipelagic (0-200m), upper mesopelagic (200-500m), and
-lower mesopelagic (500-1000m). The average sampling volume integrated
-through these regions were 7.59\(m^2\), 7.06\(m^2\), and 11.77\(m^2\),
-with non-detection thresholds at 0.30 indv. \(m^{-2}\), 0.33 indv.
-\(m^{-2}\), and 0.20 indv. \(m^{-2}\) respectively. All UVP data
-processing was done using the \texttt{EcotaxaTools} package in R (Barth
-2023).
+normalized biomass size spectrum (NBSS) slope was constructed to
+identify a drop-off which would indicate poor-sampling at the small size
+range (Barth and Stone, In press; Lombard et al., 2019). However, it was
+evident from this analysis that all size ranges were adequately sampled
+across the size range (Supplemental Figure 2) so no data were excluded.
+The UVP5 reports the exact depth at which a particle is recorded,
+however to estimate abundance, observations must be binned over fixed
+depth intervals. Our deployments had variable descent depths and speeds
+with more casts descending to 500m than 1000m and descents quicker
+through the epipelagic than the mesopelagic (see Barth and Stone (2022)
+for an extended discussion of UVP5 data processing). For the present
+study, Rhizaria abundances were estimated in 25m vertical bins, which
+offer a moderate sampling volume per bin (average 0.948\(m^3\) in the
+epipelagic and 0.589\(m^3\) in the mesopelagic; Supplemental Table 1)
+while still maintaining ecologically relevant widths. However,
+concentrations in a 25m bin would need to be greater than 2.428 ind.
+\(m^{-3}\) and 3.912 ind. \(m^{-3}\), in the epipelagic and mesopelagic
+respectively, to fall below a 10\% non-detection risk (Barth and Stone,
+In press; Benfield et al., 1996). Because we typically observed many
+rhizaria taxa below these concentrations, we present the 25m binned data
+to visualize broad-scale average distributions. For quantifying and
+modelling Rhizaria abundances, we present integrated abundance
+estimates, with each cast. Due to the variable descent depths of the
+UVP, data are categorized as epipelagic (0-200m), upper mesopelagic
+(200-500m), and lower mesopelagic (500-1000m). The average sampling
+volume integrated through these regions were 7.59\(m^2\), 7.06\(m^2\),
+and 11.77\(m^2\), with non-detection thresholds at 0.30 ind. \(m^{-2}\),
+0.33 ind. \(m^{-2}\), and 0.20 ind. \(m^{-2}\) respectively. All UVP
+data processing was done using the \texttt{EcotaxaTools} package in R
+(Barth 2023).
 
-\hypertarget{modelling-environmental-controls-of-rhizarian-abundance}{%
-\subsection{Modelling environmental controls of Rhizarian
-Abundance}\label{modelling-environmental-controls-of-rhizarian-abundance}}
+\hypertarget{modelling-environmental-controls-of-rhizaria-abundance}{%
+\subsection{Modelling environmental controls of Rhizaria
+Abundance}\label{modelling-environmental-controls-of-rhizaria-abundance}}
 
 Generalized Additive Models (GAMs) were used to assess the relationship
-between integrated Rhizarian abundance and different environmental
+between integrated Rhizaria abundance and different environmental
 factors. GAMs offer the ability to model non-linear and non-monotonic
 relationships, which can be particularly useful in assessing ecological
 relationships (Wood, 2017) and have been successfully applied to
-Rhizarian ecology (Biard and Ohman, 2020). The \texttt{mgcv} package
+Rhizaria ecology (Biard and Ohman, 2020). The \texttt{mgcv} package
 (Wood, 2001) was used to construct models relating environmental
 parameters to each taxonomic group's integrated abundance estimates from
 each cast. To select the most parsimonious model for each analysis, a
@@ -590,53 +617,83 @@ products at \url{https://github.com/TheAlexBarth/RhizariaSeasonality}.
 \subsubsection{Environmental
 Variability}\label{environmental-variability}}
 
-The BATS sampling region is southeast of Bermuda, situated in the North
-Sargasso Sea and the North Atlantic oligotrophic ocean gyre. Due to the
-sampling location, while the environmental conditions are generally low
-in variation and oligotrophic, there is some seasonality and
-considerable influence from mesoscale eddies (Lomas et al., 2013;
-McGillicuddy et al., 1998). Variability in the water column structure
-was visible during the study period (Figure 2). This is best evidenced
-through the temperature profiles; In the late summer and early fall
-there was a stratified water column with high temperatures in the
-surface (\textless75m) (Figure 2A) and slightly elevated salinity
-(Figure 2B). This warm, stratified period appeared more intense during
-the few months sampled in 2019. In 2021, we observed the stratified
-layer slowly dissipated into the winter months. There was a consistent
-oxygen minimum zone (OMZ) located at about 750m deep (Figure 2C).
-Although, February 2021 saw a notable downwelling event, likely due to a
-passing cyclonic eddy. During this time, warmer, oxic water was plunged
-deeper into the mesopelagic. This process was reversed in the spring
-months (March, April) when mixing occurred throughout the epipelagic and
-the surface was cooler and well mixed. Primary production was highest
-during the spring mixing period, evidenced both by in-situ fluorescence
-(Figure 2D) and productivity incubation experiments (Figure 3A).
-Originating near the surface, the productivity peak moved deeper
-throughout the spring and declined into the summer (Figure 2D). However,
-there was a notable, yet smaller productivity bump in the late summer
-and early fall (Figure 3A) which occurred deeper in the epipelagic
-(Figure 2D). The particle concentration (184\(\mu m\) - 450\(\mu m\))
-was closely coupled to chlorophyll-a patterns.
+The BATS sampling region is southeast of Bermuda, situated in the
+oligotrophic North Atlantic Subtropical Gyre. Due to the sampling
+location, while the environmental conditions are generally low in
+variation and oligotrophic, there is considerable influence from deep
+winter-mixing and summer stratification as well as secondary influences
+from mesoscale eddies which result in spatiotemporal heterogeniety
+(Lomas et al., 2013; McGillicuddy et al., 1998). Variability in the
+water column structure was visible during the study period (Figure 2).
+This is best evidenced through the temperature profiles; In the late
+summer and early fall there was a stratified water column with high
+temperatures in the surface (\textless75m) (Figure 2A) and slightly
+elevated salinity (Figure 2B). This warm, stratified period appeared
+more intense during the few months sampled in 2019. In 2021, we observed
+the stratified layer slowly dissipated into the winter months following
+mixed layer entrainment. There was a consistent oxygen minimum zone
+(OMZ) located at about 800m deep (Figure 2C). February 2021 saw a
+notable downwelling event, likely due to a passing anti-cyclonic eddy
+which impacted the local region during early 2021. During this phaes,
+warmer, oxic water was significantly depressed deeper into the
+mesopelagic. This process was reversed in the spring months (March,
+April) primary due to the interaction of convective mixing and the
+passing of a strong cyclonic eddy resulting in a deep cold mixed layer.
+Primary production was highest during the spring mixing period,
+evidenced both by in-situ fluorescence (Figure 2D) and productivity
+incubation experiments (Figure 3A). Originating near the surface, the
+productivity peak moved deeper throughout the spring and declined into
+the summer (Figure 2D). However, there was a notable, yet smaller
+productivity bump in the late summer and early fall (Figure 3A) which
+occurred deeper in the epipelagic (Figure 2D). The particle
+concentration (184\(\mu m\) - 450\(\mu m\)) was closely coupled to
+chlorophyll-a patterns.
+
+\begin{figure}
+
+{\centering \includegraphics{images/02-environmental.pdf}
+
+}
+
+\caption{Environmental profiles across time-series of study period. Y
+axis shows depth in meters. (A) Temperature. (B) Salinity. (C) Dissolved
+Oxygen. (D) In-situ chlorophyll fluorescence. (E) Particle concenctrion
+(184 - 450\(\mu m\)). (F) Bacteria Abundance. (G) Silica. (H) Nitrate}
+
+\end{figure}
 
 Overall, particle concentration was high near the surface during the
 2021 spring bloom, then moved deeper throughout the water column
 attenuating throughout the lower epipelagic (Figure 2E). Similarly,
-bacteria abundance was closely linked to overall productivity, althrough
-there was a more consistent moderate-abundance layer near the top of the
-mesopelagic (\textasciitilde250m) (Figure 2F). Concurrent with the
-secondary fall production peak, there was also higher particle
-concentration and bacterial abundance in the later summer and early
-fall. Interestingly, while primary productivity estimates from
-July-August were not that different between 2019 and 2021 (Figure 4A),
-chlorophyll-a florescence, particle concentration, and bacterial
-abundance were much higher in 2019's summer/fall (Figure 2D-F).
-Inorganic nutrients (\(Si\) and \(NO_3\)) were generally well
+heterotrophic bacteria abundance was closely linked to overall
+productivity, althrough there was a more consistent moderate-abundance
+layer near the top of the mesopelagic (\textasciitilde250m) (Figure 2F).
+Concurrent with the secondary fall production peak, there was also
+higher particle concentration and bacterial abundance in the later
+summer and early fall. Interestingly, while primary productivity
+estimates from July-August were not that different between 2019 and 2021
+(Figure 3A), chlorophyll-a florescence, particle concentration, and
+bacterial abundance were much higher in 2019's summer/fall (Figure
+2D-F). Inorganic nutrients (\(Si\) and \(NO_3\)) were generally well
 stratified, with low concentrations in the epipelagic and increasing
 throughout the mesopelagic. However, both nutrients did vary vertically
 in accordance with the 2021 February downwelling and spring mixing
 period (Figure 2G-H). Additionally, in the late fall of 2021, \(Si\)
 concentrations were slightly elevated in the mid-mesopelagic (Figure
 2G).
+
+\begin{figure}
+
+{\centering \includegraphics{images/03_prod-flux.pdf}
+
+}
+
+\caption{Primary productivity (A) and flux estimates from total mass
+(B), carbon (C), and nitrogen (D). Values are from monthly cruises with
+month displayed in corresponding colors. Absent data are shown by grey
+bar.}
+
+\end{figure}
 
 Overall mass flux to the mesopelagic was highest during the 2021
 February downwelling (Figure 3B). Generally, export was similarly high
@@ -658,8 +715,22 @@ average, 42.6\% of all mesozooplankton abundance (Supplemental Figure
 other living mesozooplankton were 22\%. The large contribution of
 Rhizaria to the mesozooplankton community is most prominent in the
 epipelagic, where they accounted for 47\% of all mesozooplankton. In the
-mesopelagic rhizaria were a smaller fraction, at 38\% in the upper
-layers (200-500m) and 37\% in the deeper mesopelagic (500-1000m).
+mesopelagic rhizaria were a smaller (but still prominent fraction), at
+38\% in the upper layers (200-500m) and 37\% in the deeper mesopelagic
+(500-1000m).
+
+\begin{figure}
+
+{\centering \includegraphics{images/04_vertical.pdf}
+
+}
+
+\caption{Average abundance of Rhizaria in 25m bins, across entire study
+period. Shown are total Rhizaria (A), Acantharea (B), Collodaria (C),
+Aulacanthidae (D), Foraminifera (E), Aulosphaeridae (F), Castanellidae
+(G), Coelodendridae (H).}
+
+\end{figure}
 
 Total average Rhizaria abundance had a bimodal distribution with respect
 to depth. Total abundance was highest just below the surface (0-100m),
@@ -667,7 +738,7 @@ with secondary, wider peak occurring in the mid mesopelagic (Figure 4A).
 Variation in depth binned abundance was large, likely due to seasonal
 variability but also increased from the detection-risk described in the
 methods. The vertical distribution pattern and abundance varied
-considerably across taxonomic groups. Radiolarians were some of the most
+considerably across taxonomic groups. Radiolarias were some of the most
 abundant taxa observed, particularly in the epipelagic (Figure 4, Figure
 5B). This pattern was led by Collodaria, whose colonies were abundant in
 the upper epipelagic and declined into the top of the mesopelagic
@@ -675,30 +746,44 @@ the upper epipelagic and declined into the top of the mesopelagic
 a large portion of the total Rhizaria pattern (Figure 4B, Figure 5).
 Foraminifera had a similar bimodal distribution, yet their overall
 average densities were much lower and spread wider throughout the
-mesopelagic (Figure 4E). Phaeodarian families exhibited a wide range of
+mesopelagic (Figure 4E). Phaeodaria families exhibited a wide range of
 vertical distribution patterns. The most abundant, Aulacanthidae, also
 had a bimodal pattern but the density was highest in the lower
 mesopelagic (Figure 4D). Aulosphaeridae had low average density and was
 nearly homogeneously distributed throughout the water column, although
 slightly lower in the epipelagic (Figure 4F). Castanellidae were the
-only Phaeodarian who appeared to be effectively restricted to the photic
+only Phaeodaria who appeared to be effectively restricted to the photic
 zone (Figure 4G). Alternatively, Coelodendridae primarily occurred in
 the lower mesopelagic (Figure 4H). A few individuals from the families
 Tuscaroridae and Medusettidae were also observed in the mesopelagic, yet
 they were much rarer (data not shown).
+
+\begin{figure}
+
+{\centering \includegraphics{images/05_seasonality.pdf}
+
+}
+
+\caption{Seasonality of Rhizaria integrated abundance for the epipelagic
+(0-200m) (A-B), upper mesopelagic (200-500m) (C-D), lower mesopelagic
+(500-1000m) (E-F). Left panels (A,C,E) display total integrated
+abundance per monthly cruise colored by month. Right panels (B, D, F)
+display community composition of each total abundance.}
+
+\end{figure}
 
 Between the monthly cruises, Rhizaria integrated abundance varied in the
 epipelagic. Highest average abundance occurred in June 2021 and was
 lowest during the winter months (Figure 5A). The 2019 later summer -
 fall period also had much higher integrated abundance than similar
 months in 2021. While the majority of integrated abundance in the
-epipelagic was consistently attributable to Collodaria, Acanthrean
+epipelagic was consistently attributable to Collodaria, Acanthrea
 abundance occurred sporadically and could account for a large portion of
 the total in some months (Figure 5B). The mesopelagic integrated
 abundance was much more consistent across monthly cruises, although
 average abundance was notably higher in 2019 (Figure 5C-F). The
 community composition in the mesopelagic was more diverse, mostly
-comprised of Phaeodarians. However, Acantharea and unidentified Rhizaria
+comprised of Phaeodarias. However, Acantharea and unidentified Rhizaria
 also were common members of the community (Figure 5D, 5F).
 
 \hypertarget{body-size-throughout-the-water-column.}{%
@@ -715,11 +800,22 @@ significantly different on average (Wilcox Rank Sum p-value
 \textless0.001). Acantharea were smaller, on average in the mesopelagic
 while all other taxa tended to be larger (Figure 6).
 
-\hypertarget{environmental-drivers-of-rhizarian-abundance}{%
-\subsubsection{Environmental Drivers of Rhizarian
-Abundance}\label{environmental-drivers-of-rhizarian-abundance}}
+\begin{figure}
 
-For total Rhizarian integrated abundance the GAMs produced moderate fits
+{\centering \includegraphics{images/09_size-comp.pdf}
+
+}
+
+\caption{Comparison of average sizes (ESD) amongst Rhizaria taxa which
+occurred throughout the water column.}
+
+\end{figure}
+
+\hypertarget{environmental-drivers-of-rhizaria-abundance}{%
+\subsubsection{Environmental Drivers of Rhizaria
+Abundance}\label{environmental-drivers-of-rhizaria-abundance}}
+
+For total Rhizaria integrated abundance the GAMs produced moderate fits
 (\(R^2_{adj}\) = 0.406-0.603) (Table 1). In the epipelagic, there were
 several significant predictor variables including inorganic nutrients
 (\(NO_3\) and \(Si\)), water quality parameters (Salinity, DO), primary
@@ -727,18 +823,86 @@ production, and particle concentration (Table 1). However, the upper and
 lower mesopelagic were exclusively explained by particle-related
 variables (concentration and mass flux) (Table 1).
 
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3400}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}@{}}
+\caption{Generalized Additive Model results for integrated total
+Rhizaria abundance in different regions of the water
+column.}\tabularnewline
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+edf
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} \\
+\midrule()
+\endfirsthead
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+edf
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{All Rhizaria Epipelagic} & Salinity & 2.0818 & 4.654 &
+\textless0.001 \\
+\(R^2_{adj}\)= 0.42 & DO & 0.8272 & 0.945 & 0.0136 \\
+& Silica & 3.1206 & 15.75 & \textless0.001 \\
+& NO3 & 2.9970 & 6.268 & \textless0.001 \\
+& Primary Productivity & 1.8367 & 2.099 & \textless0.001 \\
+& Particle Concentration & 0.9282 & 2.566 & \textless0.001 \\
+\textbf{All Rhizaria Upper Mesopelagic} & Silica & 0.6847 & 0.431 &
+0.073 \\
+\(R^2_{adj}\)= 0.406 & Avg Mass Flux & 1.5426 & 0.923 & 0.045 \\
+& Particle Concentration & 3.2957 & 20.89 & \textless0.001 \\
+\textbf{All Rhizaria Lower Mesopelagic} & Avg Mass Flux & 1.6632 & 1.824
+& 0.002 \\
+\(R^2_{adj}\)= 0.603 & Particle Concentration & 0.7694 & 0.662 &
+0.027 \\
+\bottomrule()
+\end{longtable}
+
 GAMs for individual taxa were much less consistent in their fits (Table
 2). This is likely in part due to the high number of non-observations
 for certain taxa. Note that due to low abundances, GAMs were not
-constructed for Tuscaroridae or Medusettidae. Furthermore no significant
-terms were found for a model with Aulosphaeridae in the epipelagic nor
-Foraminifera in the mesopelagic.
+constructed for Tuscaroridae or Medusettidae. Furthermore no,
+significant terms were found for a model with Aulosphaeridae in the
+epipelagic nor Foraminifera in the mesopelagic.
+
+\begin{figure}
+
+{\centering \includegraphics{images/06_epi-partials.pdf}
+
+}
+
+\caption{Partial effects of smooth terms in taxa-specific GAM models
+from the epipelagic (0-200m). Effects are grouped by taxa; Acantharea
+(A), Foraminifera (B), Aulacanthidae (C), Collodaria (D), Castanellidae
+(E).}
+
+\end{figure}
 
 Epipelagic Acantharea were explained by several predictor variables and
 had a good fit (\(R^2_{adj}\) = 0.53, Table 2). Most notable smooths
 were mass flux and particle concentration, which had a weak positive
 association (Figure 7A), with July 2021 as a clear outlier where
-Acantharean abundances were high in the epipelagic despite lower fluxes
+Acantharea abundances were high in the epipelagic despite lower fluxes
 and particle concentrations (Figure 5). Foraminifera had a good fitting
 GAM in the epipelagic (\(R^2_{adj}\) = 0.445). There were several
 significant explanatory variables, although the clearest pattern was
@@ -754,6 +918,109 @@ occur during higher DO conditions in the surface waters (Figure 7D).
 Castanellidae also had similarly poor fits in the epipelagic
 (\(R^2_{adj}\) = 0.124) (Table 2, Figure 7E).
 
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3400}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0800}}@{}}
+\caption{Taxa-specific generalized additive models for different regions
+of the water column.}\tabularnewline
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+edf
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} \\
+\midrule()
+\endfirsthead
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+edf
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{Acantharea Epipelagic} & Salinity & 2.264 & 4.113 &
+\textless0.001 \\
+R2adj=0.53 & O2 & 2.579 & 6.712 & \textless0.001 \\
+& Avg Mass Flux & 4.810 & 22.81 & \textless0.001 \\
+& Bacteria \#/L & 1.599 & 1.317 & 0.0117 \\
+& Particle Concentration & 0.853 & 1.158 & 0.0087 \\
+\textbf{Acantharea Upper Mesopelagic} & Avg C Flux & 1.296 & 0.621 &
+0.0439 \\
+R2adj=0.231 & Avg N Flux & 1.619 & 1.283 & 0.0026 \\
+& Particle Concentration & 0.952 & 3.886 & \textless0.001 \\
+\textbf{Acantharea Lower Mesopelagic} & Temperature & 2.076 & 4.155 &
+\textless0.001 \\
+R2adj=0.509 & Avg N Flux & 1.494 & 1.216 & 0.0113 \\
+& Primary Productivity & 0.766 & 0.648 & 0.0253 \\
+& Particle Concentration & 2.037 & 10.03 & \textless0.001 \\
+\textbf{Aulacanthidae Epipelagic} & Salinity & 0.792 & 0.757 & 0.0241 \\
+R2adj=0.251 & Avg N Flux & 0.869 & 1.324 & 0.0018 \\
+& Primary Productivity & 2.312 & 7.704 & \textless0.001 \\
+& Particle Concentration & 2.008 & 2.200 & 0.0017 \\
+\textbf{Aulacanthidae Upper Mesopelagic} & Particle Concentration &
+2.832 & 9.802 & \textless0.001 \\
+R2adj = 0.158 & & & & \\
+\textbf{Aulacanthidae Lower Mesopelagic} & Avg Mass Flux & 1.622 & 1.991
+& 0.002 \\
+R2adj=0.298 & Particle Concentration & 2.123 & 6.706 & \textless0.001 \\
+\textbf{Aulosphaeridae Upper Mesopelagic} & Particle Concentration &
+2.653 & 13.06 & \textless0.001 \\
+R2adj=0.2 & & & & \\
+\textbf{Aulosphaeridae Lower Mesopelagic} & Particle Concentration &
+0.972 & 6.248 & \textless0.001 \\
+R2adj=.147 & & & & \\
+\textbf{Castanellidae Epipelagic} & Avg C Flux & 1.462 & 0.816 &
+0.0421 \\
+R2adj = 0.124 & Primary Productivity & 0.771 & 0.665 & 0.0247 \\
+& Particle Concentration & 3.956 & 4.623 & \textless0.001 \\
+\textbf{Coelodendridae Upper Mesopelagic} & Avg N Flux & 0.822 & 0.919 &
+0.0183 \\
+R2adj=.113 & Particle Concentration & 0.970 & 6.208 & \textless0.001 \\
+\textbf{Coelodendridae Lower Mesopelagic} & Particle Concentration &
+1.773 & 4.873 & \textless0.001 \\
+R2adj=.133 & & & & \\
+\textbf{Collodaria Epipelagic} & Salinity & 0.925 & 2.267 &
+\textless0.001 \\
+R2adj=0.16 & O2 & 2.015 & 2.217 & 0.002 \\
+& Bacteria \#/L & 1.843 & 2.100 & 0.002 \\
+\textbf{Foraminifera Epipelagic} & Temperature & 4.414 & 8.789 &
+\textless0.001 \\
+R2adj=0.445 & O2 & 1.603 & 1.287 & 0.0111 \\
+& Avg N Flux & 2.512 & 3.396 & \textless0.001 \\
+& Primary Productivity & 0.824 & 0.920 & 0.0153 \\
+& Particle Concentration & 0.919 & 2.257 & \textless0.001 \\
+\bottomrule()
+\end{longtable}
+
+\begin{figure}
+
+{\centering \includegraphics{images/07_upmeso-partial.pdf}
+
+}
+
+\caption{Partial effects of smooth terms in taxa-specific GAM models
+from the upper mesopelagic (200-500m). Effects are grouped by taxa;
+Acantharea (A), Aulacanthidae (B), Aulosphaeridae (C), Coelodendridae
+(D).}
+
+\end{figure}
+
 In the upper mesopelagic (200-500m), abundances were generally low
 (Figure 4) so GAMs were only constructed for Acantharea, Aulacanthidae,
 Aulosphaeridae, and Coelodendridae (Table 2). All these models had
@@ -766,39 +1033,52 @@ GAM fits for taxa specific models (\(R^2_{adj}\) \textless0.3), with the
 exception of Acantharea (\(R^2_{adj}\) = 0.509). Acantharea in the lower
 mesopelagic was most clearly positively associated with particle
 concentration and nitrogen flux, as well as temperature to a slight
-degree (Figure 9A). For all Phaeodarians with a significant model,
+degree (Figure 9A). For all Phaeodarias with a significant model,
 particle concentration was a main predictor variable (Table 2, Figure
-9B-D). Aulacanthidae had the best fitting model of the Phaeodarians
+9B-D). Aulacanthidae had the best fitting model of the Phaeodarias
 (\(R^2_{adj}\) = 0.298), which also included mass flux as a
 statistically significant smooth (Figure 9B).
+
+\begin{figure}
+
+{\centering \includegraphics{images/08_lomeso-partials.pdf}
+
+}
+
+\caption{Partial effects of smooth terms in taxa-specific GAM models
+from the lower mesopelagic (500-1000m). Effects are grouped by taxa;
+Acantharea (A), Aulacanthidae (B), Aulosphaeridae (C), Coelodendridae
+(D).}
+
+\end{figure}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-\hypertarget{overall-rhizarian-abundance-and-patterns}{%
-\subsubsection{Overall Rhizarian abundance and
-patterns}\label{overall-rhizarian-abundance-and-patterns}}
+\hypertarget{overall-rhizaria-abundance-and-patterns}{%
+\subsubsection{Overall Rhizaria abundance and
+patterns}\label{overall-rhizaria-abundance-and-patterns}}
 
 In the epipelagic Rhizaria exhibited a notable seasonal pattern.
-Rhizarian abundances were higher in the summer months and lower during
+Rhizaria abundances were higher in the summer months and lower during
 the winter. During a prior time period, Blanco-Bercial et al. (2022)
 noted that there is considerable seasonality in the community
-composition of all protists. Despite the seasonality of total Rhizarian
+composition of all protists. Despite the seasonality of total Rhizaria
 abundance, community composition was relatively consistent, with
 Collodaria representing the bulk of the community. It should be noted
 that the overall taxonomic resolution of the UVP5 is fairly low, so
 there may be a switching of species within the broad groups identified
 in this study which were not captured. Throughout the mesopelagic,
-month-to-month variation in 2021 was relatively low. Again this is
+month-to-month variation in 2021 was relatively low. Again, this is
 consistent with observations from metabarcoding of the whole protist
 community in the same study region (Blanco-Bercial et al., 2022). This
 finding is not surprising as the overall seasonal variation in
 environmental conditions in this region were low.
 
-Overall Rhizaria were the most commonly identified group of
-mesozooplankton throughout the study period. We do note that the UVP5
-commonly captures Trichodesmium colonies, yet these were excluded in
-this comparison as they are strictly autotrophs. It should be noted that
+Overall Rhizaria were the most commonly identified group of mesoplankton
+throughout the study period. We do note that the UVP5 commonly captures
+\emph{Trichodesmium} colonies, yet these were excluded in this
+comparison as they are strictly autotrophs. It should be noted that
 previous work has suggested that avoidance behavior with the UVP is
 possible, at times likely, for visual and highly mobile zooplankton
 (Barth and Stone, 2022). Thus, the percent contribution reported here
@@ -810,10 +1090,10 @@ using similar calculation methods, Biard et al. (2016) estimated
 Rhizaria only contribute 15\% of the total mesozooplankton community in
 the upper 500m. Likely, Rhizaria display considerable interannual
 variability. In the present study, we noticed considerably higher
-Rhizarian abundance throughout the water column in 2019 compared to
-2021. While this may have been driven by increased mass flux, more
-information is needed to truly understand the magnitude by which
-Rhizaria can vary interannually.
+Rhizaria abundance throughout the water column in 2019 compared to 2021.
+While this may have been driven by increased mass flux, more information
+is needed to truly understand the magnitude by which Rhizaria can vary
+interannually.
 
 \hypertarget{relationship-to-environmental-parameters}{%
 \subsubsection{Relationship to environmental
@@ -866,21 +1146,23 @@ Collodaria were primarily absent from below 250m, there were a few
 instances of deeper colonies being observed. Global investigations of
 polycystine flux, suggest that deep-Collodaria in Oligotrophic regions
 may be a consequence of isothermal submersion (Boltovskoy, 2017).
-Another effectively exclusively epipelagic Rhizaria was the Phaeodarian
-family of Castanellidae. All Phaeodarians are thought to be fully
-heterotrophic (Nakamura and Suzuki, 2015), nonetheless a number of
-studies, including this one, report Castanellidae to be typically found
-in the lower epipelagic (Biard et al., 2018; Biard and Ohman, 2020;
-Zasko and Rusanov, 2005). It should be considered that perhaps
-Castanellidae specializes in feeding on sinking particles directly at
-the base of the epipelagic. Given it's smaller size (Nakamura and
-Suzuki, 2015), Castanellidae does not need a large diameter to
-efficiently flux feed at the typically particle rich region of the lower
-epipelagic. Both Castanelldiae and Collodaria had poor fitting GAMs.
-This is somewhat of a surprise for Collodaria who had large abundance.
-However, given the consistency of their abundance, it may be that this
-study did not capture a wide enough range of conditions for describing
-Collodaria's preferred niche.
+Alternatively, surface waters at BATS often mix into the mode water
+during the seasonal mixing, so Collodaria in the deeper waters may be a
+result of diapyncal mixing. Another effectively exclusively epipelagic
+Rhizaria was the Phaeodaria family of Castanellidae. All Phaeodaria are
+thought to be fully heterotrophic (Nakamura and Suzuki, 2015),
+nonetheless a number of studies, including this one, report
+Castanellidae to be typically found in the lower epipelagic (Biard et
+al., 2018; Biard and Ohman, 2020; Zasko and Rusanov, 2005). It should be
+considered that perhaps Castanellidae specializes in feeding on sinking
+particles directly at the base of the epipelagic. Given it's smaller
+size (Nakamura and Suzuki, 2015), Castanellidae does not need a large
+diameter to efficiently flux feed at the typically particle rich region
+of the lower epipelagic. Both Castanelldiae and Collodaria had poor
+fitting GAMs. This is somewhat of a surprise for Collodaria who had
+large abundance. However, given the consistency of their abundance, it
+may be that this study did not capture a wide enough range of conditions
+for describing Collodaria's preferred niche.
 
 The mesopelagic generally was home to known heterotrophic organisms,
 particularly for those which were constrained to exclusively occupy
@@ -895,7 +1177,7 @@ the base of the epipelagic may provide a rich feeding environment for
 Castanellidae, smaller protists, or heterotrophic bacteria (Figure 2F),
 the region from 200-500m might be otherwise food poor. Perhaps it is
 more advantageous for Rhizaria to situate deeper, in darker regions of
-the twilight zone. Also it should be noted that Phaeodarians utilize
+the twilight zone. Also it should be noted that Phaeodaria utilize
 silica to build their opaline tests, and silica concentrations started
 to increase around 500m (Figure 2G). Although \(Si\) was not a
 significant smooth for any taxa-specific model, this lack of association
@@ -937,10 +1219,10 @@ Acantharea also had a bimodal distribution, with much larger abundances
 than Aulacanthidae or Foraminifera. Most prior studies of Acantharea
 vertical distribution found them concentrated in near surface layers of
 the water column Zasko and Rusanov (2005). This would support the
-paradigm that large Acantharean abundances may be supported by their
+paradigm that large Acantharea abundances may be supported by their
 mixotrophic abilities (Michaels et al., 1995; Suzuki and Not, 2015).
 While the UVP5 images cannot distinguish between mixotrophic and
-heterotrophic Acantharea, the GAMs constructed for Acantharean abundance
+heterotrophic Acantharea, the GAMs constructed for Acantharea abundance
 found positive associations with particle concentration and mass flux,
 suggesting a higher reliance on heterotrophy. Recently Mars Brisbin et
 al. (2020) described apparent predator behavior amongst near-surface
@@ -961,27 +1243,27 @@ Furthermore, given that horizontal transfer of symbionts between
 generations of Acantharea is unlikely due to their spawning behavior,
 the newly spawned mesopelagic Acantharea are not necessarily required to
 rapidly return to the photic zone (Decelle et al., 2013, 2012). This
-hypothesis predicts that Acanthareans in the mesopelagic would be
-smaller (Decelle et al., 2013). Mars Brisbin et al. (2020) provided some
-support for this hypothesis, with a significant decrease in Acantharea
-sizes with depth. Although the authors also observed low abundances in
-the mesopelagic and noted that the smaller sizes may be due to lower
-food availability (Mars Brisbin et al., 2020). Since food is more scarce
-in the mesopelagi, nutritional quality lower, yet flux feeders would
-likely grow larger to increase their feeding range (Biard and Ohman,
-2020). In the data collecting in this study, Acanthareans in the
-mesopelagic were significantly smaller than the epipelagic, despite the
-other bimodal taxa (Foraminifera and Aulacanthidae) being significantly
-larger with depth. This provides added support for the hypothesis that
-cyst-forming Acantharea may utilize different sections of the water
-column throughout their life cycle. However to further investigate this,
-more work is needed with higher temporal and taxonomic resolution.
+hypothesis predicts that Acanthareas in the mesopelagic would be smaller
+(Decelle et al., 2013). Mars Brisbin et al. (2020) provided some support
+for this hypothesis, with a significant decrease in Acantharea sizes
+with depth. Although the authors also observed low abundances in the
+mesopelagic and noted that the smaller sizes may be due to lower food
+availability (Mars Brisbin et al., 2020). Since food is more scarce in
+the mesopelagi, nutritional quality lower, yet flux feeders would likely
+grow larger to increase their feeding range (Biard and Ohman, 2020). In
+the data collecting in this study, Acanthareas in the mesopelagic were
+significantly smaller than the epipelagic, despite the other bimodal
+taxa (Foraminifera and Aulacanthidae) being significantly larger with
+depth. This provides added support for the hypothesis that cyst-forming
+Acantharea may utilize different sections of the water column throughout
+their life cycle. However to further investigate this, more work is
+needed with higher temporal and taxonomic resolution.
 
 \hypertarget{conclusions-and-considerations}{%
 \subsubsection{Conclusions and
 Considerations}\label{conclusions-and-considerations}}
 
-This study provides a detailed look at Rhizarian abundance over time
+This study provides a detailed look at Rhizaria abundance over time
 throughout the water column in a major oligotrophic gyre. We show that
 their abundances are generally related to particle concentration and
 flux, although lack of environmental variability may have reduced the
@@ -995,7 +1277,7 @@ generally slower sinking than large particles. However, once consumed
 and repackaged by larger Rhizaria, they can sink quicker and contribute
 more to overall flux (Michaels, 1988). Thus, Rhizaria may act as an
 aggregation mechanism. However, this is largely speculation, to truly
-test this, more work is needed measuring Rhizarian flux.
+test this, more work is needed measuring Rhizaria flux.
 
 The vertical partitioning documented in this study do support the
 hypothesis that mixotrophic rhizaria will occupy shallower waters while
@@ -1006,7 +1288,7 @@ dominant members of the near surface region. These organisms have the
 potential to contribute considerably to the otherwise low productivity
 of oligotrophic regions. However, their role in food webs is not well
 understood. While this study represents a step-forward in our
-understanding of Rhizarian ecology, continued research on Rhizaria is
+understanding of Rhizaria ecology, continued research on Rhizaria is
 much needed to better understand their ecology. Particularly extended
 descriptive work to capture interannual patterns. Also work defining
 biotic interactions, feeding rates, productivity, and life history are
@@ -1034,9 +1316,10 @@ Geographical distribution of cryptic genetic types in the planktonic
 foraminifer Globigerinoides ruber. Molecular Ecology 18, 1692--1706.
 \url{https://doi.org/10.1111/j.1365-294X.2009.04136.x}
 
-\leavevmode\vadjust pre{\hypertarget{ref-barth-inrev}{}}%
-Barth, A., Stone, J., in review. Understanding the picture: The promis
+\leavevmode\vadjust pre{\hypertarget{ref-barth-inpress}{}}%
+Barth, A., Stone, J., In press. Understanding the picture: The promis
 and challenges of in-situ imagery data in the study of plankton ecology.
+Journal of Plankton Research: Horizons.
 
 \leavevmode\vadjust pre{\hypertarget{ref-barth2022}{}}%
 Barth, A., Stone, J., 2022.
@@ -1237,6 +1520,21 @@ Pacific Ocean. Global Biogeochemical Cycles 33, 1146--1160.
 Kimoto, K., 2015. Planktic foraminifera. pp. 129--178.
 \url{https://doi.org/10.1007/978-4-431-55130-0_7}
 
+\leavevmode\vadjust pre{\hypertarget{ref-knap1997}{}}%
+Knap, A.H., Michaels, A.F., Steinberg, D.K., Bahr, F., Bates, N.R.,
+Bell, S., Countway, P., Close, A.R., Doyle, A.P., Dow, R.L., Howse,
+F.A., Gundersen, K., Johnson, R.J., Kelly, R., Little, R., Orcutt, K.,
+Parsons, R., Rathburn, C., Sanderson, M., Stone, S., 1997.
+\href{https://eprints.soton.ac.uk/361194/}{BATS methods manual, version
+4}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-laget2024}{}}%
+Laget, M., Drago, L., Panaïotis, T., Kiko, R., Stemmann, L., Rogge, A.,
+Llopis-Monferrer, N., Leynaert, A., Irisson, J.-O., Biard, T., 2024.
+Global census of the significance of giant mesopelagic protists to the
+marine carbon and silicon cycles. Nature Communications 15, 3341.
+\url{https://doi.org/10.1038/s41467-024-47651-4}
+
 \leavevmode\vadjust pre{\hypertarget{ref-lampitt2009}{}}%
 Lampitt, R.S., Salter, I., Johns, D., 2009. Radiolaria: Major exporters
 of organic carbon to the deep ocean. Global Biogeochemical Cycles 23.
@@ -1410,304 +1708,6 @@ the Gulf of California. Biology Bulletin 32, 279--287.
 \url{https://doi.org/10.1007/s10525-005-0103-5}
 
 \end{CSLReferences}
-
-\newpage
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2533}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}@{}}
-\caption{Generalized Additive Model results for integrated total
-Rhizarian abundance in different regions of the water
-column.}\tabularnewline
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Model}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Term
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-edf
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-F
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-p-value
-\end{minipage} \\
-\midrule()
-\endfirsthead
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Model}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Term
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-edf
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-F
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-p-value
-\end{minipage} \\
-\midrule()
-\endhead
-\textbf{All Rhizaria Epipelagic} & Salinity & 2.0818 & 4.654 &
-\textless0.001 \\
-\(R^2_{adj}\)= 0.42 & DO & 0.8272 & 0.945 & 0.0136 \\
-& Silica & 3.1206 & 15.75 & \textless0.001 \\
-& NO3 & 2.9970 & 6.268 & \textless0.001 \\
-& Primary Productivity & 1.8367 & 2.099 & \textless0.001 \\
-& Particle Concentration & 0.9282 & 2.566 & \textless0.001 \\
-& & & & \\
-\textbf{All Rhizaria Upper Mesopelagic} & Silica & 0.6847 & 0.431 &
-0.073 \\
-\(R^2_{adj}\)= 0.406 & Avg Mass Flux & 1.5426 & 0.923 & 0.045 \\
-& Particle Concentration & 3.2957 & 20.89 & \textless0.001 \\
-& & & & \\
-\textbf{All Rhizaria Lower Mesopelagic} & Avg Mass Flux & 1.6632 & 1.824
-& 0.002 \\
-\(R^2_{adj}\)= 0.603 & Particle Concentration & 0.7694 & 0.662 &
-0.027 \\
-\bottomrule()
-\end{longtable}
-
-\newpage
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2533}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1867}}@{}}
-\caption{Taxa-specific generalized additive models for different regions
-of the water column.}\tabularnewline
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-Model
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Term
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-edf
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-F
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-p-value
-\end{minipage} \\
-\midrule()
-\endfirsthead
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-Model
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Term
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-edf
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-F
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-p-value
-\end{minipage} \\
-\midrule()
-\endhead
-\textbf{Acantharea Epipelagic} & Salinity & 2.264 & 4.113 &
-\textless0.001 \\
-R2adj=0.53 & O2 & 2.579 & 6.712 & \textless0.001 \\
-& Avg Mass Flux & 4.810 & 22.81 & \textless0.001 \\
-& Bacteria \#/L & 1.599 & 1.317 & 0.0117 \\
-& Particle Concentration & 0.853 & 1.158 & 0.0087 \\
-& & & & \\
-\textbf{Acantharea Upper Mesopelagic} & Avg C Flux & 1.296 & 0.621 &
-0.0439 \\
-R2adj=0.231 & Avg N Flux & 1.619 & 1.283 & 0.0026 \\
-& Particle Concentration & 0.952 & 3.886 & \textless0.001 \\
-& & & & \\
-\textbf{Acantharea Lower Mesopelagic} & Temperature & 2.076 & 4.155 &
-\textless0.001 \\
-R2adj=0.509 & Avg N Flux & 1.494 & 1.216 & 0.0113 \\
-& Primary Productivity & 0.766 & 0.648 & 0.0253 \\
-& Particle Concentration & 2.037 & 10.03 & \textless0.001 \\
-\textbf{Aulacanthidae Epipelagic} & Salinity & 0.792 & 0.757 & 0.0241 \\
-R2adj=0.251 & Avg N Flux & 0.869 & 1.324 & 0.0018 \\
-& Primary Productivity & 2.312 & 7.704 & \textless0.001 \\
-& Particle Concentration & 2.008 & 2.200 & 0.0017 \\
-& & & & \\
-\textbf{Aulacanthidae Upper Mesopelagic} & Particle Concentration &
-2.832 & 9.802 & \textless0.001 \\
-R2adj = 0.158 & & & & \\
-& & & & \\
-\textbf{Aulacanthidae Lower Mesopelagic} & Avg Mass Flux & 1.622 & 1.991
-& 0.002 \\
-R2adj=0.298 & Particle Concentration & 2.123 & 6.706 & \textless0.001 \\
-& & & & \\
-\textbf{Aulosphaeridae Upper Mesopelagic} & Particle Concentration &
-2.653 & 13.06 & \textless0.001 \\
-R2adj=0.2 & & & & \\
-& & & & \\
-\textbf{Aulosphaeridae Lower Mesopelagic} & Particle Concentration &
-0.972 & 6.248 & \textless0.001 \\
-R2adj=.147 & & & & \\
-& & & & \\
-\textbf{Castanellidae Epipelagic} & Avg C Flux & 1.462 & 0.816 &
-0.0421 \\
-R2adj = 0.124 & Primary Productivity & 0.771 & 0.665 & 0.0247 \\
-& Particle Concentration & 3.956 & 4.623 & \textless0.001 \\
-& & & & \\
-\textbf{Coelodendridae Upper Mesopelagic} & Avg N Flux & 0.822 & 0.919 &
-0.0183 \\
-R2adj=.113 & Particle Concentration & 0.970 & 6.208 & \textless0.001 \\
-& & & & \\
-\textbf{Coelodendridae Lower Mesopelagic} & Particle Concentration &
-1.773 & 4.873 & \textless0.001 \\
-R2adj=.133 & & & & \\
-& & & & \\
-\textbf{Collodaria Epipelagic} & Salinity & 0.925 & 2.267 &
-\textless0.001 \\
-R2adj=0.16 & O2 & 2.015 & 2.217 & 0.002 \\
-& Bacteria \#/L & 1.843 & 2.100 & 0.002 \\
-& & & & \\
-\textbf{Foraminifera Epipelagic} & Temperature & 4.414 & 8.789 &
-\textless0.001 \\
-R2adj=0.445 & O2 & 1.603 & 1.287 & 0.0111 \\
-& Avg N Flux & 2.512 & 3.396 & \textless0.001 \\
-& Primary Productivity & 0.824 & 0.920 & 0.0153 \\
-& Particle Concentration & 0.919 & 2.257 & \textless0.001 \\
-\bottomrule()
-\end{longtable}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/01_taxa.pdf}
-
-}
-
-\caption{Example images of different Rhizaria taxa. 4mm scale bar shown
-in lower right. All vignettes are same scale}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/02-environmental.pdf}
-
-}
-
-\caption{Environmental profiles across time-series of study period. Y
-axis shows depth in meters. (A) Temperature. (B) Salinity. (C) Dissolved
-Oxygen. (D) In-situ chlorophyll fluorescence. (E) Particle concenctrion
-(184 - 450\(\mu m\)). (F) Bacteria Abundance. (G) Silica. (H) Nitrate}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/03_prod-flux.pdf}
-
-}
-
-\caption{Primary productivity (A) and flux estimates from total mass
-(B), carbon (C), and nitrogen (D). Values are from monthly cruises with
-month displayed in corresponding colors. Absent data are shown by grey
-bar.}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/04_vertical.pdf}
-
-}
-
-\caption{Average abundance of Rhizaria in 25m bins, across entire study
-period. Shown are total Rhizaria (A), Acantharea (B), Collodaria (C),
-Aulacanthidae (D), Foraminifera (E), Aulosphaeridae (F), Castanellidae
-(G), Coelodendridae (H).}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/05_seasonality.pdf}
-
-}
-
-\caption{Seasonality of Rhizarian integrated abundance for the
-epipelagic (0-200m) (A-B), upper mesopelagic (200-500m) (C-D), lower
-mesopelagic (500-1000m) (E-F). Left panels (A,C,E) display total
-integrated abundance per monthly cruise colored by month. Right panels
-(B, D, F) display community composition of each total abundance.}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/09_size-comp.pdf}
-
-}
-
-\caption{Comparison of average sizes (ESD) amongst Rhizarian taxa which
-occurred throughout the water column.}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/06_epi-partials.pdf}
-
-}
-
-\caption{Partial effects of smooth terms in taxa-specific GAM models
-from the epipelagic (0-200m). Effects are grouped by taxa; Acantharea
-(A), Foraminifera (B), Aulacanthidae (C), Collodaria (D), Castanellidae
-(E).}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/07_upmeso-partial.pdf}
-
-}
-
-\caption{Partial effects of smooth terms in taxa-specific GAM models
-from the upper mesopelagic (200-500m). Effects are grouped by taxa;
-Acantharea (A), Aulacanthidae (B), Aulosphaeridae (C), Coelodendridae
-(D).}
-
-\end{figure}
-
-\newpage
-
-\begin{figure}
-
-{\centering \includegraphics{images/08_lomeso-partials.pdf}
-
-}
-
-\caption{Partial effects of smooth terms in taxa-specific GAM models
-from the lower mesopelagic (500-1000m). Effects are grouped by taxa;
-Acantharea (A), Aulacanthidae (B), Aulosphaeridae (C), Coelodendridae
-(D).}
-
-\end{figure}
-
-\newpage
-
-end.
 
 
 
