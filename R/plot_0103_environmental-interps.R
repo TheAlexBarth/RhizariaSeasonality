@@ -12,7 +12,7 @@ library(tidyr)
 library(scales)
 source('./R/utils.R')
 
-# |- Interpolating Function -----------------------
+## |- Interpolating Function -----------------------
 
 surf_interp <- function(df,
                         value,
@@ -50,26 +50,35 @@ par_df$Date <- as.Date(par_df$sampledate)
 
 # for casts occuring on the same date, mean
 par_df <- par_df |> 
-  group_by(Date, db) |> 
+  group_by(Date, db, esd_bin) |> 
   summarize(par_conc = mean(par_conc)) |> 
   ungroup() |> 
   bin_format()
 
 par_df$Depth = par_df$mp
 
-# |- Interpolate -----------------
+## |- Interpolate -----------------
 
-par_interp <- surf_interp(par_df, 'par_conc')
+## |-|- NEEDS REVISION FOR SMALL & LARGE --------------------------
+
+## |-|- Small -----------------------------------
+par_df <- par_df |> 
+  pivot_wider(names_from = 'esd_bin',
+              values_from = 'par_conc')
+
+
+small_par_interp <- surf_interp(par_df, 'small')
+small_par_interp$small[small_par_interp$small > 1] = 1
 
 par_df_early <- par_df[par_df$Date <= '2019-12-31',]
 par_df_late <- par_df[par_df$Date > '2019-12-31',]
 
-par_early_interp <- par_interp[par_interp$Date <= '2019-09-30',]
-par_late_interp <- par_interp[par_interp$Date >= '2020-10-24',]
+small_par_early_interp <- small_par_interp[small_par_interp$Date <= '2019-09-30',]
+small_par_late_interp <- small_par_interp[small_par_interp$Date >= '2020-10-24',]
 
-par_early_plot <- ggplot() +
-  geom_tile(data = par_early_interp,
-            aes(x = Date, y = Depth, fill = par_conc)) +
+small_par_early_plot <- ggplot() +
+  geom_tile(data = small_par_early_interp,
+            aes(x = Date, y = Depth, fill = small)) +
   geom_point(data = par_df_early,
              aes(x = as.POSIXct(Date), y = Depth),
              size = 0.1, color = 'lightgrey', alpha = 0.75) +
@@ -81,27 +90,76 @@ par_early_plot <- ggplot() +
         axis.title = element_blank(),
         axis.text = element_text(size = 2))
 
-par_late_plot <- ggplot() +
-  geom_tile(data = par_late_interp,
-            aes(x = Date, y = Depth, fill = par_conc)) +
+small_par_late_plot <- ggplot() +
+  geom_tile(data = small_par_late_interp,
+            aes(x = Date, y = Depth, fill = small)) +
   geom_point(data = par_df_late,
              aes(x = as.POSIXct(Date), y = Depth),
              size = 0.1, color = 'lightgrey', alpha = 0.75) +
   scale_fill_viridis_c(option = 'magma',
-                       begin = 0, end = 1)+
+                       begin = 0, end = 1,
+                       breaks = c(0.2, 0.4, 0.6))+
   scale_y_reverse(expand = c(0,0)) +
   theme_bw() +
   theme(legend.title = element_blank(),
         axis.title = element_blank(),
         axis.text = element_text(size = 2))
 
-ggsave('./output/01_environmental/par-conc-early.pdf',
-       par_early_plot,
+ggsave('./output/01_environmental/small-par-conc-early.pdf',
+       small_par_early_plot,
        height = 40, width = 20, units = 'mm',dpi = 600)
 
-ggsave('./output/01_environmental/par-conc-late.pdf',
-       par_late_plot,
+ggsave('./output/01_environmental/small-par-conc-late.pdf',
+       small_par_late_plot,
        height = 40, width = 70, units = 'mm',dpi = 600)
+
+
+## |-|- Large ----------------------------------------
+
+
+large_par_interp <- surf_interp(par_df, 'large')
+
+large_par_interp$large[large_par_interp$large > 1] = 1
+large_par_early_interp <- large_par_interp[large_par_interp$Date <= '2019-09-30',]
+large_par_late_interp <- large_par_interp[large_par_interp$Date >= '2020-10-24',]
+
+large_par_early_plot <- ggplot() +
+  geom_tile(data = large_par_early_interp,
+            aes(x = Date, y = Depth, fill = large)) +
+  geom_point(data = par_df_early,
+             aes(x = as.POSIXct(Date), y = Depth),
+             size = 0.1, color = 'lightgrey', alpha = 0.75) +
+  scale_fill_viridis_c(option = 'magma',
+                       begin = 0, end = 1)+
+  scale_y_reverse(expand = c(0,0)) +
+  theme_bw() +
+  theme(legend.position = 'none',
+        axis.title = element_blank(),
+        axis.text = element_text(size = 2))
+
+large_par_late_plot <- ggplot() +
+  geom_tile(data = large_par_late_interp,
+            aes(x = Date, y = Depth, fill = large)) +
+  geom_point(data = par_df_late,
+             aes(x = as.POSIXct(Date), y = Depth),
+             size = 0.1, color = 'lightgrey', alpha = 0.75) +
+  scale_fill_viridis_c(option = 'magma',
+                       begin = 0, end = 1,
+                       breaks = c(0.2,0.4,0.6))+
+  scale_y_reverse(expand = c(0,0)) +
+  theme_bw() +
+  theme(legend.title = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_text(size = 2))
+
+ggsave('./output/01_environmental/large-par-conc-early.pdf',
+       large_par_early_plot,
+       height = 40, width = 20, units = 'mm',dpi = 600)
+
+ggsave('./output/01_environmental/large-par-conc-late.pdf',
+       large_par_late_plot,
+       height = 40, width = 70, units = 'mm',dpi = 600)
+
 
 ###
 # CTD DATA ###########
@@ -111,7 +169,7 @@ ggsave('./output/01_environmental/par-conc-late.pdf',
 ctd_data <- readRDS("./data/00_ctd-data.rds") |> 
   list_to_tib('cruise_id')
 
-# |- Prep -----------------------------------
+## |- Prep -----------------------------------
 
 ctd_data <- ctd_data[which(ctd_data$ctd_origfilename %in% uvp_meta$ctd_origfilename),]
 
@@ -131,14 +189,14 @@ ctd_data <- ctd_data |>
 ctd_data$Depth <- ctd_data$depth
 ctd_data$Date <- ctd_data$`date(datetime)`
 
-# |-|- Interpolate ctd ----------------
+## |-|- Interpolate ctd ----------------
 ctd_data_interp <- list()
 for(value in c('temp','sal','o2','RFU')) {
   ctd_data_interp[[value]] <- surf_interp(ctd_data, value)
 }
 
 
-# |- Plot CTD -----------------------
+## |- Plot CTD -----------------------
 
 ctd_plotter <- function(value, color_option) {
   
@@ -212,7 +270,7 @@ bot_data <- bot_data |>
 raw_bot <- raw_bot |> 
   filter(depth <= 1000)
 
-# |- Prep -------------------
+## |- Prep -------------------
 uvp_cruise_meta <- uvp_meta |> 
   group_by(cruise_id = as.numeric(cruise_id)) |> 
   summarize(Date = mean(sampledate))
@@ -250,7 +308,7 @@ for(val in bot_vals) {
 
 
 
-# |-|- Interpolate Bottle data -------------------------
+## |-|- Interpolate Bottle data -------------------------
 
 bot_interp <- list()
 for(value in bot_vals) {
@@ -258,7 +316,7 @@ for(value in bot_vals) {
 }
 
 
-# |- Bot Plots ---------------------
+## |- Bot Plots ---------------------
 
 bot_plotter <- function(value, color_option) {
   
@@ -319,7 +377,7 @@ for(value in bot_vals) {
 # Flux & PP ######
 ###
 
-# |- Flux -----------------------------------
+## |- Flux -----------------------------------
 
 flux_data <- readRDS('./data/00_flux.rds')
 flux_data <- flux_data |> 
@@ -353,16 +411,16 @@ for(value in c('avg_mass_flux','avg_fbc','avg_fbn')) {
 }
 
 
-# |- Productivity ----------
+## |- Productivity ----------
 
 prod_data <- readRDS('./data/00_prod.rds')
 
-# |-|- Primary Productivity ----------------
+## |-|- Primary Productivity ----------------
 prod_split <- prod_data |> 
   split(f = prod_data$cruise_id)
 
 
-# |-|-|- Interpolated Productivity --------------------
+## |-|-|- Interpolated Productivity --------------------
 
 prod_interpolator <- function(prod_df) {
   drange = seq(0,140,1)
@@ -385,7 +443,7 @@ interp_prod <- prod_split |>
 
 
 
-# |-|-|- Binned Productivity ------------------------
+## |-|-|- Binned Productivity ------------------------
 
 
 interp_prod$db <- cut(interp_prod$depth, breaks = seq(0,150,25))

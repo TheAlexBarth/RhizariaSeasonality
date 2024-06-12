@@ -12,7 +12,7 @@ library(EcotaxaTools)
 # Data prep #################
 ###
 
-# |- Load in data -------
+## |- Load in data -------
 rhiz <- readRDS('./data/01_rhiz-densities.rds')
 meta <- readRDS('./data/00_zoop-uvp.rds')$meta
 
@@ -20,7 +20,7 @@ meta <- readRDS('./data/00_zoop-uvp.rds')$meta
 meta$month <- month(meta$sampledate)
 meta$year <- year(meta$sampledate)
 
-# |- make a all-rhizaria dataframe --------------
+## |- make a all-rhizaria dataframe --------------
 
 sum_by_cast <- function(cast_df) {
   out_df <- cast_df |> 
@@ -49,7 +49,7 @@ rhiz_avg_group <- rhiz |>
   summarize(mean = mean(conc_m3),
             sd = sd(conc_m3))
 
-# |- Save for later plots ---------------
+## |- Save for later plots ---------------
 saveRDS(
   list(
     all = total_avg_rhiz,
@@ -64,7 +64,7 @@ saveRDS(
 # Integrate for Seasonality ##########
 ####
 
-# |- Set up--------------------------
+## |- Set up--------------------------
 
 # write a function to make integrations based on depths and reject non-matches
 
@@ -128,8 +128,8 @@ cruise_id_convert <- function(rhiz_df) {
   return(rhiz_df)
 }
 
-# |- Total Calcs -----------------------------------
-# |-|- Epipelagic --------------------
+## |- Total Calcs -----------------------------------
+## |-|- Epipelagic --------------------
 
 all_epi <- total_rhiz |> 
   lapply(integrate_range_total, 0, 200) |> 
@@ -154,7 +154,7 @@ all_epi_sum <- all_epi_sum |>
   cruise_id_convert()
 
 
-# |-|- Upper Meso --------------------
+## |-|- Upper Meso --------------------
 
 all_upmeso <- total_rhiz |> 
   lapply(integrate_range_total, 200, 500) |> 
@@ -179,7 +179,7 @@ all_upmeso_sum <- all_upmeso_sum |>
   cruise_id_convert()
 
 
-# |-|- Lower Meso --------------------
+## |-|- Lower Meso --------------------
 
 all_lomeso <- total_rhiz |> 
   lapply(integrate_range_total, 500, 1000) |> 
@@ -205,8 +205,8 @@ all_lomeso_sum <- all_lomeso_sum |>
 
 
 
-# |- Group Calculations ---------------------------------------
-# |-|- Epipelagic ------------------------------
+## |- Group Calculations ---------------------------------------
+## |-|- Epipelagic ------------------------------
 rhiz_epi <- rhiz |> 
   lapply(integrate_range, 0, 200) |> 
   trim_NAs() |> 
@@ -230,7 +230,7 @@ rhiz_epi_sum <- rhiz_epi_sum |>
 
 # need to calc for more vertical zones
 
-# |-|- Upper Meso ------------------------------
+## |-|- Upper Meso ------------------------------
 rhiz_upmeso <- rhiz |> 
   lapply(integrate_range, 200, 500) |> 
   trim_NAs() |> 
@@ -249,7 +249,7 @@ rhiz_upmeso_sum <- rhiz_upmeso |>
 rhiz_upmeso_sum <- rhiz_upmeso_sum |> 
   cruise_id_convert()
 
-# |-|- Lower Meso ------------------------------
+## |-|- Lower Meso ------------------------------
 rhiz_lomeso <- rhiz |> 
   lapply(integrate_range, 500, 1000) |> 
   trim_NAs() |> 

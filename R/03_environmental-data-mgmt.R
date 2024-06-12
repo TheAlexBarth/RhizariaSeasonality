@@ -12,21 +12,21 @@ library(lubridate)
 # Data Prep ############
 ##
 
-# |- Original UVP data -------------
+## |- Original UVP data -------------
 meta <- readRDS('./data/00_zoop-uvp.rds')$meta
 
-# |- Particle data --------------------
+## |- Particle data --------------------
 par_conc <- readRDS('./data/01_par-conc.rds')
 
 par_df <- par_conc |> 
   list_to_tib('profileid')
 
-# |- Rhizaria Data -------------------------------------------------
+## |- Rhizaria Data -------------------------------------------------
 
 # bin-specific data
 binned_rhiz <- readRDS('./data/01_rhiz-densities.rds')
 
-# |-|- make a all-rhizaria dataframe --------------
+## |-|- make a all-rhizaria dataframe --------------
 
 sum_by_cast <- function(cast_df) {
   out_df <- cast_df |> 
@@ -43,7 +43,7 @@ intg_total_rhiz <- readRDS('./data/02_integrated-all-rhiz.rds')
 intg_taxa <- readRDS('./data/02_integrated-taxa.rds')
 
 
-# |- Environmental Data --------------------------------------
+## |- Environmental Data --------------------------------------
 
 # readin
 bottle_data <- readRDS('./data/00_bottles.rds')
@@ -51,7 +51,7 @@ ctd_data <- readRDS('./data/00_ctd-data.rds')
 flux_data <- readRDS('./data/00_flux.rds')
 prod_data <- readRDS('./data/00_prod.rds')
 
-# |-|- CTD Data ----------------------------
+## |-|- CTD Data ----------------------------
 
 ctd_binner <- function(ctd_df) {
   
@@ -89,12 +89,12 @@ ctd_bins <- ctd_data |>
 ctd_df <- ctd_bins |> 
   do.call(what = rbind,)
 
-# |-|-|- Correct the CTD Data ---------------
+## |-|-|- Correct the CTD Data ---------------
 ctd_df$o2[which(ctd_df$o2 < 0)] <- 0
 ctd_df$sal[which(ctd_df$sal < 0)] <- 0
 
 
-# |-|- Bottle Data ------------------------
+## |-|- Bottle Data ------------------------
 
 bottle_data$cruise_id <- bottle_data$ctd_origfilename |> 
   as.character() |> 
@@ -114,7 +114,7 @@ drop_idx <- bottle_data[,c(18:26)] |>
 
 bottle_data <- bottle_data[-which(drop_idx == 0),]
 
-# |-|-|- Split and average within ----------------------
+## |-|-|- Split and average within ----------------------
 
 bot_split <- bottle_data |> 
   split(f = bottle_data$ctd_origfilename)
@@ -186,17 +186,17 @@ binned_bottles <- interpolated_avgs |>
             Bact_enumb = mean(Bact_enumb, na.rm = T)) 
 
 
-# |-|- Flux Data -------------------
+## |-|- Flux Data -------------------
 flux_predict <- flux_data |> 
   select(cruise_id, depth, avg_mass_flux, avg_fbc, avg_fbn) |> 
   pivot_wider(names_from = depth, values_from = c(avg_mass_flux, avg_fbc, avg_fbn))
 
-# |-|- Primary Productivity ----------------
+## |-|- Primary Productivity ----------------
 prod_split <- prod_data |> 
   split(f = prod_data$cruise_id)
 
 
-# |-|-|- Interpolated Productivity --------------------
+## |-|-|- Interpolated Productivity --------------------
 
 prod_interpolator <- function(prod_df) {
   drange = seq(0,140,1)
@@ -219,7 +219,7 @@ interp_prod <- prod_split |>
 
 
 
-# |-|-|- Binned Productivity ------------------------
+## |-|-|- Binned Productivity ------------------------
 
 
 interp_prod$db <- cut(interp_prod$depth, breaks = seq(0,150,25))
@@ -233,7 +233,7 @@ prod_bins <- prod_bins[-which(is.na(prod_bins$db)),] |>
 
 prod_bins$cruise_id <- as.numeric(prod_bins$cruise_id)
   
-# |-|-|- Integrated Euphotic Productivity ---------------------
+## |-|-|- Integrated Euphotic Productivity ---------------------
 
 prod_integrate <- function(pp) {
   
@@ -253,7 +253,7 @@ integrated_prod <- interp_prod |>
 # Merge Environmental And Rhizaria #############
 ###
 
-# |- Total Rhizaria -----------------------
+## |- Total Rhizaria -----------------------
 
 
 
@@ -286,7 +286,7 @@ tot_rhiz <- list()
 tot_rhiz[['epi']] <- tot_rhiz_envir[tot_rhiz_envir$max_d <= 200, ]
 tot_rhiz[['meso']] <- tot_rhiz_envir[tot_rhiz_envir$max_d > 200,]
 
-# |- Individual taxa dfs -----------------------------
+## |- Individual taxa dfs -----------------------------
 
 taxa_rhiz <- binned_rhiz |>
   list_to_tib('profileid')  |>
@@ -330,7 +330,7 @@ for(name in keeper_names) {
 # Matching Integrated Data #######
 ###
 
-# |- Getting enviornmental data to match ------------
+## |- Getting enviornmental data to match ------------
 ctd_df <- ctd_df |> bin_format()
 ctd_df$zone <- NULL
 for(r in 1:nrow(ctd_df)) {
@@ -350,7 +350,7 @@ ctd_avg_zone <- ctd_df |>
             o2 = mean(o2),
             RFU = mean(RFU))
 
- # |-|- Bottle Data ----------------------------
+ ## |-|- Bottle Data ----------------------------
 binned_bottles <- binned_bottles |> bin_format()
 binned_bottles$zone <- NULL
 for(r in 1:nrow(binned_bottles)) {
@@ -370,7 +370,7 @@ intg_bot <- binned_bottles |>
             Bact_enumb = sum(Bact_enumb))
 intg_bot$cruise_id <- as.character(intg_bot$cruise_id)
 
-# |-|- Particle Data --------------------------------
+## |-|- Particle Data --------------------------------
 par_df$zone <- NA
 par_df <- par_df |> bin_format()
 
@@ -385,10 +385,14 @@ for(r in 1:nrow(par_df)) {
 }
 
 part_intg <- par_df |> 
-  group_by(zone, profileid) |> 
-  summarize(par_conc = sum(par_conc, na.rm = T))
+  group_by(zone, profileid, esd_bin) |> 
+  summarize(par_conc = sum(par_conc, na.rm = T)) |> 
+  pivot_wider(names_from = esd_bin,
+              values_from = par_conc)
 
-# |-|- Productivity Data ---------------------------
+
+
+## |-|- Productivity Data ---------------------------
 
 prod_intg <- prod_bins |> 
   group_by(cruise_id) |> 
@@ -398,9 +402,9 @@ prod_intg$cruise_id <- prod_intg$cruise_id |> as.character()
 
 flux_predict$cruise_id <- as.character(flux_predict$cruise_id)
 
-# |- Bring it together ------------------------
+## |- Bring it together ------------------------
 
-# |-|- All Rhizaria ----------------------------
+## |-|- All Rhizaria ----------------------------
 
 meta$month <- month(meta$sampledate)
 
@@ -410,7 +414,7 @@ for(zone in names(intg_total_rhiz)) {
     left_join(
       part_intg[which(part_intg$zone == zone),] |> 
         ungroup() |> 
-        select(profileid, par_conc), 
+        select(profileid, large, small), 
       by = c('profileid')
     ) |>
     left_join(
@@ -448,7 +452,7 @@ for(zone in names(intg_taxa_group)) {
       left_join(
         part_intg[which(part_intg$zone == zone),] |> 
           ungroup() |> 
-          select(profileid, par_conc), 
+          select(profileid, large, small), 
         by = c('profileid')
       ) |>
       left_join(
@@ -482,7 +486,7 @@ for(zone in names(intg_taxa_group)) {
 # Save Data ###############
 ###
 
-# |- Rhizaria Data for models ---------------------------------
+## |- Rhizaria Data for models ---------------------------------
 
 # Binned data
 saveRDS(tot_rhiz, './data/03_total-rhizaria.rds')
@@ -492,7 +496,7 @@ saveRDS(taxa_data, './data/03_taxa-rhizaria.rds')
 saveRDS(all_intg, './data/03_all-integrated.rds')
 saveRDS(taxa_intg, './data/03_taxa-integrated.rds')
 
-# |- Data for plotting environmental data -----------------
+## |- Data for plotting environmental data -----------------
 
 # CTD data is already saved as is.
 # Particle data can be formatted later
