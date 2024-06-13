@@ -10,7 +10,7 @@ library(dplyr)
 uvp_data <- readRDS('./data/00_zoop-uvp.rds') 
 
 par_conc <- uvp_data |> 
-  uvp_par_conc(min_esd = 0.184, max_esd = .450)
+  uvp_par_conc(min_esd = 0.184, max_esd = 0.9)
 
 db_cutter <- function(pdf) {
   pdf$db <- cut(pdf$depth, seq(0,1000,25))

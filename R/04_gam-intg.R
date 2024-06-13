@@ -9,6 +9,7 @@ library(EcotaxaTools)
 library(dplyr)
 library(tidyr)
 library(mgcViz)
+source('./R/utils.R')
 
 ##
 # Load in Data #########
@@ -27,53 +28,46 @@ for(taxa in names(taxa_rhiz$epi)) {
 # Total Rhizaria ##########
 ###
 
-# |- Epi pelagic -----------------------
+## |- Epi pelagic -----------------------
 
 # full model 
-full_epi_total <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) + s(RFU, k = 6) +
-    s(Si, k = 6) + s(Bact_enumb, k = 6) + s(NO3, k = 6) +
-    s(avg_mass_flux_200, k = 6) + s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
-    s(pp, k = 6) + s(par_conc, k = 6),
+
+full_epi_form <-   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) + s(RFU, k = 6) +
+  s(Si, k = 6) + s(Bact_enumb, k = 6) + s(NO3, k = 6) +
+  s(avg_mass_flux_200, k = 6) + s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
+  s(pp, k = 6) + s(par_conc, k = 6)
+
+
+full_epi_total <- gam(full_epi_form,
   data = tot_rhiz$epi, method = 'ML', select = T
 )
 full_epi_total |>  summary()
+full_epi_total |> concurvity()
 
 # reduced model
-red_epi_total <- gam(
-  intg ~ s(sal, k = 6) + s(o2, k = 6) +
-    s(Si, k = 6) + s(NO3, k = 6) +
-    s(pp, k = 6) + s(par_conc, k = 6),
-  data = tot_rhiz$epi, method = 'ML', select = T
-)
+red_epi_total <- backward_stepwise_gam(full_epi_form, tot_rhiz$epi)
 red_epi_total |>  summary()
-AIC(red_epi_total, full_epi_total)
-BIC(red_epi_total, full_epi_total)
 
-# |- UpMeso ----------------------------------
+## |- UpMeso ----------------------------------
 
-full_upmeso_tot <- gam(
-  intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
-    s(Si, k = 6) +  s(NO3, k = 6) +
-    s(avg_mass_flux_200, k = 6) + s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
-    s(par_conc, k = 6),
+full_upmeso_form <-   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
+  s(Si, k = 6) +  s(NO3, k = 6) +
+  s(avg_mass_flux_200, k = 6) + s(avg_fbc_200, k = 6) + s(avg_fbn_200, k = 6) +
+  s(par_conc, k = 6)
+
+
+full_upmeso_tot <- gam(full_upmeso_form,
   data = tot_rhiz$upmeso, method = 'ML', select = T 
 )
 full_upmeso_tot |> summary()
 
 
-red_upmeso_tot <- gam(
-  intg ~ 
-    s(Si, k = 6) + 
-    s(avg_mass_flux_200, k = 6) + 
-    s(par_conc, k = 6),
-  data = tot_rhiz$upmeso, method = 'ML', select = T 
-)
+red_upmeso_tot <- backward_stepwise_gam(full_upmeso_form, tot_rhiz$upmeso)
 red_upmeso_tot |> summary()
 AIC(full_upmeso_tot, red_upmeso_tot)
 BIC(full_upmeso_tot, red_upmeso_tot)
 
-# |- LoMeso -----------------------------
+## |- LoMeso -----------------------------
 
 
 full_lomeso_tot <- gam(
@@ -99,7 +93,7 @@ red_lomeso_tot |> summary()
 # Acantharea #########
 ##
 
-# |- Epipelagic -----------------------
+## |- Epipelagic -----------------------
 
 # full model 
 full_epi_acantharea <- gam(
@@ -121,7 +115,7 @@ red_epi_acantharea <- gam(
 )
 red_epi_acantharea |>  summary()
 
-# |- UpMeso ----------------------------------
+## |- UpMeso ----------------------------------
 
 full_upmeso_acantharea <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -142,7 +136,7 @@ red_upmeso_acantharea |> summary()
 AIC(full_upmeso_acantharea, red_upmeso_acantharea)
 BIC(full_upmeso_acantharea, red_upmeso_acantharea)
 
-# |- LoMeso -----------------------------
+## |- LoMeso -----------------------------
 
 full_lomeso_acantharea <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -167,7 +161,7 @@ BIC(full_lomeso_acantharea, red_lomeso_acantharea)
 # Aulacanthidae #########
 ##
 
-# |- Epipelagic -----------------------
+## |- Epipelagic -----------------------
 
 # full model 
 full_epi_Aulacanthidae <- gam(
@@ -190,7 +184,7 @@ red_epi_Aulacanthidae |>  summary()
 AIC(red_epi_Aulacanthidae, full_epi_Aulacanthidae)
 BIC(red_epi_Aulacanthidae, full_epi_Aulacanthidae)
 
-# |- UpMeso ----------------------------------
+## |- UpMeso ----------------------------------
 
 full_upmeso_Aulacanthidae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -211,7 +205,7 @@ red_upmeso_Aulacanthidae |> summary()
 AIC(full_upmeso_Aulacanthidae, red_upmeso_Aulacanthidae)
 BIC(full_upmeso_Aulacanthidae, red_upmeso_Aulacanthidae)
 
-# |- LoMeso -----------------------------
+## |- LoMeso -----------------------------
 
 full_lomeso_Aulacanthidae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -237,7 +231,7 @@ BIC(full_lomeso_Aulacanthidae, red_lomeso_Aulacanthidae)
 # Aulosphaeridae #########
 ##
 
-# |- Epipelagic -----------------------
+## |- Epipelagic -----------------------
 
 # # full model 
 # full_epi_Aulosphaeridae <- gam(
@@ -259,7 +253,7 @@ BIC(full_lomeso_Aulacanthidae, red_lomeso_Aulacanthidae)
 # red_epi_Aulosphaeridae |>  summary()
 
 
-# |- UpMeso ----------------------------------
+## |- UpMeso ----------------------------------
 
 full_upmeso_Aulosphaeridae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -280,7 +274,7 @@ red_upmeso_Aulosphaeridae |> summary()
 AIC(full_upmeso_Aulosphaeridae, red_upmeso_Aulosphaeridae)
 BIC(full_upmeso_Aulosphaeridae, red_upmeso_Aulosphaeridae)
 
-# |- LoMeso -----------------------------
+## |- LoMeso -----------------------------
 
 full_lomeso_Aulosphaeridae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -329,7 +323,7 @@ BIC(full_epi_Castanellidae, red_epi_Castanellidae)
 ###
 
 
-# |- UpMeso ----------------------------------
+## |- UpMeso ----------------------------------
 
 full_upmeso_Coelodendridae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -352,7 +346,7 @@ red_upmeso_Coelodendridae |> summary()
 AIC(full_upmeso_Coelodendridae, red_upmeso_Coelodendridae)
 BIC(full_upmeso_Coelodendridae, red_upmeso_Coelodendridae)
 
-# |- LoMeso -----------------------------
+## |- LoMeso -----------------------------
 
 full_lomeso_Coelodendridae <- gam(
   intg ~ s(temp, k = 6) + s(sal, k = 6) + s(o2, k = 6) +
@@ -402,7 +396,7 @@ BIC(full_epi_Collodaria, red_epi_Collodaria)
 # Foraminifera #############
 ###
 
-# |- Epipelagic -----------------------
+## |- Epipelagic -----------------------
 
 # full model 
 full_epi_Foraminifera <- gam(
@@ -432,7 +426,7 @@ BIC(red_epi_Foraminifera, full_epi_Foraminifera)
 ###
 
 
-# |- Plot extracting function --------------------------------
+## |- Plot extracting function --------------------------------
 
 # function for inside smooth predictor
 get_other_median <- function(var, data) {
@@ -487,9 +481,9 @@ smooth_predictor <- function(model, data) {
   return(plot_output)
 }
 
-# |- Save Data for plots --------------------------
+## |- Save Data for plots --------------------------
 
-# |-|- Total Data --------------------------------------
+## |-|- Total Data --------------------------------------
 
 epi_total <- smooth_predictor(red_epi_total, tot_rhiz$epi)
 upmeso_total <- smooth_predictor(red_upmeso_tot, tot_rhiz$upmeso)
@@ -503,7 +497,7 @@ saveRDS(list(
 ), './data/04_total-gam.rds')
 
 
-# |-|- Taxa Data ----------------------------------------
+## |-|- Taxa Data ----------------------------------------
 
 acantharea_epi <- smooth_predictor(red_epi_acantharea, taxa_rhiz$epi$Acantharea)
 acantharea_upmeso <- smooth_predictor(red_upmeso_acantharea, taxa_rhiz$upmeso$Acantharea)
