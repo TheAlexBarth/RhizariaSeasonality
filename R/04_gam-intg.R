@@ -389,7 +389,28 @@ red_epi_Collodaria |>  summary()
 red_epi_Foraminifera |>  summary()
 
 
-
+## |- Save Models --------------------------
+saveRDS(
+  list(
+      tot_epi = red_epi_total,
+      tot_upmeso = red_upmeso_tot,
+      tot_lomeso = red_lomeso_tot,
+      acantharea_epi = red_epi_acantharea,
+      acantharea_upmeso = red_upmeso_acantharea,
+      acantharea_lomeso = red_lomeso_acantharea,
+      aulacanthidae_epi = red_epi_Aulacanthidae,
+      aulacanthidae_upmeso = red_upmeso_Aulacanthidae,
+      aulacanthidae_lomeso = red_lomeso_Aulacanthidae,
+      aulosphaeridae_upmeso = red_upmeso_Aulosphaeridae,
+      aulosphaeridae_lomeso = red_lomeso_Aulosphaeridae,
+      castanellidae_epi = red_epi_Castanellidae,
+      coelodendridae_upmeso = red_upmeso_Coelodendridae,
+      coelodendridae_lomeso = red_lomeso_Coelodendridae,
+      collodaria_epi = red_epi_Collodaria,
+      foraminifera_epi = red_epi_Foraminifera
+    ),
+  './data/04_gam-intg.rds'
+)
 
 
 
