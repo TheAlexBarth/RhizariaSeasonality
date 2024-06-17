@@ -3,7 +3,9 @@
 ###
 
 rm(list = ls())
-
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
 
 ###
 # Just to show particle relationships
@@ -75,11 +77,38 @@ save_plots <- function(name) {
 taxa = names(data)
 taxa = taxa[-which(taxa == 'total')]
 
+
+## |- Name mapping for plots ------------------
 zones = c(
   `epi` = 'Epipelagic',
   `upmeso` = 'Upper Mesopelagic',
   `lomeso` = 'Lower Mesopelagic'
 )
+
+taxa_names = c(
+  `acanth` = 'Acantharea',
+  `aulacanthidae` = 'Aulacanthidae',
+  `aulosphaeridae` = 'Aulosphaeridae',
+  `castanellidae` = 'Castanellidae',
+  `coelodendridae` = 'Coelodendridae',
+  `collodaria` = 'Collodaria',
+  `foram` = 'Foraminifera',
+)
+
+var_names = c(
+  `temp` = 'Temperature [°C]',
+  `sal` = 'Salinity [ppt]',
+  `pp` = 'Primary Production [mg C m^-2 d^-1]',
+  `avg_mass_flux_200` = 'Average Mass Flux [mg C m^-2 d^-1]',
+  `Bact_enumb` = 'Bacterial Abundance [10^8 kg^-1]',
+  `RFU` = 'Relative Fluorescence Units',
+  `avg_fbn_200` = 'Average Nitrogen Flux [mg N m^-2 d^-1]',
+  `Si` = 'Silicate [µmol kg^-1]',
+  `o2` = 'Oxygen [µmol kg^-1]',
+  `par_conc` = 'Particle Concentration [L^-1]',
+  `avg_fbc_200` = 'Average Carbon Flux [mg C m^-2 d^-1]'
+)
+
 
 # need to make the plot into a function to avoid lazy load issue
 supp_plot <- function(taxon, zone, var) {
@@ -97,7 +126,7 @@ supp_plot <- function(taxon, zone, var) {
                 color = 'lightgrey',
                 alpha = 0.2) +
     labs(x = var, y = 'Integrated Abundance',
-         subtitle = paste0(taxon, ' ', zones[zone])) +
+         subtitle = paste0(taxa_names[taxon], ' ', zones[zone])) +
     theme_bw() +
     theme(legend.position = 'none', 
           axis.text = element_text(size = 8, face = 'bold'),

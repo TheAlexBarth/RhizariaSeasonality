@@ -104,10 +104,10 @@ Epipelagic Acantharea were explained by several predictor variables and had a go
 | $R^2_{adj}$=0.157                    |                        |       |       |         |
 | **Collodaria Epipelagic**.           | Salinity               | 0.926 | 2.267 |\<0.001  |
 | $R^2_{adj}$=0.16                     | O2                     | 2.015 | 2.217 |\<0.001  |
-|                                      | Bacteria #/L           | 1.843 | 2.100 | 0.0024  |
+|                                      | Bacteria.              | 1.843 | 2.100 | 0.0024  |
 | **Foraminifera Epipelagic**          | Temperature            | 4.420 | 7.624 |\<0.001  |
 | $R^2_{adj}$=0.543                    | O2                     | 0.799 | 0.788 | 0.023   |
-|                                      | Bacteria.              | 0.000 | 0.000 | 0.523   |
+|                                      | Bacteria               | 0.000 | 0.000 | 0.523   |
 |                                      | Avg N Flux             | 1.847 | 3.022 |\<0.001  |
 |                                      | Primary Productivity   | 0.472 | 0.139 | 0.183   |
 |                                      | Particle Concentration | 1.685 | 2.955 |\<0.001  |

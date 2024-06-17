@@ -19,9 +19,10 @@ tot_rhiz <- readRDS('./data/03_all-integrated.rds')
 tot_rhiz$epi <- tot_rhiz$epi[-which(tot_rhiz$epi$sal < 33),] # drop epi malfunction
 taxa_rhiz <- readRDS('./data/03_taxa-integrated.rds')
 
-# drop epi sal malfunction
+# drop epi sal malfunction and RFU -999
 for(taxa in names(taxa_rhiz$epi)) {
   taxa_rhiz$epi[[taxa]] <- taxa_rhiz$epi[[taxa]][-which(taxa_rhiz$epi[[taxa]]$sal < 33),]
+  taxa_rhiz$epi[[taxa]] <- taxa_rhiz$epi[[taxa]][-which(taxa_rhiz$epi[[taxa]]$RFU == -999),]
 }
 
 ###
