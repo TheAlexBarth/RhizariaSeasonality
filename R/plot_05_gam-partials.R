@@ -6,6 +6,7 @@ rm(list = ls())
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+graphics.off()
 
 ###
 # Just to show particle relationships
@@ -36,7 +37,11 @@ make_gam_plot <- function(var, data) {
     scale_color_gradient2(low = "#96e0fa", mid = "#B2182B", high = "#96e0fa", name = "Month",
                          midpoint = 6) +
     theme_bw() +
-    theme(legend.position = 'none', axis.text = element_text(size = 8, face = 'bold'))
+    theme(legend.position = 'none', 
+          axis.text = element_text(size = 18, face = 'bold'),
+          axis.title = element_blank(),
+          panel.border = element_rect(colour = 'black', fill = NA,
+                                      linewidth = 2))
   return(plot)
 }
 
@@ -92,7 +97,7 @@ taxa_names = c(
   `castanellidae` = 'Castanellidae',
   `coelodendridae` = 'Coelodendridae',
   `collodaria` = 'Collodaria',
-  `foram` = 'Foraminifera',
+  `foram` = 'Foraminifera'
 )
 
 var_names = c(
@@ -117,7 +122,7 @@ supp_plot <- function(taxon, zone, var) {
    outplot <- ggplot() +
     geom_point(aes(x = plot_data[[var]]$obs[[var]], 
                    y = plot_data[[var]]$obs$intg),
-               size = 3) +
+               size = 1) +
     geom_line(aes(x = plot_data[[var]]$pred[[var]],
                   y = plot_data[[var]]$pred$fit)) +
     geom_ribbon(aes(x = plot_data[[var]]$pred[[var]],
@@ -125,42 +130,43 @@ supp_plot <- function(taxon, zone, var) {
                     ymax = plot_data[[var]]$pred$high),
                 color = 'lightgrey',
                 alpha = 0.2) +
-    labs(x = var, y = 'Integrated Abundance',
+    labs(x = var_names[var], y = 'Integrated Abundance [indv. m^-2]',
          subtitle = paste0(taxa_names[taxon], ' ', zones[zone])) +
     theme_bw() +
     theme(legend.position = 'none', 
-          axis.text = element_text(size = 8, face = 'bold'),
-          plot.subtitle = element_text(size = 8))
+          axis.text = element_text(size = 6, face = 'bold'),
+          plot.subtitle = element_text(size = 6),
+          axis.title = element_text(size = 6))
    
    return(outplot)
 }
 
 
-#### ERRORS HERE ####################
 
+plot_list = list()
 for(zone in names(zones)) {
-  plot_list = list()
+  plot_list[[zone]] = list()
   
   for(taxon in taxa) {
     if(zone %in% names(data[[taxon]])){
       print(paste0('Making plot for ', taxon, ' in ', zone))
       for(var in names(data[[taxon]][[zone]])) {
-        plot_list[[paste0(taxon, '-', var)]] <- supp_plot(taxon, zone, var)
+        plot_list[[zone]][[paste0(taxon, '-', var)]] <- supp_plot(taxon, zone, var)
       }
     }
   }
+}
+
+
+for(name in names(plot_list)) {
   
-  quartz()
-  ggarrange(plotlist = plot_list)
+  ggsave(paste0('./output/Supplement/s05_gam-partials/s05_', name, '.pdf'),
+         ggarrange(plotlist = plot_list[[name]],
+                   labels = 'AUTO'),
+         width = 8, height = 9, units = 'in')
 }
 
-
-for(name in plot_list) {
-  quartz()
-  print(plot_list[[name]])
-}
-
-# # DO NOT UNCOMMENT UNLESS YOU ARE SURE YOU WANT TO DELETE ALL OTHER PLOTS!
+# DO NOT UNCOMMENT UNLESS YOU ARE SURE YOU WANT TO DELETE ALL OTHER PLOTS!
 # 
 # lapply(names(data), save_plots)
 
