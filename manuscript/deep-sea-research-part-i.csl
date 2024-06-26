@@ -11,4 +11,10 @@
     <updated>2018-03-09T05:06:46+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+  <citation>
+    <sort>
+      <key variable="year"/>
+      <key variable="author"/>
+    </sort>
+  </citation>
 </style>
