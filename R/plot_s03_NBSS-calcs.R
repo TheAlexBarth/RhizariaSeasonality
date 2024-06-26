@@ -39,33 +39,111 @@ names(vol_s)[1] <- 'volume'
 
 
 #' get the nbss for each cast.
-calc_nbss <- function(df, metric = 'esd') {
+calc_nbss_width <- function(df,
+                      metric = 'esd',
+                      conv = 0.092,
+                      vol) {
   
-  size_limits <- c(min_size = min(df[[metric]]), max_size = max(df[[metric]]))
+  # assign size bins
+  # using width with prefixed sizes will make all bins the same regardless
+  # of the df input
+  size_classes <- (df[[metric]] * conv) |>
+    assign_spectra_bins('width',
+                        width = 1,
+                        min_size = size_limits[1], 
+                        max_size = size_limits[2])
   
-  df$size_class <- df[[metric]] |>
-    assign_spectra_bins('log', min_size = size_limits[1], max_size = size_limits[2])
+  ns = (table(size_classes) / vol)
   
-  db_num <- df |>
-    count_size_classes() |>
-    numeric_spectra(vol_L = 1, needs_format = T)
+  ns[which(ns == 0)] <- NA
   
-  return(db_num)
+  outdf <- data.frame(
+    size_bin = levels(size_classes),
+    count = as.vector(table(size_classes)),
+    ns = as.vector(ns)
+  ) |> 
+    bin_format(col = 'size_bin')
+  return(outdf)
 }
+
+
+calc_nbss_log <- function(df,
+                            metric = 'esd',
+                            conv = 0.092,
+                            vol) {
+  
+  # assign size bins
+  # using width with prefixed sizes will make all bins the same regardless
+  # of the df input
+  size_classes <- (df[[metric]] * conv) |>
+    assign_spectra_bins('log',
+                        min_size = size_limits[1], 
+                        max_size = size_limits[2])
+  
+  ns = (table(size_classes) / vol) |> 
+    log()
+  
+  ns[is.infinite(ns)] <- NA
+  
+  outdf <- data.frame(
+    size_bin = levels(size_classes),
+    count = as.vector(table(size_classes)),
+    ns = as.vector(ns)
+  ) |> 
+    bin_format(col = 'size_bin')
+  return(outdf)
+}
+
 
 
 # create bin sizes
 rhiz_sizes <- get_all(rhiz, 'esd', pixel_conv = T)
-min(rhiz_sizes)
-max(rhiz_sizes)
+size_limits = c(min(rhiz_sizes), max(rhiz_sizes))
 
 
-## |-|- Create list of bins
+## |-|- Create list of bins ------------------------------
+
+ns_list = list()
+log_ns = list()
+for(name in names(rhiz$zoo_files)) {
+  ns_list[[name]] <- calc_nbss_width(rhiz$zoo_files[[name]],
+                               vol = as.numeric(vol_s$volume[vol_s$profileid == name]))
+  
+  log_ns[[name]] <- calc_nbss_log(rhiz$zoo_files[[name]],
+                               vol = as.numeric(vol_s$volume[vol_s$profileid == name]))
+}
+
+nsdf <- ns_list |> 
+  list_to_tib('profileid')
+
+logdf <- log_ns |>
+  list_to_tib('profileid')
 
 
 
+ns_plot <- ggplot() +
+  geom_point(data = nsdf,
+             aes(x = mp_size_bin,
+                 y = ns)
+  ) +
+  labs(x = 'ESD [mm]', y = '#/L    ') +
+  theme_bw()
 
-rhiz_nbss <- rhiz_sizes |>
-  calc_nbss()
+log_plot <- ggplot() +
+  geom_point(data = logdf,
+             aes(x = log(mp_size_bin),
+                 y = ns)
+  ) +
+  geom_smooth(data = logdf,
+              aes(x = log(mp_size_bin),
+                  y = ns),
+              method = 'lm',
+              se = F,
+              color = 'red') +
+  labs(x = 'Log(ESD [mm])', y = 'Log(#/L)') +
+  theme_bw()
 
-plot(log(n_s,2) ~ mp_size_class, data = rhiz_nbss)
+lm(logdf$ns ~ log(logdf$mp_size_bin))
+
+ggarrange(ns_plot, log_plot, ncol = 2, labels = 'AUTO')
+ggsave('./output/Supplement/s03_NBSS-calcs.pdf', width = 8, height = 4, units = 'in')

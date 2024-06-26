@@ -71,12 +71,12 @@ for(r in 1:nrow(rhiz_sizes)) {
   }
 }
 
-# |- filter to more than 100 obs --------------
+##  filter to more than 100 obs --------------
 
 rhiz_sizes <- rhiz_sizes |> 
   filter(name %in% c('Acantharea', 'Aulacanthidae', 'Foraminifera', 'Aulosphaeridae'))
 
-# |- Plot sizes -------------------------
+## |- Plot sizes -------------------------
 
 ggplot(rhiz_sizes,aes(x = name, y = esd, fill = zone, color = zone)) +
   geom_point(position = position_jitterdodge(0.2), alpha = 0.25) +
@@ -96,7 +96,7 @@ ggplot(rhiz_sizes,aes(x = name, y = esd, fill = zone, color = zone)) +
 ggsave('./output/09_size-comp/size-comp.pdf',width = 85, units = 'mm')
 
 
-# |- Stats ----------------------
+## |- Stats ----------------------
 for(name in unique(rhiz_sizes$name)) {
   print(name)
   loop_data <- rhiz_sizes[which(rhiz_sizes$name == name),]
