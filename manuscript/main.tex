@@ -7,6 +7,7 @@
 ]{article}
 
 \usepackage{amsmath,amssymb}
+\usepackage{lmodern}
 \usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
@@ -17,10 +18,6 @@
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else  
-    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -43,28 +40,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 
 \providecommand{\tightlist}{%
@@ -91,38 +74,28 @@
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-% definitions for citeproc citations
-\NewDocumentCommand\citeproctext{}{}
-\NewDocumentCommand\citeproc{mm}{%
-  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
-\makeatletter
- % allow citations to break across lines
- \let\@cite@ofmt\@firstofone
- % avoid brackets around text for \cite:
- \def\@biblabel#1{}
- \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
-\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
- {\begin{list}{}{%
-  \setlength{\itemindent}{0pt}
-  \setlength{\leftmargin}{0pt}
-  \setlength{\parsep}{0pt}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-   \setlength{\leftmargin}{\cslhangindent}
-   \setlength{\itemindent}{-1\cslhangindent}
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
   \fi
   % set entry spacing
-  \setlength{\itemsep}{#2\baselineskip}}}
- {\end{list}}
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \usepackage{hyphenat} % don't hyphenat titles
@@ -130,6 +103,10 @@
 \usepackage{lineno}\linenumbers
 
 % Add any tex header commands here
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -166,17 +143,21 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \makeatother
 \makeatletter
-\makeatother
-\makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\usepackage{bookmark}
-
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
@@ -188,7 +169,6 @@
   citecolor={Blue},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
-
 
 \title{Rhizaria in the oligotrophic ocean exhibit clear temporal and
 vertical variability.}
@@ -321,10 +301,11 @@ heterotrophy amongst many taxa.
 \vspace{0.1\textheight} 
 
 \end{minipage}  \end{titlepage}
-
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, interior hidden, sharp corners, borderline west={3pt}{0pt}{shadecolor}, frame hidden, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \setstretch{2}
-\section{Introduction}\label{introduction}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
 
 Rhizaria are an extremely diverse super-group of single-celled organisms
 which occupy a wide range of habitats. Planktonic Rhizaria include
@@ -460,9 +441,11 @@ primary productivity, local DO maxima) and other rhizaria will
 correspond to factors which promote heterotrophy (particle
 concentration, flux, and local DO minima).
 
-\section{Methods}\label{methods}
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
 
-\subsection{Oceanographic sampling}\label{oceanographic-sampling}
+\hypertarget{oceanographic-sampling}{%
+\subsection{Oceanographic sampling}\label{oceanographic-sampling}}
 
 Data were collected in collaboration with the Bermuda Atlantic
 Time-series Study (Michaels and Knap, 1996; Lomas \emph{et al.}, 2013)
@@ -523,8 +506,9 @@ averaged over the cruise, then subsequently averaged into matching bins
 as the UVP5 data. Primary productivity estimates were depth integrated
 throughout the euphotic zone (0-140m).
 
+\hypertarget{rhizaria-imaging-processing-and-abundance-quantification}{%
 \subsection{Rhizaria imaging processing and abundance
-quantification}\label{rhizaria-imaging-processing-and-abundance-quantification}
+quantification}\label{rhizaria-imaging-processing-and-abundance-quantification}}
 
 Individual vignettes of Rhizaria images were identified using the
 classification platform EcoTaxa (Picheral \emph{et al.}). Data were
@@ -547,7 +531,7 @@ distinguishable between Aulacanthidae or Acantharea or ``unidentified
 Phaeodaria'', which are clearly Phaeodaria but not distinguishable into
 a family.
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/01_taxa.pdf}
 
@@ -557,7 +541,7 @@ a family.
 imaging. 4mm scale bar shown in lower right. All vignettes are same
 scale}
 
-\end{figure}%
+\end{figure}
 
 The UVP5 samples at \textasciitilde15Hz rate as it descends the water
 column and records the exact position of each particle larger than
@@ -566,18 +550,18 @@ column and records the exact position of each particle larger than
 diameter. To confirm that the UVP5 was sampling adequately across all
 size ranges, an normalized biomass size spectrum (NBSS) slope was
 constructed to identify a drop-off which would indicate poor-sampling at
-the small size range (Lombard \emph{et al.}, 2019; Barth and Stone,
-2024). However, it was evident from this analysis that all size ranges
-were adequately sampled across the size range (Supplemental Figure 2) so
-no data were excluded. The UVP5 reports the exact depth at which a
-particle is recorded, however to estimate abundance, observations must
-be binned over fixed depth intervals. Our deployments had variable
-descent depths and speeds with more casts descending to 500m than 1000m
-and descents quicker through the epipelagic than the mesopelagic (see
-Barth and Stone (2022) for an extended discussion of UVP5 data
-processing). For the present study, Rhizaria abundances were estimated
-in 25m vertical bins, which offer a moderate sampling volume per bin
-(average 0.948\(m^3\) in the epipelagic and 0.589\(m^3\) in the
+the smaller end of the size range (Lombard \emph{et al.}, 2019; Barth
+and Stone, 2024). However, it was evident from this analysis that all
+size ranges were adequately sampled across the size range (Supplemental
+Figure 2) so no data were excluded. The UVP5 reports the exact depth at
+which a particle is recorded, however to estimate abundance,
+observations must be binned over fixed depth intervals. Our deployments
+had variable descent depths and speeds with more casts descending to
+500m than 1000m and descents quicker through the epipelagic than the
+mesopelagic (see Barth and Stone (2022) for an extended discussion of
+UVP5 data processing). For the present study, Rhizaria abundances were
+estimated in 25m vertical bins, which offer a moderate sampling volume
+per bin (average 0.948\(m^3\) in the epipelagic and 0.589\(m^3\) in the
 mesopelagic; Supplemental Table 1) while still maintaining ecologically
 relevant widths. However, concentrations in a 25m bin would need to be
 greater than 2.428 ind. \(m^{-3}\) and 3.912 ind. \(m^{-3}\), in the
@@ -593,10 +577,12 @@ epipelagic (0-200m), upper mesopelagic (200-500m), and lower mesopelagic
 regions were 7.59\(m^2\), 7.06\(m^2\), and 11.77\(m^2\), with
 non-detection thresholds at 0.30 ind. \(m^{-2}\), 0.33 ind. \(m^{-2}\),
 and 0.20 ind. \(m^{-2}\) respectively. All UVP data processing was done
-using the \texttt{EcotaxaTools} package in R (Barth 2023).
+using the \texttt{EcotaxaTools} package in R
+(\url{https://github.com/TheAlexBarth/EcotaxaTools?tab=readme-ov-file}).
 
+\hypertarget{modelling-environmental-controls-of-rhizaria-abundance}{%
 \subsection{Modelling environmental controls of Rhizaria
-abundance}\label{modelling-environmental-controls-of-rhizaria-abundance}
+abundance}\label{modelling-environmental-controls-of-rhizaria-abundance}}
 
 Generalized Additive Models (GAMs) were used to assess the relationship
 between integrated Rhizaria abundance and different environmental
@@ -628,10 +614,12 @@ model selection tools are available in open-source scripts, as well as
 intermediate data products at
 \url{https://github.com/TheAlexBarth/RhizariaSeasonality}.
 
-\section{Results}\label{results}
+\hypertarget{results}{%
+\section{Results}\label{results}}
 
+\hypertarget{environmental-variability}{%
 \subsubsection{Environmental
-Variability}\label{environmental-variability}
+Variability}\label{environmental-variability}}
 
 While the environmental conditions were generally low in variation and
 oligotrophic, there is considerable influence from deep winter-mixing
@@ -663,7 +651,7 @@ which occurred deeper in the epipelagic (Figure 2D). The particle
 concentration (184\(\mu m\) - 900\(\mu m\)) was closely coupled to
 chlorophyll-a patterns.
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/02_environmental.pdf}
 
@@ -675,7 +663,7 @@ Oxygen. (D) in situ chlorophyll fluorescence. (E) Particle concenctrion
 (184 - 900\$\textbackslash mu m\$). (F) Bacteria Abundance. (G) Silica.
 (H) Nitrate}
 
-\end{figure}%
+\end{figure}
 
 Overall, particle concentration was high near the surface during the
 2021 spring bloom, then moved deeper throughout the water column
@@ -697,7 +685,7 @@ period (Figure 2G-H). Additionally, in the late fall of 2021, \(Si\)
 concentrations were slightly elevated in the mid-mesopelagic (Figure
 2G).
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/03_prod-flux.pdf}
 
@@ -708,7 +696,7 @@ concentrations were slightly elevated in the mid-mesopelagic (Figure
 month displayed in corresponding colors. Absent data are shown by grey
 bar.}
 
-\end{figure}%
+\end{figure}
 
 Overall mass flux to the mesopelagic was highest during the 2021
 February downwelling (Figure 3B). Generally, export was similarly high
@@ -718,8 +706,9 @@ pattern was consistent with total mass, carbon and nitrogen fluxes
 (Figure 3B-D). Higher mass, carbon and nitrogen flux also occurred in
 the 2019 late summer - early fall period.
 
+\hypertarget{rhizaria-abundance-and-distribution}{%
 \subsubsection{Rhizaria abundance and
-distribution}\label{rhizaria-abundance-and-distribution}
+distribution}\label{rhizaria-abundance-and-distribution}}
 
 Across all imaged mesozooplankton (\textgreater900\(\mu m\)), Rhizaria
 comprised a considerable fraction of the total community. Considering
@@ -733,7 +722,7 @@ abundance. In the mesopelagic Rhizaria were a smaller fraction, at 38\%
 in the upper layers (200-500m) and 37\% in the deeper mesopelagic
 (500-1000m).
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/04_vertical.pdf}
 
@@ -744,7 +733,7 @@ period. Shown are total Rhizaria (A), Acantharea (B), Collodaria (C),
 Aulacanthidae (D), Foraminifera (E), Aulosphaeridae (F), Castanellidae
 (G), Coelodendridae (H).}
 
-\end{figure}%
+\end{figure}
 
 Average abundance of all Rhizaria had a bimodal distribution with
 respect to depth. Total abundance was highest just below the surface
@@ -770,7 +759,7 @@ lower mesopelagic (Figure 4H). A few individuals from the families
 Tuscaroridae and Medusettidae were also observed in the mesopelagic, yet
 they were much rarer (data not shown).
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/05_seasonality.pdf}
 
@@ -781,7 +770,7 @@ they were much rarer (data not shown).
 (500-1000m) (C). Data shown are the cruise mean integrated abundance in
 the water column region colored for each taxon.}
 
-\end{figure}%
+\end{figure}
 
 Between the monthly cruises, Rhizaria integrated abundance varied in the
 epipelagic. Highest average abundance occurred in June 2021 and was
@@ -797,8 +786,9 @@ community composition in the mesopelagic was more diverse, mostly
 comprised of Phaeodaria families. However, Acantharea and unidentified
 Rhizaria also were common members of the community (Figure 5B, C).
 
+\hypertarget{body-size-throughout-the-water-column.}{%
 \subsubsection{Body size throughout the water
-column.}\label{body-size-throughout-the-water-column.}
+column.}\label{body-size-throughout-the-water-column.}}
 
 Very few taxa had consistent distributions throughout the water column.
 Only Acanthrea, Foraminifera, Aulacanthidae, and Aulosphaeridae were
@@ -810,7 +800,7 @@ for each taxa. All groups were significantly different on average
 average in the mesopelagic while all other taxa tended to be larger
 (Figure 6).
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/09_size-comp.pdf}
 
@@ -819,12 +809,13 @@ average in the mesopelagic while all other taxa tended to be larger
 \caption{Comparison of average sizes (ESD) amongst Rhizaria taxa which
 occurred throughout the water column.}
 
-\end{figure}%
+\end{figure}
 
+\hypertarget{environmental-drivers-of-rhizaria-abundance}{%
 \subsubsection{Environmental Drivers of Rhizaria
-Abundance}\label{environmental-drivers-of-rhizaria-abundance}
+Abundance}\label{environmental-drivers-of-rhizaria-abundance}}
 
-\begin{figure}[H]
+\begin{figure}
 
 {\centering \includegraphics{images/06_tot-partials.pdf}
 
@@ -839,7 +830,7 @@ with smoothed relationship shown shaded with 95\% confidence intervals.
 Individual points are depth integrated values for all Rhizaria from an
 individual cast, colored by month.}
 
-\end{figure}%
+\end{figure}
 
 For integrated abundance of all Rhizaria, the GAMs produced moderate
 fits (\(R^2_{adj}\) = 0.406-0.603) (Table 1). In the epipelagic, there
@@ -871,7 +862,7 @@ Rhizaria abundance in different regions of the water column. edf =
 estimated degrees of freedom, F = F-statistic, p = p-value. Models were
 selected using a backwards-stepwise approach with a retention threshold
 of p = 0.1 or a large enough reduction in model fit.}\tabularnewline
-\toprule\noalign{}
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 \textbf{Model}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -883,9 +874,9 @@ F
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 p
 \end{minipage} \\
-\midrule\noalign{}
+\midrule()
 \endfirsthead
-\toprule\noalign{}
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 \textbf{Model}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -897,10 +888,8 @@ F
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 p
 \end{minipage} \\
-\midrule\noalign{}
+\midrule()
 \endhead
-\bottomrule\noalign{}
-\endlastfoot
 \textbf{All Rhizaria Epipelagic} & Temperature & 0.7950 & 0.492 &
 0.0440 \\
 \(R^2_{adj}\)= 0.48 & Salinity & 2.4117 & 5.113 & \textless0.001 \\
@@ -917,6 +906,7 @@ p
 & \textless0.001 \\
 \(R^2_{adj}\)= 0.61 & Particle Concentration & 3.819 & 27.43 &
 \textless0.001 \\
+\bottomrule()
 \end{longtable}
 
 GAMs for individual taxa were much less consistent in their fits (Table
@@ -953,7 +943,7 @@ of the water column.edf = estimated degrees of freedom, F = F-statistic,
 p = p-value. Models were selected using a backwards-stepwise approach
 with a retention threshold of p = 0.1 or a large enough reduction in
 model fit.}\tabularnewline
-\toprule\noalign{}
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Model
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -965,9 +955,9 @@ F
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 p
 \end{minipage} \\
-\midrule\noalign{}
+\midrule()
 \endfirsthead
-\toprule\noalign{}
+\toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Model
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -979,10 +969,8 @@ F
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 p
 \end{minipage} \\
-\midrule\noalign{}
+\midrule()
 \endhead
-\bottomrule\noalign{}
-\endlastfoot
 \textbf{Acantharea Epipelagic} & Temperature & 0.868 & 0.380 & 0.0935 \\
 \(R^2_{adj}\)=0.539 & Salinity & 2.349 & 4.646 & \textless0.001 \\
 & O2 & 2.501 & 5.493 & \textless0.001 \\
@@ -1042,6 +1030,7 @@ p
 & Avg N Flux & 1.847 & 3.022 & \textless0.001 \\
 & Primary Productivity & 0.472 & 0.139 & 0.183 \\
 & Particle Concentration & 1.685 & 2.955 & \textless0.001 \\
+\bottomrule()
 \end{longtable}
 
 In the upper mesopelagic (200-500m), abundances were generally low
@@ -1057,10 +1046,12 @@ associated with particle concentration (Supplemental Figure 6). For all
 Phaeodaria with a significant model, particle concentration was a main
 predictor variable (Table 2, Supplemental Figure 6).
 
-\section{Discussion}\label{discussion}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
+\hypertarget{overall-rhizaria-abundance-and-patterns}{%
 \subsubsection{Overall Rhizaria abundance and
-patterns}\label{overall-rhizaria-abundance-and-patterns}
+patterns}\label{overall-rhizaria-abundance-and-patterns}}
 
 In the epipelagic Rhizaria exhibited a notable seasonal pattern.
 Rhizaria abundances were higher in the summer months and lower during
@@ -1100,8 +1091,9 @@ al.}, 2018). To truly understand the drivers of interannual variability
 however, sustained observations of Rhizaria over longer time periods are
 required.
 
+\hypertarget{relationship-to-environmental-parameters}{%
 \subsubsection{Relationship to environmental
-parameters}\label{relationship-to-environmental-parameters}
+parameters}\label{relationship-to-environmental-parameters}}
 
 In general, the fit of most GAMs were moderate to poor. One possible
 reason for the poor fits may have been that for some taxa, conditions
@@ -1126,21 +1118,22 @@ parameter which had significant positive associations was particle
 concentration. This observation is not surprising as most Rhizaria
 likely to some extent engage in flux feeding.
 
+\hypertarget{vertical-structure-and-trophic-roles}{%
 \subsubsection{Vertical Structure and Trophic
-Roles}\label{vertical-structure-and-trophic-roles}
+Roles}\label{vertical-structure-and-trophic-roles}}
 
 In this study we present a clear pattern of vertical zonation between
 different Rhizaria groups. Largely, the taxonomic composition and
 vertical positioning were similar to Rhizaria zonation in the California
 Current Ecosystem (Biard and Ohman, 2020). It should be noted however,
-that the secondary abundance peak reported in the present study is
-lower. This is likely due to the more oligotrophic nature of the study
-region, were the euphotic zone penetrates deeper into the water column.
-Most prevalent in the epipelagic were Collodaria. These mixotrophic
-Radiolaria have long been reported to contribute to primary productivity
-in the euphotic zone (Michaels \emph{et al.}, 1995; Dennett \emph{et
-al.}, 2002). Collodaria are thought to be particularly successful
-globally in oligotrophic regions due to their photosymbiotic
+that the secondary abundance peak reported in the present study is lower
+in magnitude. This is likely due to the more oligotrophic nature of the
+study region, were the euphotic zone penetrates deeper into the water
+column. Most prevalent in the epipelagic were Collodaria. These
+mixotrophic Radiolaria have long been reported to contribute to primary
+productivity in the euphotic zone (Michaels \emph{et al.}, 1995; Dennett
+\emph{et al.}, 2002). Collodaria are thought to be particularly
+successful globally in oligotrophic regions due to their photosymbiotic
 relationships (Biard \emph{et al.}, 2016, 2017). We observed the highest
 abundance of Collodaria during June 2021, supporting the notion they can
 thrive during the typically low-nutrient conditions of summer
@@ -1170,8 +1163,8 @@ particularly for those which were constrained to exclusively occupy
 deeper waters. This is consistent with Blanco-Bercial \emph{et al.}
 (2022)'s observation of an auto-/mixotroph to heterotroph gradient in
 local protist community as well as global patterns in Rhizaria ecology
-{[}Laget \emph{et al.} (2024){]}. The upper mesopelagic interestingly
-had relatively low total abundance. This low-abundance region likely
+(Laget \emph{et al.}, 2024). The upper mesopelagic interestingly had
+relatively low total abundance. This low-abundance region likely
 reflects the dynamics of productivity and export throughout the water
 column. While productivity and thus sinking particles for flux feeders
 are high in the euphotic zone, much of this is attenuated throughout the
@@ -1189,14 +1182,14 @@ significant relationships, although weak fits, to particle concentration
 in the mesopelagic. In our study, while consistently observed, overall
 abundances of Aulosphaeridae were very low. In the Pacific Ocean, on
 California's Coast, much higher abundances of Aulosphaeridae have been
-reported {[}Zasko and Rusanov (2005); Biard and Ohman (2020){]} and they
-have massive potential to impact silica export (Biard \emph{et al.},
-2018). Coelodendridae were also seemingly restricted to the deeper
-section of the mesopelagic. This is interesting given that in the
-California Current, (Biard and Ohman, 2020) found a bimodal distribution
-in Coelodendridae. There are several morphotypes corresponding to
-different taxa of Coelodendridae (Nakamura and Suzuki, 2015; Biard and
-Ohman, 2020). So it may be that only a few types of Coelodendridae were
+reported (Zasko and Rusanov, 2005; Biard and Ohman, 2020) and they have
+massive potential to impact silica export (Biard \emph{et al.}, 2018).
+Coelodendridae were also seemingly restricted to the deeper section of
+the mesopelagic. This is interesting given that in the California
+Current, (Biard and Ohman, 2020) found a bimodal distribution in
+Coelodendridae. There are several morphotypes corresponding to different
+taxa of Coelodendridae (Nakamura and Suzuki, 2015; Biard and Ohman,
+2020). So it may be that only a few types of Coelodendridae were
 observed in this study, while the epipelagic variety was not.
 Alternatively, the lower epipelagic of the extremely productive
 California Current may provide adequate habitat for Coelodendridae,
@@ -1245,25 +1238,26 @@ Furthermore, given that horizontal transfer of symbionts between
 generations of Acantharea is unlikely due to their spawning behavior,
 the newly spawned mesopelagic Acantharea are not necessarily required to
 rapidly return to the photic zone (Decelle \emph{et al.}, 2012, 2013).
-This hypothesis predicts that Acanthareas in the mesopelagic would be
+This hypothesis predicts that Acantharea in the mesopelagic would be
 smaller (Decelle \emph{et al.}, 2013). Mars Brisbin \emph{et al.} (2020)
 provided some support for this hypothesis, with a significant decrease
 in Acantharea sizes with depth. Although the authors also observed low
 abundances in the mesopelagic and noted that the smaller sizes may be
 due to lower food availability (Mars Brisbin \emph{et al.}, 2020). Since
-food is more scarce in the mesopelagic, nutritional quality lower, yet
-flux feeders would likely grow larger to increase their feeding range
-(Stukel \emph{et al.}, 2018; Biard and Ohman, 2020). In the data
-collecting in this study, Acanthareas in the mesopelagic were
-significantly smaller than the epipelagic, despite the other bimodal
-taxa (Foraminifera and Aulacanthidae) being significantly larger with
-depth. This provides added support for the hypothesis that cyst-forming
-Acantharea may utilize different sections of the water column throughout
-their life cycle. However to further investigate this, more work is
-needed with higher temporal and taxonomic resolution.
+food is more scarce in the mesopelagic, nutritional quality lower (Kim
+\emph{et al.}, 2018), yet flux feeders would likely grow larger to
+increase their feeding range (Stukel \emph{et al.}, 2018; Biard and
+Ohman, 2020). In the data collecting in this study, Acantharea in the
+mesopelagic were significantly smaller than the epipelagic, despite the
+other bimodal taxa (Foraminifera and Aulacanthidae) being significantly
+larger with depth. This provides added support for the hypothesis that
+cyst-forming Acantharea may utilize different sections of the water
+column throughout their life cycle. However to further investigate this,
+more work is needed with higher temporal and taxonomic resolution.
 
+\hypertarget{conclusions-and-considerations}{%
 \subsubsection{Conclusions and
-Considerations}\label{conclusions-and-considerations}
+Considerations}\label{conclusions-and-considerations}}
 
 This study provides a detailed look at Rhizaria abundance over time
 throughout the water column in a major oligotrophic gyre. We show that
@@ -1286,44 +1280,47 @@ symbiosis is uncertain. Collodaria were recorded as consistent and
 dominant members of the near surface region. These organisms have the
 potential to contribute considerably to the otherwise low productivity
 of oligotrophic regions. However, their role in food webs is not well
-understood. While this study represents a step-forward in our
-understanding of Rhizaria ecology, continued research on Rhizaria is
-much needed to better understand their ecology. Particularly extended
-work describing interannual patterns in Rhizaria abundance. Also work
-defining biotic interactions, feeding rates, productivity, and life
-history are all rich fields of interest in Rhizaria.
+understood. While this study represents a step forward in our
+understanding of Rhizaria, further research is needed to better
+characterize their ecology and role in biogeochemical cycling. To fully
+understand the functioning of the oceans, not only carbon or nitrogen,
+but other elements such as silica or strontium, extended work addressing
+the interannual patterns in Rhizaria, their biotic interactions, and the
+key biological rates that impact ocean biogeochemistry, will be
+required.
 
-\section{References:}\label{references}
+\hypertarget{references}{%
+\section{References:}\label{references}}
 
-\phantomsection\label{refs}
+\hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\bibitem[\citeproctext]{ref-anderson2014}
+\leavevmode\vadjust pre{\hypertarget{ref-anderson2014}{}}%
 Anderson, O. R. (2014)
 \href{https://doi.org/10.4467/16890027AP.13.0019.1116}{Living Together
 in the Plankton: A Survey of Marine Protist Symbioses}. \emph{Acta
 Protozoologica}, \textbf{53}, 29--38.
 
-\bibitem[\citeproctext]{ref-anderson1976}
+\leavevmode\vadjust pre{\hypertarget{ref-anderson1976}{}}%
 Anderson, O. R. and Bé, A. W. H. (1976)
 \href{https://doi.org/10.2307/1540498}{A CYTOCHEMICAL FINE STRUCTURE
 STUDY OF PHAGOTROPHY IN A PLANKTONIC FORAMINIFER, {\emph{HASTIGERINA
 PELAGICA}} (d'ORBIGNY)}. \emph{The Biological Bulletin}, \textbf{151},
 437--449.
 
-\bibitem[\citeproctext]{ref-barth2022}
+\leavevmode\vadjust pre{\hypertarget{ref-barth2022}{}}%
 Barth, A. and Stone, J. (2022)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2022.898057}{Comparison
 of an in situ imaging device and net-based method to study
 mesozooplankton communities in an oligotrophic system}. \emph{Frontiers
 in Marine Science}, \textbf{9}.
 
-\bibitem[\citeproctext]{ref-barth2024}
+\leavevmode\vadjust pre{\hypertarget{ref-barth2024}{}}%
 Barth, A. and Stone, J. (2024)
 \href{https://doi.org/10.1093/plankt/fbae023}{Understanding the picture:
 The promis and challenges of in-situ imagery data in the study of
 plankton ecology}. \emph{Journal of Plankton Research: Horizons}, 1--15.
 
-\bibitem[\citeproctext]{ref-benfield1996}
+\leavevmode\vadjust pre{\hypertarget{ref-benfield1996}{}}%
 Benfield, M. C., Davis, C. S., Wiebe, P. H., Gallager, S. M., Gregory
 Lough, R., and Copley, N. J. (1996)
 \href{https://doi.org/10.1016/S0967-0645(96)00044-6}{Video Plankton
@@ -1332,58 +1329,58 @@ a stratified region of Georges Bank with comparative measurements from a
 MOCNESS sampler}. \emph{Deep Sea Research Part II: Topical Studies in
 Oceanography}, \textbf{43}, 1925--1945.
 
-\bibitem[\citeproctext]{ref-biard2022b}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2022b}{}}%
 Biard, T. (2022a)
 \href{https://doi.org/10.1111/1462-2920.16004}{Diversity and ecology of
 Radiolaria in modern oceans}. \emph{Environmental Microbiology},
 \textbf{24}, 2179--2200.
 
-\bibitem[\citeproctext]{ref-biard2022}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2022}{}}%
 Biard, T. (2022b)
 \href{https://doi.org/10.1002/9780470015902.a0029469}{Rhizaria}.
 Encyclopeida of Life Sciences, pp. 1--11.
 
-\bibitem[\citeproctext]{ref-biard2017}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2017}{}}%
 Biard, T., Bigeard, E., Audic, S., Poulain, J., Gutierrez-Rodriguez, A.,
 Pesant, S., Stemmann, L., and Not, F. (2017)
 \href{https://doi.org/10.1038/ismej.2017.12}{Biogeography and diversity
 of Collodaria (Radiolaria) in the global ocean}. \emph{The ISME
 Journal}, \textbf{11}, 1331--1344.
 
-\bibitem[\citeproctext]{ref-biard2018}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2018}{}}%
 Biard, T., Krause, J. W., Stukel, M. R., and Ohman, M. D. (2018)
 \href{https://doi.org/10.1029/2018GB005877}{The Significance of Giant
 Phaeodarians (Rhizaria) to Biogenic Silica Export in the California
 Current Ecosystem}. \emph{Global Biogeochemical Cycles}, \textbf{32},
 987--1004.
 
-\bibitem[\citeproctext]{ref-biard2020}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2020}{}}%
 Biard, T. and Ohman, M. D. (2020)
 \href{https://doi.org/10.1002/lno.11472}{Vertical niche definition of
 test-bearing protists (Rhizaria) into the twilight zone revealed by in
 situ imaging}. \emph{Limnology and Oceanography}, \textbf{65},
 2583--2602.
 
-\bibitem[\citeproctext]{ref-biard2016}
+\leavevmode\vadjust pre{\hypertarget{ref-biard2016}{}}%
 Biard, T., Stemmann, L., Picheral, M., Mayot, N., Vandromme, P., Hauss,
 H., Gorsky, G., Guidi, L., \emph{et al.} (2016)
 \href{https://doi.org/10.1038/nature17652}{In situ imaging reveals the
 biomass of giant protists in the global ocean}. \emph{Nature},
 \textbf{532}, 504--507.
 
-\bibitem[\citeproctext]{ref-bijma1990}
+\leavevmode\vadjust pre{\hypertarget{ref-bijma1990}{}}%
 Bijma, J., Erez, J., and Hemleben, C. (1990)
 \href{https://epic.awi.de/id/eprint/6096/1/Bij1990a.pdf}{Lunar and
 semi-luan reproductive cycles in some spinose planktonic foraminifers}.
 \emph{Journal of Foraminiferal Research}, \textbf{20}, 117--127.
 
-\bibitem[\citeproctext]{ref-blanco-bercial2020}
+\leavevmode\vadjust pre{\hypertarget{ref-blanco-bercial2020}{}}%
 Blanco-Bercial, L. (2020)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2020.00173}{Metabarcoding
 analyses and seasonality of the zooplankton community at BATS}.
 \emph{Frontiers in Marine Science}, \textbf{7}.
 
-\bibitem[\citeproctext]{ref-blanco-bercial2022}
+\leavevmode\vadjust pre{\hypertarget{ref-blanco-bercial2022}{}}%
 Blanco-Bercial, L., Parsons, R., Bolaños, L. M., Johnson, R.,
 Giovannoni, S. J., and Curry, R. (2022)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2022.897140}{The
@@ -1391,14 +1388,14 @@ protist community traces seasonality and mesoscale hydrographic features
 in the oligotrophic sargasso sea}. \emph{Frontiers in Marine Science},
 \textbf{9}.
 
-\bibitem[\citeproctext]{ref-boltovskoy2017}
+\leavevmode\vadjust pre{\hypertarget{ref-boltovskoy2017}{}}%
 Boltovskoy, D. (2017)
 \href{https://doi.org/10.1093/plankt/fbx003}{Vertical distribution
 patterns of radiolaria polycystina (protista) in the world ocean: Living
 ranges, isothermal submersion and settling shells}. \emph{Journal of
 Plankton Research}, \textbf{39}, 330--349.
 
-\bibitem[\citeproctext]{ref-boltovskoy1993}
+\leavevmode\vadjust pre{\hypertarget{ref-boltovskoy1993}{}}%
 Boltovskoy, D., Alder, V. A., and Abelmann, A. (1993)
 \href{https://doi.org/10.1016/0967-0637(93)90036-3}{Annual flux of
 radiolaria and other shelled plankters in the eastern equatorial
@@ -1406,83 +1403,83 @@ atlantic at 853 m: seasonal variations and polycystine species-specific
 responses}. \emph{Deep Sea Research Part I: Oceanographic Research
 Papers}, \textbf{40}, 1863--1895.
 
-\bibitem[\citeproctext]{ref-caron2016}
+\leavevmode\vadjust pre{\hypertarget{ref-caron2016}{}}%
 Caron, D. A. (2016)
 \href{https://www.nature.com/articles/nature17892}{The rise of rhizaria
 \textbar{} nature}. \emph{Nature}, \textbf{532}, 444--445.
 
-\bibitem[\citeproctext]{ref-caron1984}
+\leavevmode\vadjust pre{\hypertarget{ref-caron1984}{}}%
 Caron, D. A. and Be, A. W. H. (1984) PREDICTED AND OBSERVED FEEDING
 RATES OF THE SPINOSE PLANKTONIC FORAMINIFER. \emph{BULLETIN OF MARINE
 SCIENCE}, \textbf{35}.
 
-\bibitem[\citeproctext]{ref-caron1995}
+\leavevmode\vadjust pre{\hypertarget{ref-caron1995}{}}%
 Caron, D. A., Michaels, A. F., Swanberg, N. R., and Howse, F. A. (1995)
 \href{https://doi.org/10.1093/plankt/17.1.103}{Primary productivity by
 symbiont-bearing planktonic sarcodines (acantharia, radiolaria,
 foraminifera) in surface waters near bermuda}. \emph{Journal of Plankton
 Research}, \textbf{17}, 103--129.
 
-\bibitem[\citeproctext]{ref-cohen2023}
+\leavevmode\vadjust pre{\hypertarget{ref-cohen2023}{}}%
 Cohen, N. R., Krinos, A. I., Kell, R. M., Chmiel, R. J., Moran, D. M.,
 McIlvin, M. R., Lopez, P. Z., Barth, A., \emph{et al.} (2023)
 \href{https://doi.org/10.1101/2023.11.20.567900}{Microeukaryote
 metabolism across the western North Atlantic Ocean revealed through
 autonomous underwater profiling}.
 
-\bibitem[\citeproctext]{ref-decelle2015}
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2015}{}}%
 Decelle, J., Colin, S., and Foster, R. A. (2015)
 \href{https://doi.org/10.1007/978-4-431-55130-0_19}{Photosymbiosis in
 Marine Planktonic Protists}. In Ohtsuka, S., Suzaki, T., Horiguchi, T.,
 Suzuki, N., and Not, F. (eds). Springer Japan, Tokyo, pp. 465--500.
 
-\bibitem[\citeproctext]{ref-decelle2013}
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2013}{}}%
 Decelle, J., Martin, P., Paborstava, K., Pond, D. W., Tarling, G., Mahé,
 F., De Vargas, C., Lampitt, R., \emph{et al.} (2013)
 \href{https://doi.org/10.1371/journal.pone.0053598}{Diversity, Ecology
 and Biogeochemistry of Cyst-Forming Acantharia (Radiolaria) in the
 Oceans}. \emph{PLoS ONE}, \textbf{8}, e53598.
 
-\bibitem[\citeproctext]{ref-decelle2012}
+\leavevmode\vadjust pre{\hypertarget{ref-decelle2012}{}}%
 Decelle, J., Siano, R., Probert, I., Poirier, C., and Not, F. (2012)
 \href{https://doi.org/10.1007/s13199-012-0195-x}{Multiple microalgal
 partners in symbiosis with the acantharian Acanthochiasma sp.
 (Radiolaria)}. \emph{Symbiosis}, \textbf{58}, 233--244.
 
-\bibitem[\citeproctext]{ref-dennett2002}
+\leavevmode\vadjust pre{\hypertarget{ref-dennett2002}{}}%
 Dennett, M. R., Caron, D. A., Michaels, A. F., Gallager, S. M., and
 Davis, C. S. (2002) \href{https://doi.org/10.1093/plankt/24.8.797}{Video
 plankton recorder reveals high abundances of colonial radiolaria in
 surface waters of the central north pacific}. \emph{Journal of Plankton
 Research}, \textbf{24}, 797--805.
 
-\bibitem[\citeproctext]{ref-drago2022}
+\leavevmode\vadjust pre{\hypertarget{ref-drago2022}{}}%
 Drago, L., Panaïotis, T., Irisson, J.-O., Babin, M., Biard, T.,
 Carlotti, F., Coppola, L., Guidi, L., \emph{et al.} (2022)
 \href{https://doi.org/10.3389/fmars.2022.894372}{Global Distribution of
 Zooplankton Biomass Estimated by In Situ Imaging and Machine Learning}.
 \emph{Frontiers in Marine Science}, \textbf{9}.
 
-\bibitem[\citeproctext]{ref-gaskell2019}
+\leavevmode\vadjust pre{\hypertarget{ref-gaskell2019}{}}%
 Gaskell, D. E., Ohman, M. D., and Hull, P. M. (2019)
 \href{https://doi.org/10.2113/gsjfr.49.4.390}{Zooglider-based
 measurements of planktonic foraminifera in the california current
 system}. \emph{Journal of Foraminiferal Research}, \textbf{49},
 390--404.
 
-\bibitem[\citeproctext]{ref-gorsky2010}
+\leavevmode\vadjust pre{\hypertarget{ref-gorsky2010}{}}%
 Gorsky, G., Ohman, M. D., Picheral, M., Gasparini, S., Stemmann, L.,
 Romagnan, J.-B., Cawood, A., Pesant, S., \emph{et al.} (2010)
 \href{https://doi.org/10.1093/plankt/fbp124}{Digital zooplankton image
 analysis using the ZooScan integrated system}. \emph{Journal of Plankton
 Research}, \textbf{32}, 285--303.
 
-\bibitem[\citeproctext]{ref-gowing1989}
+\leavevmode\vadjust pre{\hypertarget{ref-gowing1989}{}}%
 Gowing, M. M. (1989) \href{https://doi.org/10.1007/BF00391069}{Abundance
 and feeding ecology of Antarctic phaeodarian radiolarians}. \emph{Marine
 Biology}, \textbf{103}, 107--118.
 
-\bibitem[\citeproctext]{ref-gutierrez-rodriguez2019}
+\leavevmode\vadjust pre{\hypertarget{ref-gutierrez-rodriguez2019}{}}%
 Gutierrez-Rodriguez, A., Stukel, M. R., Lopes dos Santos, A., Biard, T.,
 Scharek, R., Vaulot, D., Landry, M. R., and Not, F. (2019)
 \href{https://doi.org/10.1038/s41396-018-0322-7}{High contribution of
@@ -1490,7 +1487,7 @@ Rhizaria (Radiolaria) to vertical export in the California Current
 Ecosystem revealed by DNA metabarcoding}. \emph{The ISME Journal},
 \textbf{13}, 964--976.
 
-\bibitem[\citeproctext]{ref-gutiuxe9rrez-rodruxedguez2022}
+\leavevmode\vadjust pre{\hypertarget{ref-gutiuxe9rrez-rodruxedguez2022}{}}%
 Gutiérrez-Rodríguez, A., Lopes dos Santos, A., Safi, K., Probert, I.,
 Not, F., Fernández, D., Gourvil, P., Bilewitch, J., \emph{et al.} (2022)
 \href{https://doi.org/10.1016/j.pocean.2022.102809}{Planktonic protist
@@ -1498,20 +1495,20 @@ diversity across contrasting subtropical and subantarctic waters of the
 southwest pacific}. \emph{Progress in Oceanography}, \textbf{206},
 102809.
 
-\bibitem[\citeproctext]{ref-haekel1887}
+\leavevmode\vadjust pre{\hypertarget{ref-haekel1887}{}}%
 Haekel, E. (1887)
 \emph{\href{https://www.gutenberg.org/cache/epub/44527/pg44527-images.html}{Report
 on the radiolaria collected by h.m.s. Challenger during the years
 1873-1876, plates, by ernst haeckel}}.
 
-\bibitem[\citeproctext]{ref-hull2011}
+\leavevmode\vadjust pre{\hypertarget{ref-hull2011}{}}%
 Hull, P. M., Osborn, K. J., Norris, R. D., and Robison, B. H. (2011)
 \href{https://doi.org/10.4319/lo.2011.56.2.0562}{Seasonality and depth
 distribution of a mesopelagic foraminifer, Hastigerinella digitata, in
 Monterey Bay, California}. \emph{Limnology and Oceanography},
 \textbf{56}, 562--576.
 
-\bibitem[\citeproctext]{ref-ikenoue2019}
+\leavevmode\vadjust pre{\hypertarget{ref-ikenoue2019}{}}%
 Ikenoue, T., Kimoto, K., Okazaki, Y., Sato, M., Honda, M. C., Takahashi,
 K., Harada, N., and Fujiki, T. (2019)
 \href{https://doi.org/10.1029/2019GB006258}{Phaeodaria: An Important
@@ -1519,31 +1516,40 @@ Carrier of Particulate Organic Carbon in the Mesopelagic Twilight Zone
 of the North Pacific Ocean}. \emph{Global Biogeochemical Cycles},
 \textbf{33}, 1146--1160.
 
-\bibitem[\citeproctext]{ref-kimoto2015}
+\leavevmode\vadjust pre{\hypertarget{ref-kim2018}{}}%
+Kim, B. K., Lee, S., Ha, S.-Y., Jung, J., Kim, T. W., Yang, E. J., Jo,
+N., Lim, Y. J., \emph{et al.} (2018)
+\href{https://doi.org/10.1002/2017JC013457}{Vertical Distributions of
+Macromolecular Composition of Particulate Organic Matter in the Water
+Column of the Amundsen Sea Polynya During the Summer in 2014}.
+\emph{Journal of Geophysical Research: Oceans}, \textbf{123},
+1393--1405.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kimoto2015}{}}%
 Kimoto, K. (2015)
 \href{https://doi.org/10.1007/978-4-431-55130-0_7}{Planktic
 foraminifera}. pp. 129--178.
 
-\bibitem[\citeproctext]{ref-knap1997}
+\leavevmode\vadjust pre{\hypertarget{ref-knap1997}{}}%
 Knap, A. H., Michaels, A. F., Steinberg, D. K., Bahr, F., Bates, N. R.,
 Bell, S., Countway, P., Close, A. R., \emph{et al.} (1997)
 \href{https://eprints.soton.ac.uk/361194/}{BATS methods manual, version
 4}.
 
-\bibitem[\citeproctext]{ref-laget2024}
+\leavevmode\vadjust pre{\hypertarget{ref-laget2024}{}}%
 Laget, M., Drago, L., Panaïotis, T., Kiko, R., Stemmann, L., Rogge, A.,
 Llopis-Monferrer, N., Leynaert, A., \emph{et al.} (2024)
 \href{https://doi.org/10.1038/s41467-024-47651-4}{Global census of the
 significance of giant mesopelagic protists to the marine carbon and
 silicon cycles}. \emph{Nature Communications}, \textbf{15}, 3341.
 
-\bibitem[\citeproctext]{ref-lee2006}
+\leavevmode\vadjust pre{\hypertarget{ref-lee2006}{}}%
 Lee, J. J. (2006)
 \href{https://dalspace.library.dal.ca/bitstream/handle/10222/78255/VOLUME\%2042-NUMBER\%202-2006-PAGE\%2063.pdf?sequence=1}{Algal
 symbiosis in larger foraminifera}. \emph{Symbiosis}, \textbf{42},
 63--75.
 
-\bibitem[\citeproctext]{ref-llopismonferrer2022}
+\leavevmode\vadjust pre{\hypertarget{ref-llopismonferrer2022}{}}%
 Llopis Monferrer, N., Biard, T., Sandin, M. M., Lombard, F., Picheral,
 M., Elineau, A., Guidi, L., Leynaert, A., \emph{et al.} (2022)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2022.895995}{Siliceous
@@ -1551,7 +1557,7 @@ rhizaria abundances and diversity in the mediterranean sea assessed by
 combined imaging and metabarcoding approaches}. \emph{Frontiers in
 Marine Science}, \textbf{9}.
 
-\bibitem[\citeproctext]{ref-lomas2013}
+\leavevmode\vadjust pre{\hypertarget{ref-lomas2013}{}}%
 Lomas, M. W., Bates, N. R., Johnson, R. J., Knap, A. H., Steinberg, D.
 K., and Carlson, C. A. (2013)
 \href{https://doi.org/10.1016/j.dsr2.2013.01.008}{Two decades and
@@ -1559,40 +1565,40 @@ counting: 24-years of sustained open ocean biogeochemical measurements
 in the Sargasso Sea}. \emph{Deep Sea Research Part II: Topical Studies
 in Oceanography}, \textbf{93}, 16--32.
 
-\bibitem[\citeproctext]{ref-lombard2019}
+\leavevmode\vadjust pre{\hypertarget{ref-lombard2019}{}}%
 Lombard, F., Boss, E., Waite, A. M., Vogt, M., Uitz, J., Stemmann, L.,
 Sosik, H. M., Schulz, J., \emph{et al.} (2019)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2019.00196}{Globally
 consistent quantitative observations of planktonic ecosystems}.
 \emph{Frontiers in Marine Science}, \textbf{6}.
 
-\bibitem[\citeproctext]{ref-marra2011}
+\leavevmode\vadjust pre{\hypertarget{ref-marra2011}{}}%
 Marra, G. and Wood, S. N. (2011)
 \href{https://doi.org/10.1016/j.csda.2011.02.004}{Practical variable
 selection for generalized additive models}. \emph{Computational
 Statistics \& Data Analysis}, \textbf{55}, 2372--2387.
 
-\bibitem[\citeproctext]{ref-marsbrisbin2020}
+\leavevmode\vadjust pre{\hypertarget{ref-marsbrisbin2020}{}}%
 Mars Brisbin, M., Brunner, O. D., Grossmann, M. M., and Mitarai, S.
 (2020) \href{https://doi.org/10.1002/lno.11567}{Paired high-throughput,
 in situ imaging and high-throughput sequencing illuminate acantharian
 abundance and vertical distribution}. \emph{Limnology and Oceanography},
 \textbf{65}, 2953--2965.
 
-\bibitem[\citeproctext]{ref-mcgillicuddy1998}
+\leavevmode\vadjust pre{\hypertarget{ref-mcgillicuddy1998}{}}%
 McGillicuddy, D. J., Robinson, A. R., Siegel, D. A., Jannasch, H. W.,
 Johnson, R., Dickey, T. D., McNeil, J., Michaels, A. F., \emph{et al.}
 (1998) \href{https://doi.org/10.1038/28367}{Influence of mesoscale
 eddies on new production in the Sargasso Sea}. \emph{Nature},
 \textbf{394}, 263--266.
 
-\bibitem[\citeproctext]{ref-michaels1988}
+\leavevmode\vadjust pre{\hypertarget{ref-michaels1988}{}}%
 Michaels, A. F. (1988)
 \href{https://doi.org/10.1007/BF00391052}{Vertical distribution and
 abundance of Acantharia and their symbionts}. \emph{Marine Biology},
 \textbf{97}, 559--569.
 
-\bibitem[\citeproctext]{ref-michaels1995}
+\leavevmode\vadjust pre{\hypertarget{ref-michaels1995}{}}%
 Michaels, A. F., Caron, D. A., Swanberg, N. R., Howse, F. A., and
 Michaels, C. M. (1995)
 \href{https://doi.org/10.1093/plankt/17.1.131}{Planktonic sarcodines
@@ -1600,14 +1606,14 @@ Michaels, C. M. (1995)
 abundance, biomass and vertical flux}. \emph{Journal of Plankton
 Research}, \textbf{17}, 131--163.
 
-\bibitem[\citeproctext]{ref-michaels1996}
+\leavevmode\vadjust pre{\hypertarget{ref-michaels1996}{}}%
 Michaels, A. F. and Knap, A. H. (1996)
 \href{https://doi.org/10.1016/0967-0645(96)00004-5}{Overview of the U.S.
 JGOFS Bermuda Atlantic Time-series Study and the Hydrostation S
 program}. \emph{Deep Sea Research Part II: Topical Studies in
 Oceanography}, \textbf{43}, 157--198.
 
-\bibitem[\citeproctext]{ref-nakamura2023}
+\leavevmode\vadjust pre{\hypertarget{ref-nakamura2023}{}}%
 Nakamura, Y., Itagaki, H., Tuji, A., Shimode, S., Yamaguchi, A., Hidaka,
 K., and Ogiso-Tanaka, E. (2023)
 \href{https://doi.org/10.1111/1462-2920.16524}{DNA metabarcoding focused
@@ -1615,37 +1621,37 @@ on difficult-to-culture protists: An effective approach to clarify
 biological interactions}. \emph{Environmental Microbiology},
 \textbf{25}, 3630--3638.
 
-\bibitem[\citeproctext]{ref-nakamura2015}
+\leavevmode\vadjust pre{\hypertarget{ref-nakamura2015}{}}%
 Nakamura, Y. and Suzuki, N. (2015)
 \href{https://link.springer.com/chapter/10.1007/978-4-431-55130-0_9}{Phaeodaria:
 Diverse marine cercozoans of world-wide distribution}. Springer, pp.
 223--249.
 
-\bibitem[\citeproctext]{ref-ohman2019a}
+\leavevmode\vadjust pre{\hypertarget{ref-ohman2019a}{}}%
 Ohman, M. D. (2019) \href{https://doi.org/10.1093/icesjms/fsz184}{A sea
 of tentacles: optically discernible traits resolved from planktonic
 organisms in situ}. \emph{ICES Journal of Marine Science}, \textbf{76},
 1959--1972.
 
-\bibitem[\citeproctext]{ref-panauxefotis2023}
+\leavevmode\vadjust pre{\hypertarget{ref-panauxefotis2023}{}}%
 Panaïotis, T., Babin, M., Biard, T., Carlotti, F., Coppola, L., Guidi,
 L., Hauss, H., Karp-Boss, L., \emph{et al.} (2023)
 \href{https://doi.org/10.1111/geb.13741}{Three major mesoplanktonic
 communities resolved by in situ imaging in the upper 500 m of the global
 ocean}. \emph{Global Ecology and Biogeography}, \textbf{32}, 1991--2005.
 
-\bibitem[\citeproctext]{ref-picheral}
+\leavevmode\vadjust pre{\hypertarget{ref-picheral}{}}%
 Picheral, M., Colin, S. P., and Irisson, J.-O.
 \href{https://ecotaxa.obs-vlfr.fr/}{Ecotaxa}.
 
-\bibitem[\citeproctext]{ref-picheral2010}
+\leavevmode\vadjust pre{\hypertarget{ref-picheral2010}{}}%
 Picheral, M., Guidi, L., Stemmann, L., Karl, D. M., Iddaoud, G., and
 Gorsky, G. (2010) \href{https://doi.org/10.4319/lom.2010.8.462}{The
 Underwater Vision Profiler 5: An advanced instrument for high spatial
 resolution studies of particle size spectra and zooplankton}.
 \emph{Limnology and Oceanography: Methods}, \textbf{8}, 462--473.
 
-\bibitem[\citeproctext]{ref-sogawa2022}
+\leavevmode\vadjust pre{\hypertarget{ref-sogawa2022}{}}%
 Sogawa, S., Nakamura, Y., Nagai, S., Nishi, N., Hidaka, K., Shimizu, Y.,
 and Setou, T. (2022)
 \href{https://doi.org/10.1016/j.dsr.2022.103765}{DNA metabarcoding
@@ -1653,53 +1659,53 @@ reveals vertical variation and hidden diversity of alveolata and
 rhizaria communities in the western north pacific}. \emph{Deep Sea
 Research Part I: Oceanographic Research Papers}, \textbf{183}, 103765.
 
-\bibitem[\citeproctext]{ref-stukel2018}
+\leavevmode\vadjust pre{\hypertarget{ref-stukel2018}{}}%
 Stukel, M. R., Biard, T., Krause, J., and Ohman, M. D. (2018)
 \href{https://doi.org/10.1002/lno.10961}{Large Phaeodaria in the
 twilight zone: Their role in the carbon cycle}. \emph{Limnology and
 Oceanography}, \textbf{63}, 2579--2594.
 
-\bibitem[\citeproctext]{ref-stukel2019}
+\leavevmode\vadjust pre{\hypertarget{ref-stukel2019}{}}%
 Stukel, M. R., Ohman, M. D., Kelly, T. B., and Biard, T. (2019)
 \href{https://www.frontiersin.org/articles/10.3389/fmars.2019.00397}{The
 roles of suspension-feeding and flux-feeding zooplankton as gatekeepers
 of particle flux into the mesopelagic ocean in the northeast pacific}.
 \emph{Frontiers in Marine Science}, \textbf{6}.
 
-\bibitem[\citeproctext]{ref-suzuki2015}
+\leavevmode\vadjust pre{\hypertarget{ref-suzuki2015}{}}%
 Suzuki, N. and Not, F. (2015)
 \href{https://link.springer.com/chapter/10.1007/978-4-431-55130-0_8}{Biology
 and ecology of radiolaria}. Springer, pp. 179--222.
 
-\bibitem[\citeproctext]{ref-swanberg1981}
+\leavevmode\vadjust pre{\hypertarget{ref-swanberg1981}{}}%
 Swanberg, N. R. and Anderson, O. R. (1981)
 \href{https://doi.org/10.1016/0198-0149(81)90016-9}{Collozoum caudatum
 sp. nov.: A giant colonial radiolarian from equatorial and Gulf Stream
 waters}. \emph{Deep Sea Research Part A. Oceanographic Research Papers},
 \textbf{28}, 1033--1047.
 
-\bibitem[\citeproctext]{ref-takahashi1983}
+\leavevmode\vadjust pre{\hypertarget{ref-takahashi1983}{}}%
 Takahashi, K., Hurd, D. C., and Honjo, S. (1983)
 \href{https://doi.org/10.1126/science.222.4624.616}{Phaeodarian
 skeletons: Their role in silica transport to the deep sea}.
 \emph{Science}, \textbf{222}, 616--618.
 
-\bibitem[\citeproctext]{ref-whitmore2021}
+\leavevmode\vadjust pre{\hypertarget{ref-whitmore2021}{}}%
 Whitmore, B. M. and Ohman, M. D. (2021)
 \href{https://doi.org/10.1002/lno.11920}{Zooglider-measured association
 of zooplankton with the fine-scale vertical prey field}. \emph{Limnology
 and Oceanography}, \textbf{66}, 3811--3827.
 
-\bibitem[\citeproctext]{ref-wood2017}
+\leavevmode\vadjust pre{\hypertarget{ref-wood2017}{}}%
 Wood, S. N. (2017) \emph{Generalized additive models: an introduction
 with R}. Second edition. CRC Press/Taylor \& Francis Group, Boca Raton
 London New York.
 
-\bibitem[\citeproctext]{ref-wood2001}
+\leavevmode\vadjust pre{\hypertarget{ref-wood2001}{}}%
 Wood, S. N. (2001) mgcv: GAMs and Generalized Ridge Regression for R.
 \textbf{1}.
 
-\bibitem[\citeproctext]{ref-zasko2005}
+\leavevmode\vadjust pre{\hypertarget{ref-zasko2005}{}}%
 Zasko, D. N. and Rusanov, I. I. (2005)
 \href{https://doi.org/10.1007/s10525-005-0103-5}{Vertical Distribution
 of Radiolarians and Their Role in Epipelagic Communities of the East
@@ -1707,7 +1713,6 @@ Pacific Rise and the Gulf of California}. \emph{Biology Bulletin},
 \textbf{32}, 279--287.
 
 \end{CSLReferences}
-
 
 
 
